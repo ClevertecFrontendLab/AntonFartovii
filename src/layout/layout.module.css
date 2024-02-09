@@ -1,0 +1,119 @@
+
+.sider {
+    width: 208px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0px 2px 8px 0px #00000026;
+}
+
+.logo {
+    width: 100%;
+    height: 64px;
+    padding-top: 30px;
+}
+
+.logo img {
+    padding-left: 29px;
+    padding-top: 14px;
+}
+
+.menu {
+    padding-top: 50px;
+    height: 216px;
+    flex: 1;
+}
+
+.menu-link {
+    display: flex;
+    flex-direction: row;
+    padding: 12px;
+}
+
+.link-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.link-icon svg {
+    fill: #061178;
+}
+
+.link-title {
+    height: 18px;
+    padding-left: 10px;
+    font-size: 14px;
+    color: #262626;
+}
+
+.logout {
+    border-top: 2px solid #F0F0F0;
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    padding: 12px;
+}
+
+.logout-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.logout-title {
+    height: 18px;
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+.switcher {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: -20px;
+    top: calc(50% - 66px);
+    width: 20px;
+    height: 66px;
+    border-top: 7px solid transparent;
+    border-left: 20px solid #ffffff;
+    border-bottom: 7px solid transparent;
+
+
+}
+
+.switcher-icon {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: -18px;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    height: 168px;
+}
+
+.header-body {
+    display: flex;
+    flex-direction: row;
+}
+
+.header-left {
+    flex: 1;
+}
+
+.header-extra {
+    width: 129px;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgba(255, 253, 253, 0.8) 100%), url("../assets/images/1d3b2bd1dd53a65dace5128315d0bb33.png");
+}
+
