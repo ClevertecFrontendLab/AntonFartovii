@@ -9,6 +9,7 @@ import {MainPage} from './pages';
 import 'normalize.css';
 import './index.css';
 import Layout from "./layout/Layout.tsx";
+import 'antd/lib/style/index.css';
 
 const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);

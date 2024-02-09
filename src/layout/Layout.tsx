@@ -1,6 +1,7 @@
 import * as React from "react";
 import Sider from "./Sider.tsx";
 import Header from "./Header.tsx";
+import classes from './layout.module.less';
 
 const Layout = ({children}: { children: React.ReactNode }) => {
     return (
@@ -8,10 +9,8 @@ const Layout = ({children}: { children: React.ReactNode }) => {
             <Sider></Sider>
             <div className="wrapper">
                 <Header/>
-                <div className="main">
-                    <div className="inner-wrapper">
-                        {children}
-                    </div>
+                <div className={classes.main}>
+                    {children}
                 </div>
             </div>
         </>
