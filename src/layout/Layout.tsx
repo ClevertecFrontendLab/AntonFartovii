@@ -5,7 +5,7 @@ import classes from './layout.module.less';
 
 const Layout = ({children}: { children: React.ReactNode }) => {
     return (
-        <>
+        <div className="app-wrapper">
             <Sider></Sider>
             <div className="wrapper">
                 <Header/>
@@ -13,7 +13,7 @@ const Layout = ({children}: { children: React.ReactNode }) => {
                     {children}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

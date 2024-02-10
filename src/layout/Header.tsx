@@ -11,15 +11,14 @@ const Header = () => {
                 <div className={classes["header-body"]}>
                     <div className={classes["header-title"]}>
                         <Typography.Title level={1}>
-                            Приветствуем тебя в CleverFit — приложении, которое поможет тебе
-                            добиться
-                            своей мечты!
+                            Приветствуем тебя в CleverFit — приложении,<br/> которое поможет тебе
+                            добиться своей мечты!
                         </Typography.Title>
                     </div>
-                    <div className={classes["header-extra"]}>
+                    <div className={classes["header-setting"]}>
                         <div className={classes["wrap-extra"]}>
-                            <SettingOutlined/>
-                            <span>Настройки</span>
+                            <div className={classes["setting-icon"]}><SettingOutlined/></div>
+                            <div className={classes["setting-title"]}><span>Настройки</span></div>
                         </div>
                     </div>
                 </div>
