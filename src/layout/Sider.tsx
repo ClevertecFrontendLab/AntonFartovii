@@ -53,7 +53,7 @@ const Sider = () => {
             </div>
             <div className={classes.logout}>
                 <div className={classes["logout-icon"]}><img src={exit_icon}/></div>
-                {isSwitch && <div className={classes["logout-title"]}>Выйти</div>}
+                {isSwitch && <div className={classes["logout-title"]}>Выход</div>}
             </div>
             <div className={classes.switcher} onClick={switchHandler} data-test-id="sider-switch">
                 <svg className={classes.trapezoid} width="20" height="66" viewBox="0 0 20 66"

@@ -1,7 +1,13 @@
 import React from 'react';
 import classes from './main.module.less';
 import {Typography} from "antd/";
-import {CalendarTwoTone, HeartTwoTone, IdcardOutlined,} from '@ant-design/icons';
+import {
+    AndroidFilled,
+    AppleFilled,
+    CalendarTwoTone,
+    HeartTwoTone,
+    IdcardOutlined
+} from '@ant-design/icons';
 
 export const MainPage: React.FC = () => {
 
@@ -54,7 +60,19 @@ export const MainPage: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div className={classes["footer-container"]}></div>
+            <div className={classes["footer-container"]}>
+                <div className={classes["left"]}>Смотреть отзывы</div>
+                <div className={classes["right"]}>
+                    <div className={classes["top"]}>
+                        <div className={classes["download-link"]}>Скачать на телефон</div>
+                        <div className={classes["notification"]}>Доступно в PRO-тарифе</div>
+                    </div>
+                    <div className={classes["bottom"]}>
+                        <div><AndroidFilled/>Android OS</div>
+                        <div><AppleFilled/>Apple iOS</div>
+                    </div>
+                </div>
+            </div>
         </section>
     );
 };

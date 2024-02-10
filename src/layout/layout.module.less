@@ -25,6 +25,14 @@
     .sider-nav {
         padding-top: 7px;
     }
+
+    .menu {
+        margin-top: 15px;
+    }
+
+    .menu-link {
+        justify-content: center;
+    }
 }
 
 .sider-nav {
@@ -49,7 +57,7 @@
 .menu {
     display: flex;
     flex-direction: column;
-    margin-top: 13px;
+    margin-top: 15px;
     overflow: hidden;
     justify-content: center;
 }
@@ -58,7 +66,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 20px 16px;
 }
 
@@ -87,12 +95,12 @@
 }
 
 .logout {
-    border-top: 2px solid #F0F0F0;
+    border-top: 1px solid #F0F0F0;
     display: flex;
     flex-direction: row;
-    height: 40px;
-    padding: 12px;
-    overflow: hidden;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 16px;
 }
 
 .logout-icon {
@@ -103,8 +111,9 @@
 
 .logout-title {
     height: 18px;
-    padding-left: 10px;
+    padding-left: 25px;
     font-size: 14px;
+    line-height: 16px;
 }
 
 .switcher {
@@ -113,7 +122,7 @@
     justify-content: center;
     position: absolute;
     right: -20px;
-    top: calc(50% - 33px);
+    top: 47%;
     width: 20px;
     height: 66px;
     cursor: pointer;
@@ -216,7 +225,7 @@ header {
     .main {
         display: flex;
         flex-direction: column;
-        margin-top: 13px;
+        margin-top: 0px;
         overflow: hidden;
     }
 
@@ -309,7 +318,12 @@ header {
     header {
         z-index: 1;
 
+        .header-title {
+            padding-top: 16px;
+        }
+
         .header-setting {
+            padding: 10px 0px;
 
             .setting-icon {
                 display: flex;
@@ -334,5 +348,9 @@ header {
                 font-size: 20px;
             }
         }
+    }
+
+    .main {
+        margin-top: 0px;
     }
 }
