@@ -12,61 +12,73 @@ import {
     MenuUnfoldOutlined,
     TrophyTwoTone
 } from '@ant-design/icons';
-import {useState} from "react";
 
-const Sider = () => {
-    const [isSwitch, setIsSwitch] = useState<boolean>(true);
+export interface ISider {
+    collapsed: boolean;
+    onCollapsed: (bool: boolean) => void;
+}
 
-    const switchHandler = () => {
-        setIsSwitch(!isSwitch);
-    };
+const Sider = ({collapsed, onCollapsed}: ISider) => {
+
     const classOff = (className: string) => className + ' ' + classes["off"];
 
     return (
-        <div className={isSwitch ? classes.sider : classOff(classes.sider)}>
+        <div className={!collapsed ? classes.sider : classOff(classes.sider)}>
             <div className={classes["sider-nav"]}>
                 <div className={classes.logo}>
-                    {isSwitch ? <img src={logo}/> :
+                    {!collapsed ? <img src={logo}/> :
                         <img className={classes["logo-small"]} src={logo_small}/>
                     }
                 </div>
                 <div className={classes.menu}>
                     <div className={classes["menu-link"]}>
-                        <div className={classes["link-icon"]}><CalendarTwoTone/>
-                        </div>
-                        {isSwitch && <div className={classes["link-title"]}>Календарь</div>}
+                        <a>
+                            <CalendarTwoTone className={classes["link-icon"]}/>
+                            {!collapsed && <span className={classes["link-title"]}>Календарь</span>}
+                        </a>
                     </div>
 
                     <div className={classes["menu-link"]}>
-                        <div className={classes["link-icon"]}><HeartTwoTone/></div>
-                        <div className={classes["link-title"]}>Тренировки</div>
+                        <a>
+                            <HeartTwoTone className={classes["link-icon"]}/>
+                            {!collapsed &&
+                                <span className={classes["link-title"]}>Тренировки</span>}
+                        </a>
                     </div>
 
                     <div className={classes["menu-link"]}>
-                        <div className={classes["link-icon"]}><TrophyTwoTone/></div>
-                        <div className={classes["link-title"]}>Достижения</div>
+                        <a>
+                            <TrophyTwoTone className={classes["link-icon"]}/>
+                            {!collapsed &&
+                                <span className={classes["link-title"]}>Достижения</span>}
+                        </a>
                     </div>
 
                     <div className={classes["menu-link"]}>
-                        <div className={classes["link-icon"]}><IdcardOutlined/></div>
-                        <div className={classes["link-title"]}>Профиль</div>
+                        <a>
+                            <IdcardOutlined className={classes["link-icon"]}/>
+                            {!collapsed && <span className={classes["link-title"]}>Профиль</span>}
+                        </a>
                     </div>
                 </div>
             </div>
             <div className={classes.logout}>
-                <div className={classes["logout-icon"]}><img src={exit_icon}/></div>
-                {isSwitch && <div className={classes["logout-title"]}>Выход</div>}
+                <a>
+                    <img className={classes["logout-icon"]} src={exit_icon}/>
+                    {!collapsed && <span className={classes["logout-title"]}>Выход</span>}
+                </a>
             </div>
-            <div className={classes.switcher} onClick={switchHandler} data-test-id="sider-switch">
+            <div className={classes.switcher} onClick={() => onCollapsed(!collapsed)}
+                 data-test-id="sider-switch">
                 <img className={classes.trapezoid} src={switcher}/>
-                {isSwitch ? <MenuUnfoldOutlined className={classes["switcher-icon"]}/> :
+                {!collapsed ? <MenuUnfoldOutlined className={classes["switcher-icon"]}/> :
                     <MenuFoldOutlined className={classes["switcher-icon"]}/>
                 }
             </div>
-            <div className={classes["switcher-mobile"]} onClick={switchHandler}
+            <div className={classes["switcher-mobile"]} onClick={() => onCollapsed(!collapsed)}
                  data-test-id="sider-switch-mobile">
                 <img className={classes.trapezoid} src={switcher_mobile}/>
-                {isSwitch ? <MenuUnfoldOutlined className={classes["switcher-icon"]}/> :
+                {!collapsed ? <MenuUnfoldOutlined className={classes["switcher-icon"]}/> :
                     <MenuFoldOutlined className={classes["switcher-icon"]}/>
                 }
             </div>

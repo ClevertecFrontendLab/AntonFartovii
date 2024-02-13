@@ -67,7 +67,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    padding: 20px 16px;
+    padding: 18px 16px;
 }
 
 .link-icon {
@@ -88,9 +88,13 @@
 .link-title {
     height: 18px;
     padding-left: 10px;
+}
+
+.link-title {
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 14px;
+    line-height: 130%;
     color: var(--character-light-title-85);
 }
 
@@ -101,6 +105,14 @@
     align-items: center;
     justify-content: flex-start;
     padding: 10px 16px;
+    overflow: hidden;
+}
+
+.logout a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .logout-icon {
@@ -113,7 +125,11 @@
     height: 18px;
     padding-left: 25px;
     font-size: 14px;
-    line-height: 16px;
+    font-family: var(--font-family);
+    font-weight: 400;
+    line-height: 130%;
+    text-align: center;
+    color: var(--character-light-title-85);
 }
 
 .switcher {
@@ -155,6 +171,17 @@ header {
     z-index: 6;
 
     :global {
+
+        .ant-breadcrumb {
+            a {
+                font-family: var(--font-family);
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 130%;
+                color: var(--character-light-title-85);
+            }
+        }
+
         .ant-typography, .ant-breadcrumb ol {
             margin: 0;
         }
@@ -195,7 +222,6 @@ header {
     padding: 0 15px;
 }
 
-
 .wrap-extra {
     display: flex;
     flex-direction: row;
@@ -204,7 +230,7 @@ header {
     gap: 10px;
 }
 
-.wrap-extra span {
+.wrap-extra a {
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 14px;
@@ -215,7 +241,7 @@ header {
 
 .main {
     width: 100%;
-    height: 100%;
+    //height: 100%;
 
     :global {
         .ant-typography {
@@ -226,6 +252,116 @@ header {
         }
     }
 }
+
+.footer {
+    display: flex;
+    flex: 1;
+    //flex-basis: 364px;
+    flex-basis: 283px;
+    margin-top: 24px;
+    margin-bottom: 17px;
+
+    .footer-container {
+        padding: 0 24px 6px;
+        width: 100%;
+        margin-bottom: 18px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        .left {
+            display: flex;
+            align-items: center;
+            border-radius: 2px;
+            padding: 6px 15px;
+            width: 171px;
+            height: 40px;
+            font-family: var(--font-family);
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 130%;
+            text-align: center;
+            color: var(--primary-light-6);
+        }
+
+        .left a {
+            font-family: var(--font-family);
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 130%;
+            text-align: center;
+            color: var(--primary-light-6);
+        }
+
+        .right {
+            display: flex;
+            flex-direction: column;
+            border-radius: 2px;
+            width: 240px;
+            height: 127px;
+            box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.02);
+            background: var(--character-light-primary-inverse);
+
+            .top {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 12px 24px;
+                width: 240px;
+                height: 71px;
+
+                .download-link {
+                    font-family: var(--font-family);
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 130%;
+                    color: var(--primary-light-6);
+                }
+
+                .notification {
+                    font-family: var(--font-family);
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 130%;
+                    color: var(--character-light-secondary-45);
+                }
+            }
+
+            .bottom {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+                width: 240px;
+                height: 56px;
+                font-family: var(--font-family);
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 130%;
+                text-align: center;
+                color: var(--character-light-title-85);
+                gap: 28px;
+                padding-left: 10px;
+            }
+
+            .bottom a {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 9px;
+                font-family: var(--font-family);
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 130%;
+                text-align: center;
+                color: var(--character-light-title-85);
+            }
+        }
+    }
+
+}
+
 
 @media screen and (max-width: 1390px) {
 
@@ -241,7 +377,6 @@ header {
         flex-direction: row;
         align-items: center;
         justify-content: start;
-        padding: 20px 16px;
     }
 
     header {
@@ -258,6 +393,14 @@ header {
         .setting-icon {
             display: none;
         }
+    }
+
+    .footer {
+        flex-basis: 364px;
+    }
+
+    .footer.collapsed {
+        flex-basis: 489px;
     }
 }
 
@@ -284,9 +427,13 @@ header {
             display: none;
         }
 
+        .menu {
+            margin-top: 14px;
+        }
+
         .menu-link {
             justify-content: start;
-            padding: 16px 0px;
+            padding: 14px 0px;
         }
 
         .link-icon {
@@ -314,7 +461,11 @@ header {
         }
 
         .logout-icon {
-            overflow: hidden;
+            display: none;
+        }
+
+        .logout-title {
+            padding-left: 16px;
         }
     }
 
@@ -325,12 +476,16 @@ header {
     header {
         z-index: 1;
 
+        .header-body {
+            padding-top: 0px;
+        }
+
         .header-title {
-            padding-top: 16px;
+            padding-top: 6px;
         }
 
         .header-setting {
-            padding: 10px 0px;
+            padding: 0px 0px;
 
             .setting-icon {
                 display: flex;
@@ -359,5 +514,46 @@ header {
 
     .main {
         margin-top: 0px;
+    }
+
+    .footer {
+        flex-basis: 0px;
+        margin-top: 1px;
+
+        .footer-container {
+            padding: 0 16px 6px;
+            height: max-content;
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-container .right, .footer-container .right {
+            width: 100%;
+        }
+
+        .footer-container {
+            .right {
+                align-items: center;
+
+                .top {
+                    align-items: center
+                }
+
+                .bottom {
+                    justify-content: space-between;
+                    width: 100%;
+                    padding: 0 39px 0 33px;
+                }
+            }
+        }
+
+
+    }
+
+    .footer.collapsed {
+        flex-basis: 0px;
     }
 }
