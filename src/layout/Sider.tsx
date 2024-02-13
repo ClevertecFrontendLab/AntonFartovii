@@ -1,6 +1,8 @@
 import logo from '../assets/svg/logo.svg';
 import logo_small from '../assets/svg/logo_mobile.svg';
 import exit_icon from '../assets/svg/exit_icon.svg';
+import switcher from '../assets/svg/switcher.svg';
+import switcher_mobile from '../assets/svg/switcher_mobile.svg';
 import classes from './layout.module.less';
 import {
     CalendarTwoTone,
@@ -56,21 +58,14 @@ const Sider = () => {
                 {isSwitch && <div className={classes["logout-title"]}>Выход</div>}
             </div>
             <div className={classes.switcher} onClick={switchHandler} data-test-id="sider-switch">
-                <svg className={classes.trapezoid} width="20" height="66" viewBox="0 0 20 66"
-                     fill="none"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 -1.52588e-05L20 7.99998V58L0 66V-1.52588e-05Z" fill="white"/>
-                </svg>
+                <img className={classes.trapezoid} src={switcher}/>
                 {isSwitch ? <MenuUnfoldOutlined className={classes["switcher-icon"]}/> :
                     <MenuFoldOutlined className={classes["switcher-icon"]}/>
                 }
             </div>
             <div className={classes["switcher-mobile"]} onClick={switchHandler}
                  data-test-id="sider-switch-mobile">
-                <svg width="32" height="48" viewBox="0 0 32 48" fill="none"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 0L32 5.81818V42.1818L0 48V0Z" fill="white"/>
-                </svg>
+                <img className={classes.trapezoid} src={switcher_mobile}/>
                 {isSwitch ? <MenuUnfoldOutlined className={classes["switcher-icon"]}/> :
                     <MenuFoldOutlined className={classes["switcher-icon"]}/>
                 }
