@@ -1,0 +1,65 @@
+.auth-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1440px;
+    height: 100%;
+    margin: 0 auto;
+    background-image: url(/src/assets/images/enter_page_light.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(12px);
+    background-color: rgba(121, 156, 212, 0.5);
+    flex-direction: column;
+
+    :global {
+        .ant-menu-horizontal {
+            width: 100%;
+
+            .ant-menu-item::after {
+                left: 0px;
+                right: 0px;
+            }
+        }
+
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item {
+            flex-basis: 50%;
+            text-align: center;
+            padding: 0;
+        }
+
+        .login-form-button {
+            width: 100%;
+        }
+    }
+
+    .auth-form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        border-radius: 2px;
+        padding: 64px 32px;
+        width: 539px;
+        height: 742px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+        background: var(--character-light-primary-inverse);
+
+
+        .auth-form-inner-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 368px;
+            height: 380px;
+
+
+        }
+    }
+}
+
+

@@ -1,11 +1,11 @@
-import * as React from "react";
 import {useState} from "react";
 import Sider from "./Sider.tsx";
 import Header from "./Header.tsx";
 import classes from './layout.module.less';
 import Footer from "./Footer.tsx";
+import {Outlet} from "react-router-dom";
 
-const Layout = ({children}: { children: React.ReactNode }) => {
+const Layout = () => {
     const [collapsedSider, setCollapsedSider] = useState<boolean>(false);
 
     return (
@@ -14,7 +14,7 @@ const Layout = ({children}: { children: React.ReactNode }) => {
             <div className="wrapper">
                 <Header/>
                 <main className={classes.main}>
-                    {children}
+                    <Outlet/>
                 </main>
                 <Footer collapsed={collapsedSider}/>
             </div>
