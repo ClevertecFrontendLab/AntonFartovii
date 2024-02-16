@@ -1,12 +1,18 @@
 import {combineReducers, configureStore, Middleware} from '@reduxjs/toolkit';
 import {authApi} from "@redux/api/authApi.ts";
 import {setupListeners} from "@reduxjs/toolkit/query";
-
 import authReducer from './authSlice.ts';
+import {createReduxHistoryContext} from "redux-first-history";
+import {createBrowserHistory} from "history";
+
+const {createReduxHistory, routerMiddleware, routerReducer} = createReduxHistoryContext({
+    history: createBrowserHistory(),
+});
 
 const rootReducer = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     authReducer,
+    router: routerReducer,
 });
 
 const saveToLocalStorage = (state: RootState) => {
@@ -30,10 +36,12 @@ const preloadedState = loadFromLocalStorage();
 
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([authApi.middleware, localStorageMiddleware]),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([authApi.middleware, localStorageMiddleware, routerMiddleware]),
     preloadedState
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export const history = createReduxHistory(store);
+
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 setupListeners(store.dispatch);
