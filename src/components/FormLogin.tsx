@@ -2,23 +2,41 @@ import {Button, Checkbox, Form, Input} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 import {useLoginMutation} from "@redux/api/authApi.ts";
 import {useEffect, useState} from "react";
+import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
+import {setAccessToken} from "@redux/authSlice.ts";
+import {useNavigate} from "react-router-dom";
+import {Paths} from "../routes/Paths.ts";
 
+type Response = {
+    data?: {
+        accessToken?: string,
+    }
+}
 const FormLogin = () => {
-    const [authResponse, setAuthResponse] = useState({});
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const [authResponse, setAuthResponse] = useState<Response>({
+        data: {
+            accessToken: '',
+        }
+    });
     const [form] = Form.useForm();
-
     const [login, {isLoading, isSuccess, isError}] = useLoginMutation();
 
     useEffect(() => {
-
+        if (isSuccess) {
+            const accessToken = authResponse?.data?.accessToken;
+            accessToken && dispatch(setAccessToken(accessToken));
+            navigate(Paths.MAIN);
+        }
     }, [isSuccess]);
 
     useEffect(() => {
-
+        console.log('error');
     }, [isError]);
 
     useEffect(() => {
-
+        console.log('loading');
     }, [isLoading]);
 
     const onFinish = async () => {
@@ -26,7 +44,7 @@ const FormLogin = () => {
             email: form.getFieldValue('email'),
             password: form.getFieldValue('password'),
         }
-        const response = await login(body);
+        const response = await login(body) as Response;
         console.log(response);
         setAuthResponse(response);
     };

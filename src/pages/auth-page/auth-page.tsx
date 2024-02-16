@@ -28,16 +28,14 @@ export const AuthPage = () => {
         setCurrent(e.key);
     };
     return (
-        <div className={classes["auth-wrapper"]}>
-            <div className={classes["auth-form-container"]}>
-                <div className={classes["auth-form-inner-wrapper"]}>
-                    <div>
-                        <img src={logo}/>
-                    </div>
-                    <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal"
-                          items={items}/>
-                    <Outlet/>
+        <div className={classes["auth-form-container"]}>
+            <div className={classes["auth-form-inner-wrapper"]}>
+                <div>
+                    <img src={logo}/>
                 </div>
+                <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal"
+                      items={items}/>
+                <Outlet/>
             </div>
         </div>
     );
