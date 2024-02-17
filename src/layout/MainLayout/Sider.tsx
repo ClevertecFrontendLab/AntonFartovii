@@ -12,6 +12,10 @@ import {
     MenuUnfoldOutlined,
     TrophyTwoTone
 } from '@ant-design/icons';
+import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
+import {setAccessToken} from "@redux/authSlice.ts";
+import {useNavigate} from "react-router-dom";
+import {Paths} from "../../routes/Paths.ts";
 
 export interface ISider {
     collapsed: boolean;
@@ -19,8 +23,13 @@ export interface ISider {
 }
 
 const Sider = ({collapsed, onCollapsed}: ISider) => {
-
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const classOff = (className: string) => className + ' ' + classes["off"];
+    const logoutHandler = async () => {
+        dispatch(setAccessToken(''));
+        navigate(Paths.AUTH);
+    };
 
     return (
         <div className={!collapsed ? classes.sider : classOff(classes.sider)}>
@@ -63,7 +72,7 @@ const Sider = ({collapsed, onCollapsed}: ISider) => {
                 </div>
             </div>
             <div className={classes.logout}>
-                <a>
+                <a onClick={logoutHandler}>
                     <img className={classes["logout-icon"]} src={exit_icon}/>
                     {!collapsed && <span className={classes["logout-title"]}>Выход</span>}
                 </a>

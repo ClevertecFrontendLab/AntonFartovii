@@ -3,8 +3,8 @@ import {Navigate, useLocation} from "react-router-dom";
 
 const PrivateResult = ({children}: { children: ReactNode }) => {
     const location = useLocation();
-    const isTrue = true;
-    if (isTrue) {
+    console.log(location);
+    if (location.state !== 'result_redirect') {
         return <Navigate to='/auth' state={{from: location}}/>
     }
 
