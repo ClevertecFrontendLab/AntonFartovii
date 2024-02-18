@@ -1,8 +1,17 @@
+import {Button, Result} from "antd";
+
 const ResultErrorCheckEmail = () => {
     return (
-        <div>
-            ResultErrorCheckEmail
-        </div>
+        <Result
+            status="error"
+            title=""
+            subTitle=""
+            extra={
+                <Button type="primary" key="console" data-test-id="check-back-button">
+                    Назад к регистрации
+                </Button>
+            }
+        />
     );
 };
 
