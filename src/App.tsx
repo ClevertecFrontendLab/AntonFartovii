@@ -10,7 +10,7 @@ const App = () => {
 
     useEffect(() => {
         const decodedToken = accessToken && jwtDecode(accessToken);
-        const expirationTime = decodedToken && decodedToken.exp! * 1000 || 0;
+        const expirationTime = decodedToken && decodedToken.exp! * 1000;
         const isTokenValid = Date.now() < expirationTime;
         dispatch(setIsAuth(isTokenValid));
     }, [accessToken]);

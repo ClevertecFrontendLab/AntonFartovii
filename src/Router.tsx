@@ -20,6 +20,8 @@ import ResultErrorCheckEmail from "@components/ResultErrorCheckEmail.tsx";
 import ResultErrorChangePassword from "@components/ResultErrorChangePassword.tsx";
 import ResultSuccessChangePassword from "@components/ResultSuccessChangePassword.tsx";
 import PrivateAuth from "./hoc/PrivateAuth.tsx";
+import FlowForgotPassword from "@components/FlowForgotPassword.tsx";
+import FlowChangePassword from "@components/FlowChangePassword.tsx";
 
 const Router = () => {
     return (
@@ -29,12 +31,15 @@ const Router = () => {
                     <Route index element={<MainPage/>}/>
                 </Route>
                 <Route element={<PrivateAuth><AuthLayout/></PrivateAuth>}>
+                    <Route path={Paths.AUTH + '/' + Paths.CHANGE_PASSWORD}
+                           element={<PrivateAuth><FlowChangePassword/></PrivateAuth>}/>
                     <Route path={Paths.AUTH} element={<AuthPage/>}>
                         <Route index element={<FormLogin/>}/>
                         <Route path={Paths.REGISTRATION} element={<FormRegistration/>}/>
                     </Route>
                     <Route path={Paths.RESULT}
                            element={<PrivateResult><ResultPage/></PrivateResult>}>
+                        <Route path={Paths.FORGOT_PASSWORD} element={<FlowForgotPassword/>}/>
                         <Route path={Paths.RESULT_SUCCESS} element={<ResultSuccess/>}/>
                         <Route path={Paths.RESULT_ERROR} element={<ResultError/>}/>
                         <Route path={Paths.RESULT_ERROR_USER_EXIST}

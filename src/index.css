@@ -153,10 +153,52 @@ body {
     padding: 16px 24px;
 }
 
-.form-auth {
-    width: 100%;
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 
-:global {
-
+.verification-container {
+    margin: 0 auto;
+    background-color: var(--character-light-primary-inverse);
 }
+
+.verification-character {
+    border: 1px solid var(--character-light-border);
+    border-radius: 2px;
+    width: 40px;
+    height: 40px;
+    background: var(--character-light-primary-inverse);
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    text-align: center;
+    color: var(--character-light-title-85);
+}
+
+.verification-character-filled {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    text-align: center;
+    color: var(--character-light-title-85);
+}
+
+.verification-character-selected {
+    border: 1px solid var(--primary-light-5);
+    box-shadow: 0 0 0 2px rgba(47, 84, 235, 0.2);
+}
+
+.verification-character-inactive {
+}
+
+.verification-character-inactive.error {
+    border: 1px solid var(--character-light-error);
+}
+
