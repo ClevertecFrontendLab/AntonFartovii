@@ -6,6 +6,7 @@ import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
 import {setRememberAuth} from "@redux/authSlice.ts";
 import {useNavigate} from "react-router-dom";
 import {Paths} from "../routes/Paths.ts";
+import {useLoader} from "@hooks/useLoader.ts";
 
 export type Response = {
     data?: {
@@ -29,6 +30,15 @@ const FormLogin = () => {
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [login, loginStatus] = useLoginMutation();
     const [checkEmail, checkEmailStatus] = useCheckEmailMutation();
+    const {setLoader} = useLoader();
+
+    useEffect(() => {
+        setLoader && setLoader(loginStatus.isLoading);
+    }, [loginStatus.isLoading]);
+
+    useEffect(() => {
+        setLoader && setLoader(checkEmailStatus.isLoading);
+    }, [checkEmailStatus.isLoading]);
 
     useEffect(() => {
         if (loginStatus.isSuccess) {
