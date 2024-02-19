@@ -1,6 +1,7 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {setAccessToken} from "@redux/authSlice.ts";
+import {setAccessToken, setRememberAuth} from "@redux/authSlice.ts";
 import {Credentials} from "@redux/interfaces.ts";
+import {setFormChangePassword, setFormLogin} from "@redux/formSlice.ts";
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -19,18 +20,19 @@ export const authApi = createApi({
                 };
             },
         }),
-        login: builder.mutation<{ accessToken: string }, Credentials>({
-            query: (body) => {
+        login: builder.mutation<{ accessToken: string }, Credentials & { remember: boolean }>({
+            query: ({email, password}) => {
                 return {
                     url: 'auth/login',
                     method: 'POST',
-                    body,
+                    body: {email, password},
                 };
             },
-            async onQueryStarted(_, {dispatch, queryFulfilled}) {
+            async onQueryStarted({remember}, {dispatch, queryFulfilled}) {
                 try {
                     const {data: {accessToken}} = await queryFulfilled;
-                    dispatch(setAccessToken(accessToken))
+                    dispatch(setAccessToken(accessToken));
+                    dispatch(setRememberAuth(remember));
                 } catch (error) {
                     console.log(error);
                 }
@@ -44,7 +46,14 @@ export const authApi = createApi({
                     method: 'POST',
                     body,
                 }
-            }
+            },
+            async onQueryStarted(email, {dispatch}) {
+                try {
+                    dispatch(setFormLogin(email));
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         }),
         confirmEmail: builder.mutation({
             query: (body: { email: string, code: string }) => {
@@ -55,14 +64,21 @@ export const authApi = createApi({
                 }
             }
         }),
-        changePassword: builder.mutation({
+        changePassword: builder.mutation<void, { password: string, confirmPassword: string }>({
             query: (body: { password: string, confirmPassword: string }) => {
                 return {
                     url: 'auth/change-password',
                     method: 'POST',
                     body,
                 }
-            }
+            },
+            async onQueryStarted({password, confirmPassword}, {dispatch}) {
+                try {
+                    dispatch(setFormChangePassword({password, confirmPassword}));
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         }),
     }),
 });

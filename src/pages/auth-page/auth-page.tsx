@@ -2,19 +2,24 @@ import classes from './auth.module.less';
 import type {MenuProps} from 'antd';
 import {Menu} from "antd";
 import logo from '../../assets/svg/logo.svg'
-import {useState} from "react";
+import {createContext, useState} from "react";
 import {Link, Outlet} from "react-router-dom";
 import {Paths} from "../../routes/Paths.ts";
 
-export const AuthPage = () => {
-    const [current, setCurrent] = useState('login');
+interface IMenu {
+    current: string;
+    setCurrent: (bool: string) => void;
+}
 
+export const MenuContext = createContext<Partial<IMenu>>({});
+
+export const AuthPage = () => {
+    const [current, setCurrent] = useState('');
 
     const items: MenuProps['items'] = [
         {
             label: (<Link to={''}>Вход</Link>),
             key: 'login',
-
         },
         {
             label: (<Link to={Paths.REGISTRATION}>Регистрация</Link>),
@@ -22,21 +27,20 @@ export const AuthPage = () => {
         },
     ];
 
-
     const onClick: MenuProps['onClick'] = (e) => {
-        console.log('click ', e);
         setCurrent(e.key);
     };
+
     return (
-        <div className={classes["auth-form-container"]}>
-            <div className={classes["auth-form-inner-wrapper"]}>
-                <div>
-                    <img src={logo}/>
-                </div>
-                <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal"
-                      items={items}/>
-                <Outlet/>
+        <div className={classes["auth-form-inner-wrapper"]}>
+            <div>
+                <img src={logo}/>
             </div>
+            <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal"
+                  items={items}/>
+            <MenuContext.Provider value={{current, setCurrent}}>
+                <Outlet/>
+            </MenuContext.Provider>
         </div>
     );
 };

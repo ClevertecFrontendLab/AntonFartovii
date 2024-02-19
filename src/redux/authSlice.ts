@@ -24,10 +24,14 @@ export const authSlice = createSlice({
         },
         setIsAuth: (state, action: PayloadAction<boolean>) => {
             state.isAuth = action.payload;
-        }
+        },
+        setLogout: (state) => {
+            state.isAuth = false;
+            state.accessToken = '';
+        },
     }
 })
 
-export const {setAccessToken, setRememberAuth, setIsAuth} = authSlice.actions;
+export const {setAccessToken, setRememberAuth, setIsAuth, setLogout} = authSlice.actions;
 
 export default authSlice.reducer;

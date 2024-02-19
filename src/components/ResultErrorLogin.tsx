@@ -17,7 +17,8 @@ const ResultErrorLogin = () => {
             title="Вход не выполнен"
             subTitle="Что-то пошло не так. Попробуйте еще раз"
             extra={
-                <Button type="primary" key="console" onClick={clickHandler}>
+                <Button type="primary" key="console" onClick={clickHandler}
+                        data-test-id="login-retry-button">
                     Повторить
                 </Button>
             }

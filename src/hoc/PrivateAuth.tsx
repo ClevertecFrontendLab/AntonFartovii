@@ -7,7 +7,7 @@ const PrivateAuth = ({children}: { children: ReactNode }) => {
     const location = useLocation();
 
     if (isAuth) {
-        return <Navigate to='/' state={{from: location}}/>
+        return <Navigate to='/main' state={{from: location}}/>
     }
     return children;
 };

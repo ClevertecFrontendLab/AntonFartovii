@@ -1,23 +1,39 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {Button, Form, Input} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 import {Typography} from "antd/";
 import {useChangePasswordMutation} from "@redux/api/authApi.ts";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {Paths} from "../routes/Paths.ts";
+import {useLoader} from "@hooks/useLoader.ts";
+import {useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
 
 const FlowChangePassword = () => {
     const [form] = Form.useForm();
-    const [changePassword, {isSuccess, isError, reset}] = useChangePasswordMutation();
-    const [response, setResponse] = useState<any>();
+    const [changePassword, {isSuccess, isError, isLoading, reset}] = useChangePasswordMutation();
+    const {formChangePassword} = useAppSelector((state) => state.formReducer);
     const navigate = useNavigate();
+    const {setLoader} = useLoader();
+    const location = useLocation();
+
+    useEffect(() => {
+        setLoader && setLoader(isLoading)
+    }, [isLoading]);
+
+    useEffect(() => {
+        if (location.state?.key === 'resend') {
+            (async () => {
+                await changePassword(formChangePassword);
+            })();
+        }
+    }, []);
 
     const onFinish = async () => {
         const password = form.getFieldValue('password');
         const confirmPassword = form.getFieldValue('confirm-password');
-        const response = await changePassword({password, confirmPassword});
-        setResponse(response);
+        await changePassword({password, confirmPassword});
     };
+
 
     useEffect(() => {
         if (isError) {
@@ -26,8 +42,8 @@ const FlowChangePassword = () => {
         if (isSuccess) {
             navigate(Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_SUCCESS_CHANGE_PASSWORD, {state: {key: 'result_redirect'}})
         }
-        return reset();
-    }, [response]);
+        reset();
+    }, [isError, isSuccess]);
 
 
     const validatePassword = ({getFieldValue}) => ({

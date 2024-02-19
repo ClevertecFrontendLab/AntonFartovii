@@ -1,20 +1,23 @@
 import {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
-import {jwtDecode} from "jwt-decode";
-import {setIsAuth} from "@redux/authSlice.ts";
+import {setIsAuth, setLogout} from "@redux/authSlice.ts";
 import Router from "./Router.tsx";
 import LoaderProvider from "./hoc/LoaderProvider.tsx";
 
 const App = () => {
-    const {accessToken} = useAppSelector((state) => state.authReducer);
+    const {accessToken, isSaveAuth} = useAppSelector((state) => state.authReducer);
     const dispatch = useAppDispatch();
 
+    const isTokenValid = !!accessToken;
+    dispatch(setIsAuth(isTokenValid));
+
     useEffect(() => {
-        const decodedToken = accessToken && jwtDecode(accessToken);
-        const expirationTime = decodedToken && decodedToken.exp! * 1000;
-        const isTokenValid = Date.now() < (expirationTime || 0);
-        dispatch(setIsAuth(isTokenValid));
-    }, [accessToken]);
+        return async () => {
+            if (!isSaveAuth) {
+                dispatch(setLogout());
+            }
+        }
+    }, []);
 
     return (
         <LoaderProvider>

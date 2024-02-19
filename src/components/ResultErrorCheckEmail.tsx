@@ -1,10 +1,13 @@
 import {Button, Result} from "antd";
 import {Paths} from "../routes/Paths.ts";
+import {useNavigate} from "react-router-dom";
 
 const ResultErrorCheckEmail = () => {
+    const navigate = useNavigate();
+
     const clickHandler = () => {
         navigate(Paths.MAIN + Paths.AUTH, {
-            replace: true,
+            replace: true, state: {key: 'resend'}
         });
     };
 

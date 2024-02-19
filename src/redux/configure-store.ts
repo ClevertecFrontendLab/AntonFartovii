@@ -2,6 +2,7 @@ import {combineReducers, configureStore, Middleware} from '@reduxjs/toolkit';
 import {authApi} from "@redux/api/authApi.ts";
 import {setupListeners} from "@reduxjs/toolkit/query";
 import authReducer from './authSlice.ts';
+import formReducer from './formSlice.ts';
 import {createReduxHistoryContext} from "redux-first-history";
 import {createBrowserHistory} from "history";
 
@@ -12,6 +13,7 @@ const {createReduxHistory, routerMiddleware, routerReducer} = createReduxHistory
 const rootReducer = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     authReducer,
+    formReducer,
     router: routerReducer,
 });
 

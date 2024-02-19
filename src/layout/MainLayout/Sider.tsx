@@ -13,9 +13,8 @@ import {
     TrophyTwoTone
 } from '@ant-design/icons';
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
-import {setAccessToken} from "@redux/authSlice.ts";
+import {setLogout} from "@redux/authSlice.ts";
 import {useNavigate} from "react-router-dom";
-import {Paths} from "../../routes/Paths.ts";
 
 export interface ISider {
     collapsed: boolean;
@@ -27,8 +26,8 @@ const Sider = ({collapsed, onCollapsed}: ISider) => {
     const navigate = useNavigate();
     const classOff = (className: string) => className + ' ' + classes["off"];
     const logoutHandler = async () => {
-        dispatch(setAccessToken(''));
-        navigate(Paths.AUTH);
+        dispatch(setLogout());
+        navigate('/auth');
     };
 
     return (

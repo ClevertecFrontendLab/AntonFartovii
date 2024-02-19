@@ -3,7 +3,7 @@ import loaderAnimation from './loader.json';
 
 const Loader = () => {
     return (
-        <Lottie animationData={loaderAnimation} className="loader"/>
+        <Lottie animationData={loaderAnimation} className="loader" data-test-id="loader"/>
     );
 }
 

@@ -6,14 +6,19 @@ import {useConfirmEmailMutation} from "@redux/api/authApi.ts";
 import {useEffect, useState} from "react";
 import {ResultStatusType} from "antd/es/result";
 import {Paths} from "../routes/Paths.ts";
+import {useLoader} from "@hooks/useLoader.ts";
 
-const FlowForgotPassword = () => {
+const FlowConfirmEmail = () => {
     const [status, setStatus] = useState<ResultStatusType | undefined>(undefined);
-    const [response, setResponse] = useState<any>();
     const [value, setValue] = useState<string>('');
     const {state: {email}} = useLocation();
-    const [confirmEmail, {isSuccess, isError, reset}] = useConfirmEmailMutation();
+    const [confirmEmail, {isSuccess, isError, isLoading}] = useConfirmEmailMutation();
     const navigate = useNavigate();
+    const {setLoader} = useLoader();
+
+    useEffect(() => {
+        setLoader && setLoader(isLoading)
+    }, [isLoading]);
 
     useEffect(() => {
         if (isError) {
@@ -25,16 +30,13 @@ const FlowForgotPassword = () => {
             setValue('');
             navigate(Paths.MAIN + Paths.AUTH + '/' + Paths.CHANGE_PASSWORD, {
                 replace: true,
-                state: {key: 'sad'}
             })
         }
-        return reset();
-    }, [response]);
+    }, [isSuccess, isError]);
 
 
     const completeHandler = async (code: string) => {
-        const response = await confirmEmail({email, code});
-        setResponse(response);
+        await confirmEmail({email, code});
     };
 
     return (
@@ -51,6 +53,8 @@ const FlowForgotPassword = () => {
                                    value={value}
                                    onChange={setValue}
                                    onComplete={(code: string) => completeHandler(code)}
+                                   inputProps={{"data-test-id": "verification-input"}}
+
                                    classNames={{
                                        character: "verification-character",
                                        container: "verification-container",
@@ -66,4 +70,4 @@ const FlowForgotPassword = () => {
     );
 };
 
-export default FlowForgotPassword;
+export default FlowConfirmEmail;

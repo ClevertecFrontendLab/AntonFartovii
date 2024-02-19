@@ -196,9 +196,6 @@ body {
     box-shadow: 0 0 0 2px rgba(47, 84, 235, 0.2);
 }
 
-.verification-character-inactive {
-}
-
 .verification-character-inactive.error {
     border: 1px solid var(--character-light-error);
 }

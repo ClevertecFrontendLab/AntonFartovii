@@ -1,14 +1,15 @@
 import {Button, Result} from "antd";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {Paths} from "../routes/Paths.ts";
 
 const ResultError = () => {
     const navigate = useNavigate();
+    const {state: {body}} = useLocation();
 
     const clickHandler = () => {
         navigate(Paths.MAIN + Paths.AUTH + '/' + Paths.REGISTRATION, {
             replace: true,
-            state: 'send_post'
+            state: {key: 'resend', body}
         })
     };
 

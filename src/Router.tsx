@@ -1,6 +1,6 @@
 import {HistoryRouter} from "redux-first-history/rr6";
 import {history} from "@redux/configure-store.ts";
-import {Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import PrivateMain from "./hoc/PrivateMain.tsx";
 import Layout from "./layout/MainLayout/Layout.tsx";
 import {MainPage} from "@pages/main-page";
@@ -20,7 +20,7 @@ import ResultErrorCheckEmail from "@components/ResultErrorCheckEmail.tsx";
 import ResultErrorChangePassword from "@components/ResultErrorChangePassword.tsx";
 import ResultSuccessChangePassword from "@components/ResultSuccessChangePassword.tsx";
 import PrivateAuth from "./hoc/PrivateAuth.tsx";
-import FlowForgotPassword from "@components/FlowForgotPassword.tsx";
+import FlowConfirmEmail from "@components/FlowConfirmEmail.tsx";
 import FlowChangePassword from "@components/FlowChangePassword.tsx";
 
 const Router = () => {
@@ -28,18 +28,20 @@ const Router = () => {
         <HistoryRouter history={history}>
             <Routes>
                 <Route path='/' element={<PrivateMain><Layout/></PrivateMain>}>
-                    <Route index element={<MainPage/>}/>
+                    <Route index element={<Navigate to={'main'}/>}/>
+                    <Route path={'main'} element={<MainPage/>}/>
                 </Route>
                 <Route element={<PrivateAuth><AuthLayout/></PrivateAuth>}>
                     <Route path={Paths.AUTH + '/' + Paths.CHANGE_PASSWORD}
                            element={<PrivateAuth><FlowChangePassword/></PrivateAuth>}/>
+                    <Route path={Paths.AUTH + '/' + Paths.CONFIRM_EMAIL}
+                           element={<PrivateAuth><FlowConfirmEmail/></PrivateAuth>}/>
                     <Route path={Paths.AUTH} element={<AuthPage/>}>
                         <Route index element={<FormLogin/>}/>
                         <Route path={Paths.REGISTRATION} element={<FormRegistration/>}/>
                     </Route>
                     <Route path={Paths.RESULT}
                            element={<PrivateResult><ResultPage/></PrivateResult>}>
-                        <Route path={Paths.FORGOT_PASSWORD} element={<FlowForgotPassword/>}/>
                         <Route path={Paths.RESULT_SUCCESS} element={<ResultSuccess/>}/>
                         <Route path={Paths.RESULT_ERROR} element={<ResultError/>}/>
                         <Route path={Paths.RESULT_ERROR_USER_EXIST}
