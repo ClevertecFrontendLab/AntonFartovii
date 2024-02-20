@@ -8,8 +8,8 @@ const ResultErrorChangePassword = () => {
     const clickHandler = () => {
         navigate(Paths.MAIN + Paths.AUTH + '/' + Paths.CHANGE_PASSWORD, {
             replace: true,
-            state: {key: 'resend'}
-        })
+            state: {key: 'resend'},
+        });
     };
 
     return (

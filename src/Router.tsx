@@ -22,6 +22,7 @@ import ResultSuccessChangePassword from "@components/ResultSuccessChangePassword
 import PrivateAuth from "./hoc/PrivateAuth.tsx";
 import FlowConfirmEmail from "@components/FlowConfirmEmail.tsx";
 import FlowChangePassword from "@components/FlowChangePassword.tsx";
+import PrivateChangePassword from "./hoc/PrivateChangePassword.tsx";
 
 const Router = () => {
     return (
@@ -33,9 +34,11 @@ const Router = () => {
                 </Route>
                 <Route element={<PrivateAuth><AuthLayout/></PrivateAuth>}>
                     <Route path={Paths.AUTH + '/' + Paths.CHANGE_PASSWORD}
-                           element={<PrivateAuth><FlowChangePassword/></PrivateAuth>}/>
+                           element={
+                               <PrivateChangePassword><FlowChangePassword/></PrivateChangePassword>}/>
                     <Route path={Paths.AUTH + '/' + Paths.CONFIRM_EMAIL}
-                           element={<PrivateAuth><FlowConfirmEmail/></PrivateAuth>}/>
+                           element={
+                               <PrivateChangePassword><FlowConfirmEmail/></PrivateChangePassword>}/>
                     <Route path={Paths.AUTH} element={<AuthPage/>}>
                         <Route index element={<FormLogin/>}/>
                         <Route path={Paths.REGISTRATION} element={<FormRegistration/>}/>

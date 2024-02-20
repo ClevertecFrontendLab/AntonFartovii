@@ -1,15 +1,16 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {Button, Form, Input} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 import {Typography} from "antd/";
 import {useChangePasswordMutation} from "@redux/api/authApi.ts";
 import {useLocation, useNavigate} from "react-router-dom";
-import {Paths} from "../routes/Paths.ts";
+import {PathsFull} from "../routes/Paths.ts";
 import {useLoader} from "@hooks/useLoader.ts";
 import {useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
 
 const FlowChangePassword = () => {
     const [form] = Form.useForm();
+    const [isDisabled, setIsDisabled] = useState<boolean>(true);
     const [changePassword, {isSuccess, isError, isLoading, reset}] = useChangePasswordMutation();
     const {formChangePassword} = useAppSelector((state) => state.formReducer);
     const navigate = useNavigate();
@@ -34,28 +35,25 @@ const FlowChangePassword = () => {
         await changePassword({password, confirmPassword});
     };
 
-
     useEffect(() => {
         if (isError) {
-            navigate(Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_ERROR_CHANGE_PASSWORD, {state: {key: 'result_redirect'}})
+            navigate(PathsFull.RESULT_ERROR_CHANGE_PASSWORD, {state: {key: 'result_redirect'}})
         }
         if (isSuccess) {
-            navigate(Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_SUCCESS_CHANGE_PASSWORD, {state: {key: 'result_redirect'}})
+            navigate(PathsFull.RESULT_SUCCESS_CHANGE_PASSWORD, {state: {key: 'result_redirect'}})
         }
         reset();
     }, [isError, isSuccess]);
 
-
-    const validatePassword = ({getFieldValue}) => ({
-        validator(_, value) {
-            if (!value || getFieldValue('password') === value) {
-                return Promise.resolve();
-            }
-            return Promise.reject(new Error('Пароли не совпадают'));
-        },
-    });
-
     const iconRender = (visible: boolean) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>);
+
+    const onChange = () => {
+        form.validateFields(['password', 'confirm-password']).then(() => {
+            setIsDisabled(false);
+        }).catch(() => {
+            setIsDisabled(true);
+        });
+    };
 
     return (
         <>
@@ -63,10 +61,11 @@ const FlowChangePassword = () => {
                 Восстановление пароля
             </Typography.Title>
             <Form
+                form={form}
                 className="form-auth"
                 name="normal_login"
                 onFinish={onFinish}
-                form={form}
+                onChange={onChange}
             >
                 <Form.Item
                     name="password"
@@ -87,7 +86,17 @@ const FlowChangePassword = () => {
                 <Form.Item
                     dependencies={['password']}
                     name="confirm-password"
-                    rules={[{required: true, message: 'Пароли не совпадают',}, validatePassword,]}
+                    rules={[{
+                        required: true,
+                        message: 'Пароли не совпадают',
+                    }, ({getFieldValue}) => ({
+                        validator(_, value) {
+                            if (!value || getFieldValue('password') === value) {
+                                return Promise.resolve();
+                            }
+                            return Promise.reject(new Error('Пароли не совпадают'));
+                        },
+                    })]}
                 >
                     <Input.Password
                         data-test-id="change-confirm-password"
@@ -98,7 +107,7 @@ const FlowChangePassword = () => {
 
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="login-form-button"
-                            data-test-id="change-submit-button">
+                            data-test-id="change-submit-button" disabled={isDisabled}>
                         Обновить
                     </Button>
                 </Form.Item>

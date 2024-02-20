@@ -1,7 +1,7 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {setAccessToken, setRememberAuth} from "@redux/authSlice.ts";
-import {Credentials} from "@redux/interfaces.ts";
-import {setFormChangePassword, setFormLogin} from "@redux/formSlice.ts";
+import {ChangePassword, ConfirmEmail, Credentials} from "@redux/interfaces.ts";
+import {setFormChangePassword, setFormLogin, setFormRegister} from "@redux/formSlice.ts";
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -11,13 +11,20 @@ export const authApi = createApi({
     }),
     tagTypes: ['Auth'],
     endpoints: (builder) => ({
-        register: builder.mutation({
+        register: builder.mutation<void, Credentials>({
             query: (body) => {
                 return {
                     url: 'auth/registration',
                     method: 'POST',
                     body,
                 };
+            },
+            async onQueryStarted(data, {dispatch}) {
+                try {
+                    dispatch(setFormRegister(data));
+                } catch (error) {
+                    console.log(error);
+                }
             },
         }),
         login: builder.mutation<{ accessToken: string }, Credentials & { remember: boolean }>({
@@ -37,7 +44,6 @@ export const authApi = createApi({
                     console.log(error);
                 }
             },
-
         }),
         checkEmail: builder.mutation({
             query: (body: { email: string }) => {
@@ -47,16 +53,16 @@ export const authApi = createApi({
                     body,
                 }
             },
-            async onQueryStarted(email, {dispatch}) {
+            async onQueryStarted({email}, {dispatch}) {
                 try {
-                    dispatch(setFormLogin(email));
+                    dispatch(setFormLogin({email}));
                 } catch (error) {
                     console.log(error);
                 }
             },
         }),
-        confirmEmail: builder.mutation({
-            query: (body: { email: string, code: string }) => {
+        confirmEmail: builder.mutation<void, ConfirmEmail>({
+            query: (body) => {
                 return {
                     url: 'auth/confirm-email',
                     method: 'POST',
@@ -64,17 +70,17 @@ export const authApi = createApi({
                 }
             }
         }),
-        changePassword: builder.mutation<void, { password: string, confirmPassword: string }>({
-            query: (body: { password: string, confirmPassword: string }) => {
+        changePassword: builder.mutation<void, ChangePassword>({
+            query: (body) => {
                 return {
                     url: 'auth/change-password',
                     method: 'POST',
                     body,
                 }
             },
-            async onQueryStarted({password, confirmPassword}, {dispatch}) {
+            async onQueryStarted(data, {dispatch}) {
                 try {
-                    dispatch(setFormChangePassword({password, confirmPassword}));
+                    dispatch(setFormChangePassword(data));
                 } catch (error) {
                     console.log(error);
                 }

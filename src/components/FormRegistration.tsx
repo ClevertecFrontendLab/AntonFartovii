@@ -1,23 +1,21 @@
 import {Button, Form, Input} from "antd";
-import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
+import {EyeInvisibleOutlined, EyeTwoTone, GooglePlusOutlined} from "@ant-design/icons";
 import {useRegisterMutation} from "@redux/api/authApi.ts";
 import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {PathsFull} from "../routes/Paths.ts";
-import {Response} from "@components/FormLogin.tsx";
 import {useLoader} from "@hooks/useLoader.ts";
 import {useMenu} from "@hooks/useMenu.ts";
-import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
-import {setFormRegister} from "@redux/formSlice.ts";
+import {useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
+import {ResponseError} from "@redux/interfaces.ts";
 
 const FormRegistration = () => {
-    const [authResponse, setAuthResponse] = useState<Response>({});
+    const [isDisabled, setIsDisabled] = useState<boolean>(true);
     const [form] = Form.useForm();
     const navigate = useNavigate();
     const location = useLocation();
-    const dispatch = useAppDispatch();
     const {formRegister} = useAppSelector((state) => state.formReducer);
-    const [registerUser, {isSuccess, isError, isLoading}] = useRegisterMutation();
+    const [registerUser, {isSuccess, isError, isLoading, error}] = useRegisterMutation();
     const {setLoader} = useLoader();
     const {setCurrent} = useMenu();
 
@@ -31,11 +29,7 @@ const FormRegistration = () => {
 
     useEffect(() => {
         (async () => {
-            if (location.state?.key === 'resend') {
-                const response = await registerUser(formRegister) as Response;
-                console.log(response);
-                setAuthResponse(response);
-            }
+            location.state?.key === 'resend' && await registerUser(formRegister);
         })()
     }, []);
 
@@ -44,36 +38,31 @@ const FormRegistration = () => {
     }, [isSuccess]);
 
     useEffect(() => {
-        if (isError) {
-            const code = authResponse.error?.status;
-            if (code === 409) {
-                navigate(PathsFull.RESULT_ERROR_USER_EXIST, {state: {key: 'result_redirect'}})
-            } else {
-                navigate(PathsFull.RESULT_ERROR, {state: {key: 'result_redirect'}})
-            }
+        if (error) {
+            const code = (error as ResponseError).status;
+            code === 409 ?
+                navigate(PathsFull.RESULT_ERROR_USER_EXIST, {state: {key: 'result_redirect'}}) :
+                navigate(PathsFull.RESULT_ERROR, {state: {key: 'result_redirect'}});
         }
-    }, [authResponse]);
+    }, [isError]);
 
     const onFinish = async () => {
         const body = {
             email: form.getFieldValue('email'),
             password: form.getFieldValue('password'),
         }
-        dispatch(setFormRegister(body));
-        const response = await registerUser(body) as Response;
-        console.log(response);
-        setAuthResponse(response);
+        await registerUser(body);
     };
 
-    const validatePassword = ({getFieldValue}) => ({
-        validator(_, value) {
-            if (!value || getFieldValue('password') === value) {
-                return Promise.resolve();
-            }
-            return Promise.reject(new Error('Пароли не совпадают'));
-        },
-    });
     const iconRender = (visible: boolean) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>);
+
+    const onChange = () => {
+        form.validateFields(['email', 'password', 'confirm-password']).then(() => {
+            setIsDisabled(false);
+        }).catch(() => {
+            setIsDisabled(true);
+        })
+    }
 
     return (
         <Form
@@ -82,6 +71,7 @@ const FormRegistration = () => {
             initialValues={{remember: true}}
             onFinish={onFinish}
             form={form}
+            onChange={onChange}
         >
             <Form.Item
                 name="email"
@@ -109,7 +99,14 @@ const FormRegistration = () => {
             <Form.Item
                 dependencies={['password']}
                 name="confirm-password"
-                rules={[{required: true, message: 'Пароли не совпадают',}, validatePassword,]}
+                rules={[{required: true, message: 'Пароли не совпадают',}, ({getFieldValue}) => ({
+                    validator(_, value) {
+                        if (!value || getFieldValue('password') === value) {
+                            return Promise.resolve();
+                        }
+                        return Promise.reject(new Error('Пароли не совпадают'));
+                    },
+                })]}
             >
                 <Input.Password
                     data-test-id="registration-confirm-password"
@@ -120,8 +117,13 @@ const FormRegistration = () => {
 
             <Form.Item>
                 <Button type="primary" htmlType="submit" className="login-form-button"
-                        data-test-id="registration-submit-button">
+                        data-test-id="registration-submit-button" disabled={isDisabled}>
                     Войти
+                </Button>
+            </Form.Item>
+            <Form.Item>
+                <Button type="default" className={"google-form-button"}>
+                    <GooglePlusOutlined/> Регистрация через Google
                 </Button>
             </Form.Item>
         </Form>

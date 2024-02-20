@@ -155,8 +155,8 @@ body {
 
 .loader {
     position: absolute;
-    top: 24%;
-    left: 22%;
+    top: calc(50% - 250px);
+    left: calc(50% - 250px);
     z-index: 20;
 }
 

@@ -10,19 +10,17 @@ const ResultErrorUserExist = () => {
     };
 
     return (
-        <div>
-            <Result
-                status="error"
-                title="Данные не сохранились"
-                subTitle="Такой e-mail уже записан в системе. Попробуйте зарегистрироваться по другому e-mail."
-                extra={
-                    <Button type="primary" key="console" data-test-id="registration-back-button"
-                            onClick={clickHandler}>
-                        Назад к регистрации
-                    </Button>
-                }
-            />
-        </div>
+        <Result
+            status="error"
+            title="Данные не сохранились"
+            subTitle="Такой e-mail уже записан в системе. Попробуйте зарегистрироваться по другому e-mail."
+            extra={
+                <Button type="primary" key="console" data-test-id="registration-back-button"
+                        onClick={clickHandler}>
+                    Назад к регистрации
+                </Button>
+            }
+        />
     );
 };
 

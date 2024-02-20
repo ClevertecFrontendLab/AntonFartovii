@@ -12,7 +12,7 @@ const App = () => {
     dispatch(setIsAuth(isTokenValid));
 
     useEffect(() => {
-        return async () => {
+        return () => {
             if (!isSaveAuth) {
                 dispatch(setLogout());
             }

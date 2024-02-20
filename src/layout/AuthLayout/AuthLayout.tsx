@@ -8,7 +8,7 @@ const AuthLayout = () => {
 
     return (
         <div className={classes["auth-wrapper"]}>
-            <div className={classes["auth-form-container"]}>
+            <div className={classes["auth-container"]}>
                 <Outlet/>
             </div>
             <div
