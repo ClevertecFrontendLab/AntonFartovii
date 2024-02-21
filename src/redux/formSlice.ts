@@ -15,9 +15,9 @@ export interface FormChangePassword {
 }
 
 export interface FormState {
-    formRegister: FormRegister;
-    formLogin: FormLogin;
-    formChangePassword: FormChangePassword;
+    formRegister: Partial<FormRegister>;
+    formLogin: Partial<FormLogin>;
+    formChangePassword: Partial<FormChangePassword>;
 }
 
 const initialState: FormState = {
@@ -30,13 +30,13 @@ export const formSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setFormRegister: (state, action: PayloadAction<FormRegister>) => {
+        setFormRegister: (state, action: PayloadAction<Partial<FormRegister>>) => {
             state.formRegister = action.payload;
         },
-        setFormLogin: (state, action: PayloadAction<FormLogin>) => {
+        setFormLogin: (state, action: PayloadAction<Partial<FormLogin>>) => {
             state.formLogin = action.payload;
         },
-        setFormChangePassword: (state, action: PayloadAction<FormChangePassword>) => {
+        setFormChangePassword: (state, action: PayloadAction<Partial<FormChangePassword>>) => {
             state.formChangePassword = action.payload;
         },
     }

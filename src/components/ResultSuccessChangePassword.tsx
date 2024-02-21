@@ -10,19 +10,17 @@ const ResultSuccessChangePassword = () => {
     };
 
     return (
-        <div>
-            <Result
-                status="success"
-                title="Пароль успешно сохранён"
-                subTitle="Теперь можно войти в аккаунт, используя свой логин и новый пароль"
-                extra={
-                    <Button type="primary" key="console" data-test-id='change-entry-button'
-                            onClick={clickHandler}>
-                        Вход
-                    </Button>
-                }
-            />
-        </div>
+        <Result
+            status="success"
+            title="Пароль успешно сохранён"
+            subTitle="Теперь можно войти в аккаунт, используя свой логин и новый пароль"
+            extra={
+                <Button type="primary" key="console" data-test-id='change-entry-button'
+                        onClick={clickHandler}>
+                    Вход
+                </Button>
+            }
+        />
     );
 };
 

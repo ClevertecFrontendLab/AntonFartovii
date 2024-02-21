@@ -38,7 +38,6 @@ export const AuthPage = () => {
                     <img src={logo}/>
                 </div>
                 <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal"
-                      className={classes["menu"]}
                       items={items}/>
                 <MenuContext.Provider value={{current, setCurrent}}>
                     <Outlet/>

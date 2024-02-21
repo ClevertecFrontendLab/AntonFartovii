@@ -11,19 +11,17 @@ const ResultErrorCheckEmailNoExist = () => {
         });
     };
     return (
-        <div>
-            <Result
-                status="error"
-                title="Такой e-mail не зарегистрирован"
-                subTitle="Мы не нашли в базе вашего e-mail. Попробуйте войти с другим e-mail."
-                extra={
-                    <Button type="primary" key="console" data-test-id="check-retry-button"
-                            onClick={clickHandler}>
-                        Попробовать снова
-                    </Button>
-                }
-            />
-        </div>
+        <Result
+            status="error"
+            title="Такой e-mail не зарегистрирован"
+            subTitle="Мы не нашли в базе вашего e-mail. Попробуйте войти с другим e-mail."
+            extra={
+                <Button type="primary" key="console" data-test-id="check-retry-button"
+                        onClick={clickHandler}>
+                    Попробовать снова
+                </Button>
+            }
+        />
     );
 };
 

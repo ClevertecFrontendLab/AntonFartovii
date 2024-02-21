@@ -29,7 +29,6 @@ const FlowConfirmEmail = () => {
             setStatus(undefined);
             setValue('');
             navigate(Paths.MAIN + Paths.AUTH + '/' + Paths.CHANGE_PASSWORD, {
-                replace: true,
                 state: {key: 'result_redirect'},
             })
         }

@@ -8,20 +8,8 @@ import {useLoader} from "@hooks/useLoader.ts";
 import {useMenu} from "@hooks/useMenu.ts";
 import {useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
 import {ResponseError} from "@redux/interfaces.ts";
-
-export type Response = {
-    data?: {
-        accessToken?: string,
-    },
-    error?: {
-        data: {
-            message?: string;
-            error?: string;
-            statusCode?: number;
-        },
-        status: number;
-    }
-}
+import classes from "@pages/auth-page/auth.module.less";
+import {FormLogin as IFormLogin} from "@redux/formSlice.ts";
 
 const FormLogin = () => {
     const [isForgotDisabled, setIsForgotDisabled] = useState(false);
@@ -38,7 +26,7 @@ const FormLogin = () => {
     useEffect(() => {
         if (location.state?.key === 'resend') {
             (async () => {
-                await checkEmail(formLogin);
+                await checkEmail(formLogin as IFormLogin);
             })();
         }
     }, []);
@@ -94,6 +82,11 @@ const FormLogin = () => {
 
     const onChange = () => {
         form.getFieldValue('email').length > 0 && setIsForgotDisabled(false);
+        form.validateFields(['email']).then(() => {
+            setFormValid(false);
+        }).catch(() => {
+            setFormValid(true);
+        })
     };
 
     const iconRender = (visible: boolean) => (visible ? <EyeTwoTone/> : <EyeInvisibleOutlined/>);
@@ -109,28 +102,31 @@ const FormLogin = () => {
 
     return (
         <Form
-            name="normal_login"
+            style={{marginBottom: "81px"}}
+            name="login"
             initialValues={{remember: true}}
-            onValuesChange={() => setFormValid(form.getFieldsError().some((item) => item.errors.length > 0))}
             onFinish={onFinish}
             onChange={onChange}
             form={form}
         >
-            <Form.Item
-                name="email"
-                rules={[{type: 'email', message: '',}, {required: true, message: '',},]}
-            >
-                <Input addonBefore="e-mail" data-test-id="login-email"/>
-            </Form.Item>
-            <Form.Item
-                name="password"
-                rules={[{required: true, message: ''}]}
-            >
-                <Input.Password placeholder="Пароль" iconRender={iconRender}
-                                data-test-id="login-password"
-                />
-            </Form.Item>
-            <Form.Item>
+            <div className={classes["login-input-wrap"]}>
+                <Form.Item
+                    name="email"
+                    rules={[{type: 'email', message: '',}, {required: true, message: '',},]}
+                >
+                    <Input size="large" addonBefore="e-mail" data-test-id="login-email"/>
+                </Form.Item>
+
+                <Form.Item
+                    name="password"
+                    rules={[{required: true, message: ''}]}
+                >
+                    <Input.Password size="large" placeholder="Пароль" iconRender={iconRender}
+                                    data-test-id="login-password"
+                    />
+                </Form.Item>
+            </div>
+            <Form.Item noStyle>
                 <div className="flex-row">
                     <Form.Item name="remember" valuePropName="checked" noStyle>
                         <Checkbox data-test-id="login-remember">Запомнить меня</Checkbox>
@@ -143,7 +139,7 @@ const FormLogin = () => {
                     </Button>
                 </div>
             </Form.Item>
-            <Form.Item>
+            <Form.Item noStyle>
                 <Button type="primary" htmlType="submit" className="login-form-button"
                         data-test-id="login-submit-button"
                         disabled={formValid}>

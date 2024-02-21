@@ -14,19 +14,17 @@ const ResultError = () => {
     };
 
     return (
-        <div>
-            <Result
-                status="error"
-                title="Данные не сохранились"
-                subTitle="Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз."
-                extra={
-                    <Button type="primary" key="console" data-test-id="registration-retry-button"
-                            onClick={clickHandler}>
-                        Повторить
-                    </Button>
-                }
-            />
-        </div>
+        <Result
+            status="error"
+            title="Данные не сохранились"
+            subTitle="Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз."
+            extra={
+                <Button type="primary" key="console" data-test-id="registration-retry-button"
+                        onClick={clickHandler}>
+                    Повторить
+                </Button>
+            }
+        />
     );
 };
 

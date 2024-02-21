@@ -80,6 +80,7 @@ export const authApi = createApi({
             },
             async onQueryStarted(data, {dispatch}) {
                 try {
+                    dispatch(setFormLogin({}));
                     dispatch(setFormChangePassword(data));
                 } catch (error) {
                     console.log(error);

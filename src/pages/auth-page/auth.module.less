@@ -41,6 +41,15 @@
 
     .ant-form {
         width: 100%;
+
+        .ant-form-item {
+            height: 70px;
+            margin: 0px;
+        }
+
+        .ant-form-item-with-help {
+            height: 86px;
+        }
     }
 
     .ant-input-group-addon:first-child {
@@ -62,15 +71,18 @@
         justify-content: space-between;
         align-items: center;
         flex-wrap: nowrap;
+        margin-bottom: 24px;
     }
 
     .login-form-button {
+        margin-bottom: 16px;
         width: 100%;
         height: 40px;
         background: var(--primary-light-6);
     }
 
     .forgot-form-button {
+        height: 24px;
         font-family: var(--font-family);
         font-weight: 400;
         font-size: 16px;
@@ -93,7 +105,15 @@
 }
 
 .form-container {
-    padding: 64px 85.5px 200px;
+    padding: 64px 32px;
+}
+
+.form-login-wrapper {
+    padding: 0px;
+}
+
+.form-register-wrapper {
+    padding: 0px;
 }
 
 .auth-form-inner-wrapper {
@@ -103,10 +123,13 @@
     align-items: center;
     justify-content: flex-start;
     width: 368px;
+    margin: 0px 54px;
 }
 
 .logo {
     margin-bottom: 48px;
+    width: 100%;
+    text-align: center;
 }
 
 .logo img {
@@ -114,10 +137,24 @@
     height: 76px;
 }
 
-.menu {
-    margin-bottom: 24px;
+.login-input-wrap {
+    margin: 24px 0px;
 }
 
+.register-input-wrap {
+    margin: 32px 0px;
+}
 
+.change-password-wrap {
+    width: 368px;
+    margin: 64px 85.5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .inputs-wrap {
+        margin: 32px 0;
+    }
+}
 
 

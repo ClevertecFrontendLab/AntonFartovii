@@ -3,6 +3,34 @@
 
     .ant-result {
         padding: 0;
+
+        .ant-result-title {
+            font-family: var(--font-family);
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 130%;
+            text-align: center;
+            color: var(--character-light-title-85);
+        }
+
+        .ant-result-subtitle {
+            font-family: var(--font-family);
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 130%;
+            text-align: center;
+            color: var(--character-light-secondary-45);
+        }
+
+        button {
+            box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+            background: var(--primary-light-6);
+            border: 1px solid var(--primary-light-6);
+            border-radius: 2px;
+            padding: 4px 15px;
+            width: 100%;
+            height: 40px;
+        }
     }
 
     .ant-result-error {
@@ -14,6 +42,11 @@
         width: 475px;
         height: 430px;
         margin: 64px 32px 56px;
+    }
+
+    .ant-result-success {
+        width: 368px;
+        margin: 64px 85.5px;
     }
 }
 
