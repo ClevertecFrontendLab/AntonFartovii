@@ -163,6 +163,8 @@ body {
 .verification-container {
     margin: 0 auto;
     background-color: var(--character-light-primary-inverse);
+    height: auto;
+    width: auto;
 }
 
 .verification-character {

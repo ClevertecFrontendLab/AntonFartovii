@@ -1,14 +1,16 @@
 import {Button, Result} from "antd";
-import {Paths} from "../routes/Paths.ts";
-import {useNavigate} from "react-router-dom";
+import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
+import {push} from "redux-first-history";
+import {useLocation} from "react-router-dom";
 
 const ResultErrorCheckEmail = () => {
-    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const location = useLocation();
 
     const clickHandler = () => {
-        navigate(Paths.MAIN + Paths.AUTH, {
-            replace: true, state: {key: 'resend'}
-        });
+        dispatch(push(location.state.from, {
+            key: 'resend',
+        }));
     };
 
     return (

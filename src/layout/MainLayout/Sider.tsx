@@ -14,7 +14,7 @@ import {
 } from '@ant-design/icons';
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
 import {setLogout} from "@redux/authSlice.ts";
-import {useNavigate} from "react-router-dom";
+import {push} from "redux-first-history";
 
 export interface ISider {
     collapsed: boolean;
@@ -23,11 +23,10 @@ export interface ISider {
 
 const Sider = ({collapsed, onCollapsed}: ISider) => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const classOff = (className: string) => className + ' ' + classes["off"];
     const logoutHandler = async () => {
         dispatch(setLogout());
-        navigate('/auth');
+        dispatch(push('/auth'));
     };
 
     return (

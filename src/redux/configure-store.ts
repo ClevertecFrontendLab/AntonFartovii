@@ -8,7 +8,9 @@ import {createBrowserHistory} from "history";
 
 const {createReduxHistory, routerMiddleware, routerReducer} = createReduxHistoryContext({
     history: createBrowserHistory(),
+    savePreviousLocations: 10,
 });
+
 
 const rootReducer = combineReducers({
     [authApi.reducerPath]: authApi.reducer,

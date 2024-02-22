@@ -1,20 +1,21 @@
 import {Button, Result} from "antd";
-import {useNavigate} from "react-router-dom";
-import {Paths} from "../routes/Paths.ts";
+import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
+import {replace} from "redux-first-history";
+import {useLocation} from "react-router-dom";
 
 const ResultErrorCheckEmailNoExist = () => {
-    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const location = useLocation();
 
     const clickHandler = () => {
-        navigate(Paths.MAIN + Paths.AUTH, {
-            replace: true,
-        });
+        dispatch(replace(location.state.formReducer));
     };
+
     return (
         <Result
             status="error"
             title="Такой e-mail не зарегистрирован"
-            subTitle="Мы не нашли в базе вашего e-mail. Попробуйте войти с другим e-mail."
+            subTitle={<>Мы не нашли в базе вашего e-mail. Попробуйте<br/> войти с другим e-mail</>}
             extra={
                 <Button type="primary" key="console" data-test-id="check-retry-button"
                         onClick={clickHandler}>

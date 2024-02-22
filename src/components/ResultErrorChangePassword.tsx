@@ -1,15 +1,16 @@
 import {Button, Result} from "antd";
-import {useNavigate} from "react-router-dom";
-import {Paths} from "../routes/Paths.ts";
+import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
+import {replace} from "redux-first-history";
+import {useLocation} from "react-router-dom";
 
 const ResultErrorChangePassword = () => {
-    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const location = useLocation();
 
     const clickHandler = () => {
-        navigate(Paths.MAIN + Paths.AUTH + '/' + Paths.CHANGE_PASSWORD, {
-            replace: true,
-            state: {key: 'resend'},
-        });
+        dispatch(replace(location.state.from, {
+            key: 'resend',
+        }));
     };
 
     return (

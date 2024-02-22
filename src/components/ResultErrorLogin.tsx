@@ -1,14 +1,14 @@
 import {Button, Result} from "antd";
-import {useNavigate} from "react-router-dom";
-import {Paths} from "../routes/Paths.ts";
-
+import {useLocation} from "react-router-dom";
+import {replace} from "redux-first-history";
+import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
 
 const ResultErrorLogin = () => {
-
-    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const location = useLocation();
 
     const clickHandler = () => {
-        navigate(Paths.MAIN + Paths.AUTH, {replace: true})
+        dispatch(replace(location.state.from));
     };
 
     return (

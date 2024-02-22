@@ -1,12 +1,14 @@
 import {Button, Result} from "antd";
-import {useNavigate} from "react-router-dom";
-import {Paths} from "../routes/Paths.ts";
+import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
+import {replace} from "redux-first-history";
+import {useLocation} from "react-router-dom";
 
 const ResultErrorUserExist = () => {
-    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const location = useLocation();
 
     const clickHandler = () => {
-        navigate(Paths.MAIN + Paths.AUTH + '/' + Paths.REGISTRATION, {replace: true})
+        dispatch(replace(location.state.from));
     };
 
     return (

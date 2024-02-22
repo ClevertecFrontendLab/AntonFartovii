@@ -32,17 +32,15 @@ export const AuthPage = () => {
     };
 
     return (
-        <div className={classes["form-container"]}>
-            <div className={classes["auth-form-inner-wrapper"]}>
-                <div className={classes["logo"]}>
-                    <img src={logo}/>
-                </div>
-                <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal"
-                      items={items}/>
-                <MenuContext.Provider value={{current, setCurrent}}>
-                    <Outlet/>
-                </MenuContext.Provider>
+        <div className={classes["auth-form-inner-wrapper"]}>
+            <div className={classes["logo"]}>
+                <img src={logo}/>
             </div>
+            <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal"
+                  items={items}/>
+            <MenuContext.Provider value={{current, setCurrent}}>
+                <Outlet/>
+            </MenuContext.Provider>
         </div>
     );
 };

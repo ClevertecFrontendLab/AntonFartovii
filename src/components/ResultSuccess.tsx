@@ -1,12 +1,13 @@
 import {Button, Result} from "antd";
-import {useNavigate} from "react-router-dom";
 import {Paths} from "../routes/Paths.ts";
+import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
+import {push} from "redux-first-history";
 
 const ResultSuccess = () => {
-    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const clickHandler = () => {
-        navigate(Paths.MAIN + Paths.AUTH, {replace: true})
+        dispatch(push(Paths.MAIN + Paths.AUTH));
     };
 
     return (

@@ -2,14 +2,15 @@ import {Button, Checkbox, Form, Input} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone, GooglePlusOutlined} from "@ant-design/icons";
 import {useCheckEmailMutation, useLoginMutation} from "@redux/api/authApi.ts";
 import {useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
-import {Paths, PathsFull} from "../routes/Paths.ts";
+import {useLocation} from "react-router-dom";
 import {useLoader} from "@hooks/useLoader.ts";
 import {useMenu} from "@hooks/useMenu.ts";
-import {useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
-import {ResponseError} from "@redux/interfaces.ts";
+import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
 import classes from "@pages/auth-page/auth.module.less";
 import {FormLogin as IFormLogin} from "@redux/formSlice.ts";
+import {push} from "redux-first-history";
+import {PathsFull} from "../routes/Paths.ts";
+import {ResponseError} from "@redux/interfaces.ts";
 
 const FormLogin = () => {
     const [isForgotDisabled, setIsForgotDisabled] = useState(false);
@@ -21,7 +22,7 @@ const FormLogin = () => {
     const {setCurrent} = useMenu();
     const location = useLocation();
     const [form] = Form.useForm();
-    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (location.state?.key === 'resend') {
@@ -44,21 +45,13 @@ const FormLogin = () => {
     }, [checkEmailStatus.isLoading]);
 
     useEffect(() => {
-        loginStatus.isSuccess && navigate('/main');
-    }, [loginStatus.isSuccess]);
-
-    useEffect(() => {
-        loginStatus.isError && navigate(PathsFull.RESULT_ERROR_LOGIN, {state: {key: 'result_redirect'}})
-    }, [loginStatus.isError]);
-
-    useEffect(() => {
+        const email = form.getFieldValue('email');
         checkEmailStatus.isSuccess &&
-        navigate(Paths.CONFIRM_EMAIL, {
-            state: {
-                key: "result_redirect",
-                email: form.getFieldValue('email')
-            }
-        });
+        dispatch(push(PathsFull.CONFIRM_EMAIL, {
+            key: "result_redirect",
+            email,
+            from: location.pathname
+        }));
     }, [checkEmailStatus.isSuccess]);
 
     useEffect(() => {
@@ -66,8 +59,14 @@ const FormLogin = () => {
             const code = (checkEmailStatus.error as ResponseError).status;
             const message = (checkEmailStatus.error as ResponseError).data?.message;
             (code === 404 && message === "Email не найден") ?
-                navigate(PathsFull.RESULT_ERROR_CHECK_EMAIL_NO_EXIST, {state: {key: 'result_redirect'}}) :
-                navigate(PathsFull.RESULT_ERROR_CHECK_EMAIL, {state: {key: 'result_redirect'}})
+                dispatch(push(PathsFull.RESULT_ERROR_CHECK_EMAIL_NO_EXIST, {
+                    key: 'result_redirect',
+                    from: location.pathname
+                })) :
+                dispatch(push(PathsFull.RESULT_ERROR_CHECK_EMAIL, {
+                    key: 'result_redirect',
+                    from: location.pathname
+                }))
         }
     }, [checkEmailStatus.isError]);
 

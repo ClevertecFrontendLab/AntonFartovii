@@ -17,6 +17,7 @@ export enum Paths {
 }
 
 export enum PathsFull {
+    CONFIRM_EMAIL = Paths.MAIN + Paths.AUTH + '/' + Paths.CONFIRM_EMAIL,
     RESULT_ERROR = Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_ERROR,
     RESULT_ERROR_LOGIN = Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_ERROR_LOGIN,
     RESULT_ERROR_USER_EXIST = Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_ERROR_USER_EXIST,

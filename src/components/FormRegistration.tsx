@@ -2,7 +2,7 @@ import {Button, Form, Input} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone, GooglePlusOutlined} from "@ant-design/icons";
 import {useRegisterMutation} from "@redux/api/authApi.ts";
 import {useEffect, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {PathsFull} from "../routes/Paths.ts";
 import {useLoader} from "@hooks/useLoader.ts";
 import {useMenu} from "@hooks/useMenu.ts";
@@ -10,17 +10,17 @@ import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks.ts"
 import {ResponseError} from "@redux/interfaces.ts";
 import {FormRegister, setFormRegister} from "@redux/formSlice.ts";
 import classes from "@pages/auth-page/auth.module.less";
+import {push} from "redux-first-history";
 
 const FormRegistration = () => {
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
     const [form] = Form.useForm();
-    const navigate = useNavigate();
-    const location = useLocation();
     const {formRegister} = useAppSelector((state) => state.formReducer);
-    const [registerUser, {isSuccess, isError, isLoading, error}] = useRegisterMutation();
+    const [registerUser, {isSuccess, isError, isLoading, error, reset}] = useRegisterMutation();
     const {setLoader} = useLoader();
     const {setCurrent} = useMenu();
     const dispatch = useAppDispatch();
+    const location = useLocation();
 
     useEffect(() => {
         setCurrent && setCurrent('registration');
@@ -37,16 +37,27 @@ const FormRegistration = () => {
     }, []);
 
     useEffect(() => {
-        isSuccess && navigate(PathsFull.RESULT_SUCCESS, {state: {key: 'result_redirect'}});
-        dispatch(setFormRegister({}));
+        if (isSuccess) {
+            dispatch(setFormRegister({}));
+            dispatch(push(PathsFull.RESULT_SUCCESS, {
+                key: 'result_redirect',
+            }));
+        }
+        reset();
     }, [isSuccess]);
 
     useEffect(() => {
         if (error) {
             const code = (error as ResponseError).status;
             code === 409 ?
-                navigate(PathsFull.RESULT_ERROR_USER_EXIST, {state: {key: 'result_redirect'}}) :
-                navigate(PathsFull.RESULT_ERROR, {state: {key: 'result_redirect'}});
+                dispatch(push(PathsFull.RESULT_ERROR_USER_EXIST, {
+                    key: 'result_redirect',
+                    from: location.pathname
+                })) :
+                dispatch(push(PathsFull.RESULT_ERROR, {
+                    key: 'result_redirect',
+                    from: location.pathname
+                }));
         }
     }, [isError]);
 

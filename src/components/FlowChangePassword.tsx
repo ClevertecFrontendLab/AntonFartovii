@@ -3,21 +3,22 @@ import {Button, Form, Input} from "antd";
 import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 import {Typography} from "antd/";
 import {useChangePasswordMutation} from "@redux/api/authApi.ts";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {PathsFull} from "../routes/Paths.ts";
 import {useLoader} from "@hooks/useLoader.ts";
-import {useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
+import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
 import {FormChangePassword} from "@redux/formSlice.ts";
 import classes from "../pages/auth-page/auth.module.less"
+import {push, replace} from "redux-first-history";
 
 const FlowChangePassword = () => {
     const [form] = Form.useForm();
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
     const [changePassword, {isSuccess, isError, isLoading, reset}] = useChangePasswordMutation();
     const {formChangePassword} = useAppSelector((state) => state.formReducer);
-    const navigate = useNavigate();
     const {setLoader} = useLoader();
     const location = useLocation();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         setLoader && setLoader(isLoading)
@@ -39,13 +40,13 @@ const FlowChangePassword = () => {
 
     useEffect(() => {
         if (isError) {
-            navigate(PathsFull.RESULT_ERROR_CHANGE_PASSWORD, {state: {key: 'result_redirect'}})
+            dispatch(push(PathsFull.RESULT_ERROR_CHANGE_PASSWORD, {
+                key: 'result_redirect',
+                from: location.pathname
+            }));
         }
         if (isSuccess) {
-            navigate(PathsFull.RESULT_SUCCESS_CHANGE_PASSWORD, {
-                replace: true,
-                state: {key: 'result_redirect'}
-            })
+            dispatch(replace(PathsFull.RESULT_SUCCESS_CHANGE_PASSWORD, {key: 'result_redirect'}));
         }
 
         reset();
