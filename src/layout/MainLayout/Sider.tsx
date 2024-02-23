@@ -1,5 +1,3 @@
-import logo from '../../assets/svg/logo.svg';
-import logo_small from '../../assets/svg/logo_mobile.svg';
 import exit_icon from '../../assets/svg/exit_icon.svg';
 import switcher from '../../assets/svg/switcher.svg';
 import switcher_mobile from '../../assets/svg/switcher_mobile.svg';
@@ -15,6 +13,9 @@ import {
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
 import {setLogout} from "@redux/authSlice.ts";
 import {push} from "redux-first-history";
+import {Layout, Menu} from "antd";
+import Logo from "@components/Logo.tsx";
+import {useWindowSize} from "@uidotdev/usehooks";
 
 export interface ISider {
     collapsed: boolean;
@@ -23,52 +24,37 @@ export interface ISider {
 
 const Sider = ({collapsed, onCollapsed}: ISider) => {
     const dispatch = useAppDispatch();
-    const classOff = (className: string) => className + ' ' + classes["off"];
+    const size = useWindowSize();
+
     const logoutHandler = async () => {
         dispatch(setLogout());
         dispatch(push('/auth'));
     };
 
     return (
-        <div className={!collapsed ? classes.sider : classOff(classes.sider)}>
-            <div className={classes["sider-nav"]}>
-                <div className={classes.logo}>
-                    {!collapsed ? <img src={logo}/> :
-                        <img className={classes["logo-small"]} src={logo_small}/>
-                    }
-                </div>
-                <div className={classes.menu}>
-                    <div className={classes["menu-link"]}>
-                        <a>
-                            <CalendarTwoTone className={classes["link-icon"]}/>
-                            {!collapsed && <span className={classes["link-title"]}>Календарь</span>}
-                        </a>
-                    </div>
-
-                    <div className={classes["menu-link"]}>
-                        <a>
-                            <HeartTwoTone className={classes["link-icon"]}/>
-                            {!collapsed &&
-                                <span className={classes["link-title"]}>Тренировки</span>}
-                        </a>
-                    </div>
-
-                    <div className={classes["menu-link"]}>
-                        <a>
-                            <TrophyTwoTone className={classes["link-icon"]}/>
-                            {!collapsed &&
-                                <span className={classes["link-title"]}>Достижения</span>}
-                        </a>
-                    </div>
-
-                    <div className={classes["menu-link"]}>
-                        <a>
-                            <IdcardOutlined className={classes["link-icon"]}/>
-                            {!collapsed && <span className={classes["link-title"]}>Профиль</span>}
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <Layout.Sider theme={"light"} className={classes.sider}
+                      width={size.width! > 800 ? 208 : 106}
+                      collapsedWidth={size.width! > 800 ? 64 : 1}
+                      collapsible collapsed={collapsed}
+                      onCollapse={onCollapsed}
+                      trigger={null}>
+            <Logo collapsed={collapsed}/>
+            <Menu theme="light" defaultSelectedKeys={['1']} mode="inline"
+                  className={classes.menu} inlineIndent={17} coll>
+                <Menu.Item key="1" icon={size.width! > 800 && <CalendarTwoTone/>}>
+                    <span>Календарь</span>
+                </Menu.Item>
+                <Menu.Item key="3" icon={size.width! > 800 && <TrophyTwoTone/>}>
+                    <span>Тренировки</span>
+                </Menu.Item>
+                <Menu.Item key="2" icon={size.width! > 800 && <HeartTwoTone/>}>
+                    <span>Достижения</span>
+                </Menu.Item>
+                <Menu.Item key="4" icon={size.width! > 800 && <IdcardOutlined/>}>
+                    <span>Профиль</span>
+                </Menu.Item>
+            </Menu>
+            <div style={{flex: 1}}></div>
             <div className={classes.logout}>
                 <a onClick={logoutHandler}>
                     <img className={classes["logout-icon"]} src={exit_icon}/>
@@ -89,7 +75,7 @@ const Sider = ({collapsed, onCollapsed}: ISider) => {
                     <MenuFoldOutlined className={classes["switcher-icon"]}/>
                 }
             </div>
-        </div>
+        </Layout.Sider>
     );
 };
 

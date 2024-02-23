@@ -38,7 +38,7 @@ const FlowConfirmEmail = () => {
 
 
     const completeHandler = async (code: string) => {
-        await confirmEmail({email, code});
+        email && await confirmEmail({email, code});
     };
 
     return (

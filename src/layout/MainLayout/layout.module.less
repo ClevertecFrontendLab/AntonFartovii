@@ -8,6 +8,51 @@
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
     background: var(--character-light-primary-inverse);
     z-index: 2;
+
+    :global {
+
+        .ant-layout-sider-children {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+
+        .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+            background-color: unset;
+        }
+
+        .ant-menu-item:not(:last-child) {
+            margin-bottom: 14px;
+        }
+
+        .ant-menu-item::after {
+            border: 0;
+        }
+
+        .ant-layout-header {
+            padding: 0;
+        }
+    }
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        margin-top: 19px;
+        overflow: hidden;
+        justify-content: center;
+
+        svg {
+            path {
+                fill: #061178;
+            }
+        }
+    }
+
+    .logo.collapsed {
+        padding: 49px 0px;
+        text-align: center;
+    }
 }
 
 .sider.off {
@@ -30,13 +75,6 @@
         margin-top: 15px;
     }
 
-    .menu-link {
-        justify-content: center;
-    }
-
-    .menu-link a {
-        display: flex;
-    }
 }
 
 .sider-nav {
@@ -410,6 +448,11 @@ header {
 
 @media screen and (max-width: 800px) {
 
+    :global {
+
+
+    }
+
     .sider {
         width: 106px;
         position: fixed;
@@ -433,11 +476,6 @@ header {
 
         .menu {
             margin-top: 14px;
-        }
-
-        .menu-link {
-            justify-content: start;
-            padding: 14px 0px;
         }
 
         .link-icon {
