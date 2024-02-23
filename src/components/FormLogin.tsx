@@ -110,6 +110,7 @@ const FormLogin = () => {
         >
             <div className={classes["login-input-wrap"]}>
                 <Form.Item
+                    style={{height: '70px'}}
                     name="email"
                     rules={[{type: 'email', message: '',}, {required: true, message: '',},]}
                 >
@@ -117,6 +118,7 @@ const FormLogin = () => {
                 </Form.Item>
 
                 <Form.Item
+                    style={{height: '86px'}}
                     name="password"
                     rules={[{required: true, message: ''}]}
                 >
@@ -126,7 +128,7 @@ const FormLogin = () => {
                 </Form.Item>
             </div>
             <Form.Item noStyle>
-                <div className="flex-row">
+                <div className={classes["flex-row"]}>
                     <Form.Item name="remember" valuePropName="checked" noStyle>
                         <Checkbox data-test-id="login-remember">Запомнить меня</Checkbox>
                     </Form.Item>

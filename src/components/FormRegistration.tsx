@@ -90,18 +90,22 @@ const FormRegistration = () => {
         >
             <div className={classes["register-input-wrap"]}>
                 <Form.Item
+                    style={{height: '70px'}}
                     name="email"
-                    rules={[{type: 'email', message: '',}, {required: true, message: '',},]}
+                    rules={[{
+                        required: true, type: 'email', message: '',
+                    },
+                    ]}
                 >
                     <Input size="large" addonBefore="e-mail" data-test-id="registration-email"/>
                 </Form.Item>
 
                 <Form.Item
+                    style={{height: '86px'}}
                     name="password"
                     rules={[{
                         required: true,
                         pattern: /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8}/g,
-                        message: ""
                     }]}
                     help="Пароль не менее 8 символов, с заглавной буквой и цифрой"
                 >
@@ -114,19 +118,30 @@ const FormRegistration = () => {
                 </Form.Item>
 
                 <Form.Item
-                    dependencies={['password']}
+                    style={{height: '86px'}}
+                    dependencies={['password', 'email']}
                     name="confirm-password"
                     rules={[{
                         required: true,
-                        message: 'Пароли не совпадают',
+                        message: '',
+
                     }, ({getFieldValue}) => ({
                         validator(_, value) {
-                            if (!value || getFieldValue('password') === value) {
-                                return Promise.resolve();
+                            if (value) {
+                                if (getFieldValue('password') === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject(new Error('Пароли не совпадают'));
+                            } else {
+                                return form.validateFields(['email']).then(() => {
+                                    return Promise.reject(new Error(''));
+                                }).catch(() => {
+                                    return Promise.resolve();
+                                })
                             }
-                            return Promise.reject(new Error('Пароли не совпадают'));
                         },
-                    })]}
+                    }),
+                    ]}
                 >
                     <Input.Password
                         size="large"

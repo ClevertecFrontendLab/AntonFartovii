@@ -7,7 +7,7 @@ import {useLocation} from "react-router-dom";
 import {PathsFull} from "../routes/Paths.ts";
 import {useLoader} from "@hooks/useLoader.ts";
 import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
-import {FormChangePassword} from "@redux/formSlice.ts";
+import {FormChangePassword, setFormChangePassword} from "@redux/formSlice.ts";
 import classes from "../pages/auth-page/auth.module.less"
 import {push, replace} from "redux-first-history";
 
@@ -46,6 +46,7 @@ const FlowChangePassword = () => {
             }));
         }
         if (isSuccess) {
+            dispatch(setFormChangePassword({}));
             dispatch(replace(PathsFull.RESULT_SUCCESS_CHANGE_PASSWORD, {key: 'result_redirect'}));
         }
 
@@ -65,7 +66,7 @@ const FlowChangePassword = () => {
     return (
         <div className={classes["change-password-wrap"]}>
             <Typography.Title level={3}>
-                Восстановление аккаунта
+                Восстановление аккауанта
             </Typography.Title>
             <Form
                 form={form}
@@ -75,6 +76,7 @@ const FlowChangePassword = () => {
             >
                 <div className={classes["inputs-wrap"]}>
                     <Form.Item
+                        style={{height: '86px'}}
                         name="password"
                         rules={[{
                             required: true,
@@ -115,10 +117,10 @@ const FlowChangePassword = () => {
                         />
                     </Form.Item>
                 </div>
-                <Form.Item>
+                <Form.Item noStyle>
                     <Button type="primary" htmlType="submit" className="login-form-button"
                             data-test-id="change-submit-button" disabled={isDisabled}>
-                        Обновить
+                        Сохранить
                     </Button>
                 </Form.Item>
             </Form>

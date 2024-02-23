@@ -165,6 +165,7 @@ body {
     background-color: var(--character-light-primary-inverse);
     height: auto;
     width: auto;
+    gap: 12px
 }
 
 .verification-character {
@@ -194,11 +195,19 @@ body {
 }
 
 .verification-character-selected {
+    box-shadow: 2px 0 0 0 rgba(47, 84, 235, 0.2);
     border: 1px solid var(--primary-light-5);
-    box-shadow: 0 0 0 2px rgba(47, 84, 235, 0.2);
+    outline: 1px;
 }
 
 .verification-character-inactive.error {
     border: 1px solid var(--character-light-error);
+}
+
+@media screen and (max-width: 600px) {
+
+    .verification-container {
+        gap: 8px
+    }
 }
 

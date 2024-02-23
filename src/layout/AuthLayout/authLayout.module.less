@@ -40,8 +40,19 @@
 
 :global {
 
+    h3.ant-typography {
+        font-family: var(--font-family);
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 130%;
+        text-align: center;
+        color: var(--character-light-title-85);
+        margin: 0px;
+    }
+
     .ant-result {
         padding: 0;
+        transition: all 0.3s;
 
         .ant-result-title {
             font-family: var(--font-family);
@@ -66,34 +77,33 @@
         }
     }
 
+    .ant-result-warning,
+    .ant-result-error,
+    .ant-result-success {
+        width: 368px;
+        margin: 8px 54px;
+    }
+
     .ant-result-info {
         width: 475px;
+        margin-top: 3px;
 
         .ant-result-icon > .anticon {
             color: var(--primary-light-6);
         }
 
-    }
-
-    .ant-result-error {
-        width: 475px;
-        padding: 0px 30px;
-
-        button {
-            width: 167px;
+        .ant-result-icon {
+            margin-bottom: 27px;
         }
     }
 
     .ant-result-500 {
+        margin: 0px 33px;
+        transition: all 0.3s;
 
         button {
             width: 74px;
         }
-    }
-
-    .ant-result-success {
-        width: 368px;
-        margin: 0px 53.5px;
     }
 
     .ant-result-content {
@@ -113,5 +123,67 @@
         box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
         background: var(--primary-light-6);
     }
+
+    .ant-typography-secondary {
+        font-family: var(--font-family);
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 130%;
+        text-align: center;
+        color: var(--character-light-secondary-45);
+    }
+
+    .ant-form-item-explain {
+        font-family: var(--font-family);
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 130%;
+        color: var(--character-light-secondary-45);
+    }
 }
 
+@media screen and (max-width: 600px) {
+
+    .auth-container {
+        padding: 32px 16px;
+    }
+
+    :global {
+
+        .ant-result-warning,
+        .ant-result-error,
+        .ant-result-success {
+            margin: 0px;
+            max-width: 296px;
+            width: auto;
+
+            .ant-result-icon {
+                margin-bottom: 31px;
+            }
+        }
+
+        .ant-result-500 {
+            max-width: 264px;
+            width: auto;
+            height: 448px;
+            margin: 32px 16px 24px;
+
+            .ant-result-icon {
+                margin-bottom: 22px;
+            }
+        }
+
+        .ant-result-info {
+            width: 296px;
+            margin-top: 3px;
+
+            .ant-result-icon > .anticon {
+                color: var(--primary-light-6);
+            }
+
+            .ant-result-icon {
+                margin-bottom: 27px;
+            }
+        }
+    }
+}
