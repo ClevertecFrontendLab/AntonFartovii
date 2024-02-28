@@ -2,12 +2,17 @@ import {Typography} from 'antd/';
 import classes from './layout.module.less';
 import {SettingOutlined} from '@ant-design/icons';
 import {Breadcrumb} from 'antd';
+import {Link} from "react-router-dom";
 
 const Header = () => {
     return (
         <header>
             <div className="inner-wrapper">
-                <Breadcrumb><a href="/">Главная</a></Breadcrumb>
+                <Breadcrumb>
+                    <Breadcrumb.Item>
+                        <Link to={'/main'}>Главная</Link>
+                    </Breadcrumb.Item>
+                </Breadcrumb>
                 <div className={classes["header-body"]}>
                     <div className={classes["header-title"]}>
                         <Typography.Title level={1}>
