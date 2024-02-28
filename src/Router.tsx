@@ -23,6 +23,7 @@ import PrivateAuth from "./hoc/PrivateAuth.tsx";
 import FlowConfirmEmail from "@components/FlowConfirmEmail.tsx";
 import FlowChangePassword from "@components/FlowChangePassword.tsx";
 import PrivateChangePassword from "./hoc/PrivateChangePassword.tsx";
+import {FeedbacksPage} from "@pages/feedbacks-page";
 
 const Router = () => {
     return (
@@ -31,6 +32,7 @@ const Router = () => {
                 <Route path='/' element={<PrivateMain><Layout/></PrivateMain>}>
                     <Route index element={<Navigate to={'main'}/>}/>
                     <Route path={'main'} element={<MainPage/>}/>
+                    <Route path={Paths.FEEDBACKS} element={<FeedbacksPage/>}/>
                 </Route>
                 <Route element={<PrivateAuth><AuthLayout/></PrivateAuth>}>
                     <Route path={Paths.AUTH + '/' + Paths.CHANGE_PASSWORD}

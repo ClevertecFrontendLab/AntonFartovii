@@ -132,8 +132,9 @@ body {
     justify-content: space-between;
     align-content: center;
     width: 100%;
+    height: auto;
+    flex-basis: 100%;
     max-width: 1440px;
-    /*height: 100%;*/
     margin: 0 auto;
     background-image: url("./assets/images/Main page_light.png");
     background-repeat: no-repeat;

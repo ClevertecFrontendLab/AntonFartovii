@@ -1,6 +1,7 @@
 export enum Paths {
     MAIN = '/',
     AUTH = 'auth',
+    FEEDBACKS = 'feedbacks',
     REGISTRATION = 'registration',
     CHANGE_PASSWORD = 'change-password',
     FORGOT_PASSWORD = 'forgot-password',
