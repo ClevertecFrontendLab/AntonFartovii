@@ -2,7 +2,7 @@ import {HistoryRouter} from "redux-first-history/rr6";
 import {history} from "@redux/configure-store.ts";
 import {Navigate, Route, Routes} from "react-router-dom";
 import PrivateMain from "./hoc/PrivateMain.tsx";
-import Layout from "./layout/MainLayout/Layout.tsx";
+import MainLayout from "./layout/MainLayout/MainLayout.tsx";
 import {MainPage} from "@pages/main-page";
 import AuthLayout from "./layout/AuthLayout/AuthLayout.tsx";
 import {Paths} from "./routes/Paths.ts";
@@ -29,7 +29,7 @@ const Router = () => {
     return (
         <HistoryRouter history={history}>
             <Routes>
-                <Route path='/' element={<PrivateMain><Layout/></PrivateMain>}>
+                <Route path='/' element={<PrivateMain><MainLayout/></PrivateMain>}>
                     <Route index element={<Navigate to={'main'}/>}/>
                     <Route path={'main'} element={<MainPage/>}/>
                     <Route path={Paths.FEEDBACKS} element={<FeedbacksPage/>}/>
