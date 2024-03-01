@@ -1,5 +1,6 @@
 export enum Paths {
     MAIN = '/',
+    MAIN_PAGE = 'main',
     AUTH = 'auth',
     FEEDBACKS = 'feedbacks',
     REGISTRATION = 'registration',
@@ -28,4 +29,9 @@ export enum PathsFull {
     FORGOT_PASSWORD = Paths.MAIN + Paths.RESULT + '/' + Paths.FORGOT_PASSWORD,
     RESULT_SUCCESS = Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_SUCCESS,
     RESULT_SUCCESS_CHANGE_PASSWORD = Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_SUCCESS_CHANGE_PASSWORD
+}
+
+export const PathNames: { [key: string]: string } = {
+    [Paths.MAIN_PAGE]: "Главная",
+    [Paths.FEEDBACKS]: 'Отзывы пользователей',
 }

@@ -39,8 +39,7 @@ const Sider = ({collapsed, onCollapsed}: ISider) => {
                       onCollapse={onCollapsed}
                       trigger={null}>
             <Logo collapsed={collapsed}/>
-            <Menu theme="light" defaultSelectedKeys={['1']} mode="inline"
-                  className={classes.menu} inlineIndent={17}>
+            <Menu theme="light" defaultSelectedKeys={['1']} mode="inline" inlineIndent={17}>
                 <Menu.Item key="1" icon={size.width! > 800 && <CalendarTwoTone/>}>
                     <span>Календарь</span>
                 </Menu.Item>

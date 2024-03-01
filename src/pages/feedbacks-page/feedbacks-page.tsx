@@ -1,9 +1,5 @@
-import {
-    Feedback,
-    useCreateFeedbackMutation,
-    useGetFeedbacksQuery
-} from "@redux/api/feedbacksApi.ts";
-import {Avatar, Button, Card, Input, Modal, Rate, Result} from "antd";
+import {Feedback, useCreateFeedbackMutation, useGetFeedbacksQuery} from "@redux/api/feedbacksApi.ts";
+import {Avatar, Button, ButtonProps, Card, Input, Modal, Rate, Result} from "antd";
 import classes from './feedbacks.module.less';
 import {UserOutlined} from "@ant-design/icons";
 import {useEffect, useState} from "react";
@@ -28,6 +24,14 @@ export const FeedbacksPage = () => {
             rating,
         })
     };
+
+    useEffect(() => {
+        if (isLoading) {
+            setLoader && setLoader(true);
+        } else {
+            setLoader && setLoader(false);
+        }
+    }, [isLoading]);
 
     useEffect(() => {
         if (createFeedbackEvents.isError) {
@@ -106,8 +110,7 @@ export const FeedbacksPage = () => {
                 onCancel={() => setModal(false)}
                 cancelButtonProps={{hidden: true}}
                 okText="Опубликовать"
-                okButtonProps={{disabled: disableOkButton}}
-
+                okButtonProps={{disabled: disableOkButton, "data-test-id": "new-review-submit-button"} as ButtonProps}
             >
                 <Rate value={rating} onChange={setRating}/>
                 <Input.TextArea onInput={(e) => textareaHandler(e)}/>
@@ -116,7 +119,8 @@ export const FeedbacksPage = () => {
                 open={modalError}
                 okText="Написать озыв"
                 cancelText="Закрыть"
-                onCancel={() => setModalError(false)}>
+                onCancel={() => setModalError(false)}
+                okButtonProps={{"data-test-id": "write-review-not-saved-modal"} as ButtonProps}>
                 <Result
                     status="error"
                     title="Данные не сохранились"

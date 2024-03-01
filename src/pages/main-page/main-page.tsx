@@ -1,13 +1,7 @@
 import React from 'react';
 import classes from './main.module.less';
 import {Typography} from "antd/";
-import {
-    AndroidFilled,
-    AppleFilled,
-    CalendarTwoTone,
-    HeartTwoTone,
-    IdcardOutlined
-} from '@ant-design/icons';
+import {AndroidFilled, AppleFilled, CalendarTwoTone, HeartTwoTone, IdcardOutlined} from '@ant-design/icons';
 import {Link} from "react-router-dom";
 import {Paths} from "../../routes/Paths.ts";
 
@@ -75,8 +69,11 @@ export const MainPage: React.FC = () => {
             </div>
             <div className={classes["main-footer"]}>
                 <div className={classes["footer-container"]}>
-                    <div className={classes["left"]}><Link to={Paths.MAIN + Paths.FEEDBACKS}>Смотреть
-                        отзывы</Link></div>
+                    <div className={classes["left"]}>
+                        <Link to={Paths.MAIN + Paths.FEEDBACKS} data-test-id="see-reviews">
+                            Смотреть отзывы
+                        </Link>
+                    </div>
                     <div className={classes["right"]}>
                         <div className={classes["top"]}>
                             <div className={classes["download-link"]}><a>Скачать на телефон</a>

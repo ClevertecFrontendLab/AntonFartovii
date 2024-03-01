@@ -19,9 +19,9 @@ const MainLayout = () => {
 
     return (
         <>
-            <div className="app-wrapper">
+            <div className={classes["app-wrapper"]}>
                 <Sider collapsed={collapsedSider} onCollapsed={setCollapsedSider}></Sider>
-                <div className="wrapper">
+                <div className={classes["wrapper"]}>
                     <Header/>
                     <main className={classes.main}>
                         <Outlet/>
