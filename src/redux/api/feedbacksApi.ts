@@ -2,6 +2,7 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {RootState} from "@redux/configure-store.ts";
 
 export type Feedback = {
+    "id": string,
     "fullName": string | null,
     "imageSrc": string | null,
     "message": string | null,
@@ -28,7 +29,9 @@ export const feedbackApi = createApi({
                     url: 'feedback',
                     method: 'GET',
                 };
-            }
+            },
+            transformResponse: (response: Feedback[]) => response.sort((a, b) =>
+                new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
         }),
         createFeedback: builder.mutation({
             query: (body) => {

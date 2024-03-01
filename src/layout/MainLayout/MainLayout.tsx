@@ -26,7 +26,7 @@ const MainLayout = () => {
                     <main className={classes.main}>
                         <Outlet/>
                     </main>
-                    <Footer collapsed={collapsedSider}/>
+                    <Footer/>
                 </div>
             </div>
             <Loader active={loader}/>
