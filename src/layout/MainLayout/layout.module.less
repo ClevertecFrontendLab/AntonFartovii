@@ -347,8 +347,23 @@ header {
         }
 
         :global {
+
+            .ant-menu {
+                margin-top: 20px;
+            }
+
             .ant-menu-item {
-                padding-left: 8px;
+                padding: 0px 8px;
+                margin: 0px;
+                font-family: var(--font-family);
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 130%;
+                color: var(--character-light-title-85);
+            }
+
+            .ant-menu-item:not(:last-child) {
+                margin-bottom: 10px;
             }
         }
 

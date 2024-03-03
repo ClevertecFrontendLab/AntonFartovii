@@ -33,6 +33,12 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
+
+    :global {
+        h4.ant-typography {
+            line-height: 130%;
+        }
+    }
 }
 
 .content-text {
@@ -122,7 +128,7 @@
     margin-bottom: 17px;
 
     .footer-container {
-        padding: 0 24px 6px;
+        padding: 0 0px 6px;
         width: 100%;
         margin-bottom: 18px;
         display: flex;
@@ -251,11 +257,24 @@
 @media screen and (max-width: 800px) {
 
     .main-container {
-        padding: 16px;
         margin-top: 10px;
 
         .content-container {
             display: block;
+
+            .content-text {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .card {
+                margin-bottom: 7px;
+            }
+
+            .card-title {
+                justify-content: center;
+            }
+
         }
 
         .description-container {
@@ -312,10 +331,11 @@
     .main-container {
 
         .description-container {
-            height: 368px;
+            height: auto;
         }
 
         .content-container {
+
             .content-text {
                 padding: 16px;
                 margin-bottom: 16px;
@@ -324,10 +344,10 @@
             .card {
                 margin-bottom: 7px;
             }
-        }
 
-        .card-title {
-            justify-content: center;
+            .card-title {
+                justify-content: center;
+            }
         }
     }
 

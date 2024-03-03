@@ -13,14 +13,35 @@ import {
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
 import {setLogout} from "@redux/authSlice.ts";
 import {push} from "redux-first-history";
+import type {MenuProps} from 'antd';
 import {Layout, Menu} from "antd";
 import Logo from "@components/Logo.tsx";
 import {useWindowSize} from "@uidotdev/usehooks";
+import {Key, ReactNode} from "react";
+
+type MenuItem = Required<MenuProps>['items'][number];
 
 export interface ISider {
     collapsed: boolean;
     onCollapsed: (bool: boolean) => void;
 }
+
+function getItem(
+    label: ReactNode,
+    key: Key,
+    icon?: ReactNode,
+    children?: MenuItem[],
+    type?: 'group',
+): MenuItem {
+    return {
+        key,
+        icon,
+        children,
+        label,
+        type,
+    } as MenuItem;
+}
+
 
 const Sider = ({collapsed, onCollapsed}: ISider) => {
     const dispatch = useAppDispatch();
@@ -31,6 +52,14 @@ const Sider = ({collapsed, onCollapsed}: ISider) => {
         dispatch(push('/auth'));
     };
 
+
+    const items: MenuItem[] = [
+        getItem('Календарь', '1', size.width! > 800 && <CalendarTwoTone/>),
+        getItem('Тренировки', '2', size.width! > 800 && <TrophyTwoTone/>),
+        getItem('Достижения', '3', size.width! > 800 && <HeartTwoTone/>),
+        getItem('Профиль', '4', size.width! > 800 && <IdcardOutlined/>),
+    ]
+
     return (
         <Layout.Sider theme={"light"} className={classes.sider}
                       width={size.width! > 800 ? 208 : 106}
@@ -39,21 +68,8 @@ const Sider = ({collapsed, onCollapsed}: ISider) => {
                       onCollapse={onCollapsed}
                       trigger={null}>
             <Logo collapsed={collapsed}/>
-            <Menu theme="light" defaultSelectedKeys={['1']} mode="inline"
-                  inlineIndent={size.width! > 800 ? 17 : 8}>
-                <Menu.Item key="1" icon={size.width! > 800 && <CalendarTwoTone/>}>
-                    <span>Календарь</span>
-                </Menu.Item>
-                <Menu.Item key="3" icon={size.width! > 800 && <TrophyTwoTone/>}>
-                    <span>Тренировки</span>
-                </Menu.Item>
-                <Menu.Item key="2" icon={size.width! > 800 && <HeartTwoTone/>}>
-                    <span>Достижения</span>
-                </Menu.Item>
-                <Menu.Item key="4" icon={size.width! > 800 && <IdcardOutlined/>}>
-                    <span>Профиль</span>
-                </Menu.Item>
-            </Menu>
+            <Menu theme="light" defaultSelectedKeys={['1']} mode="inline" items={items}
+                  inlineIndent={size.width! > 800 ? 17 : 8}/>
             <div style={{flex: 1}}></div>
             <div className={classes.logout}>
                 <a onClick={logoutHandler}>
