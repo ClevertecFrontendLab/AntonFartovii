@@ -139,6 +139,16 @@ body {
     z-index: 5;
 }
 
+.add-feedback-blur {
+    backdrop-filter: blur(4px);
+    background: rgba(121, 156, 212, 0.1);
+}
+
+.main-wrapper-blur {
+    backdrop-filter: blur(4px);
+    background: rgba(121, 156, 212, 0.5);
+}
+
 .auth-wrapper-blur.active {
     z-index: 15;
 }
@@ -191,6 +201,15 @@ body {
 
     .verification-container {
         gap: 8px
+    }
+}
+
+:global {
+    
+    .ant-result-icon {
+        margin-bottom: 28px;
+        padding-top: 5px;
+        text-align: center;
     }
 }
 

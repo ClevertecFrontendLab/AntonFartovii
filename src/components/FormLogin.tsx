@@ -103,7 +103,7 @@ const FormLogin = () => {
         <Form
             style={{marginBottom: "81px"}}
             name="login"
-            initialValues={{remember: true}}
+            initialValues={{remember: false}}
             onFinish={onFinish}
             onChange={onChange}
             form={form}

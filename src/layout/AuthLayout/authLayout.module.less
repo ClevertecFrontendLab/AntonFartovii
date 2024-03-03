@@ -130,6 +130,22 @@
     }
 }
 
+@media screen and (max-width: 800px) {
+
+    :global {
+        .ant-result-500 {
+            max-width: 264px;
+            width: auto;
+            height: 448px;
+            margin: 32px 16px 24px;
+
+            .ant-result-icon {
+                margin-bottom: 22px;
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 600px) {
 
     .auth-container {
@@ -146,7 +162,9 @@
             width: auto;
 
             .ant-result-icon {
-                margin-bottom: 31px;
+                margin-bottom: 28px;
+                padding-top: 5px;
+                text-align: center;
             }
         }
 

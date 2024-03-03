@@ -30,6 +30,7 @@ export const feedbackApi = createApi({
                     method: 'GET',
                 };
             },
+            providesTags: ['Feedbacks'],
             transformResponse: (response: Feedback[]) => response.sort((a, b) =>
                 new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
         }),
@@ -41,6 +42,7 @@ export const feedbackApi = createApi({
                     body
                 };
             },
+            invalidatesTags: ["Feedbacks"]
         }),
     }),
 });
