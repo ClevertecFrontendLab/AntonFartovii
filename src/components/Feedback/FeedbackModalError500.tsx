@@ -1,5 +1,5 @@
 import {useFeedbackModal} from "@hooks/useFeedbackModal.ts";
-import FeedbackModalProvider from "../hoc/FeedbackModalProvider.tsx";
+import FeedbackModalProvider from "../../hoc/FeedbackModalProvider.tsx";
 import {useWindowSize} from "@uidotdev/usehooks";
 import {Button, Modal, Result} from "antd";
 import {push} from "redux-first-history";
@@ -9,13 +9,14 @@ const FeedbackModalError500 = () => {
     const feedbackModal = useFeedbackModal() as FeedbackModalProvider;
     const size = useWindowSize();
     const dispatch = useAppDispatch();
-    
+
     return (
         <Modal
             width={size.width! > 800 ? 539 : 328}
             wrapClassName="main-wrapper-blur"
             maskStyle={{background: "unset"}}
             centered
+            closable={false}
             open={feedbackModal.modalError500}
             okButtonProps={{hidden: true}}
             cancelButtonProps={{hidden: true}}
@@ -25,9 +26,9 @@ const FeedbackModalError500 = () => {
                 title="Что-то пошло не так"
                 subTitle="Произошла ошибка, попробуйте ещё раз."
                 extra={
-                    [<Button type="primary" onClick={() => dispatch(push('/main'))}>
+                    <Button type="primary" onClick={() => dispatch(push('/main'))}>
                         Назад
-                    </Button>]
+                    </Button>
                 }/>
         </Modal>
     );

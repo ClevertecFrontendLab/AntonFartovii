@@ -12,6 +12,7 @@ export type Feedback = {
 
 export const feedbackApi = createApi({
     reducerPath: 'feedbackApi',
+    refetchOnFocus: true,
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://marathon-api.clevertec.ru/',
         credentials: "include",

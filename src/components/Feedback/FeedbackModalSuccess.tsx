@@ -1,6 +1,6 @@
 import {Button, Modal, Result} from "antd";
 import {useFeedbackModal} from "@hooks/useFeedbackModal.ts";
-import FeedbackModalProvider from "../hoc/FeedbackModalProvider.tsx";
+import FeedbackModalProvider from "../../hoc/FeedbackModalProvider.tsx";
 import {useWindowSize} from "@uidotdev/usehooks";
 
 const FeedbackModalSuccess = () => {
@@ -10,6 +10,7 @@ const FeedbackModalSuccess = () => {
     return (
         <Modal
             centered
+            closable={false}
             width={size.width! > 800 ? 539 : 328}
             cancelButtonProps={{hidden: true}}
             okButtonProps={{hidden: true}}

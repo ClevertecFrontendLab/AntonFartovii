@@ -9,9 +9,12 @@ import './index.css';
 import 'antd/lib/style/index.css';
 import 'antd/dist/antd.css';
 import App from "./App.tsx";
+import {setupListeners} from "@reduxjs/toolkit/query";
 
 const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
+
+setupListeners(store.dispatch);
 
 root.render(
     <React.StrictMode>

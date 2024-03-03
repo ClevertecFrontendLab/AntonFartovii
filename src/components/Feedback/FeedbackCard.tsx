@@ -2,7 +2,7 @@ import {Avatar, Card, Rate} from "antd";
 import {StarFilled, StarOutlined, UserOutlined} from "@ant-design/icons";
 import classes from "@pages/feedbacks-page/feedbacks.module.less";
 import {Feedback} from "@redux/api/feedbacksApi.ts";
-import {formatDate} from "../utils.ts";
+import {formatDate} from "../../utils.ts";
 
 const {Meta} = Card;
 

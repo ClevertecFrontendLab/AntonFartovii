@@ -3,15 +3,15 @@ import {Button} from "antd";
 import classes from './feedbacks.module.less';
 import {useEffect, useState} from "react";
 import {useLoader} from "@hooks/useLoader.ts";
-import FeedbackWelcome from "@components/FeedbackWelcome.tsx";
-import FeedbackCard from "@components/FeedbackCard.tsx";
+import FeedbackWelcome from "@components/Feedback/FeedbackWelcome.tsx";
+import FeedbackCard from "@components/Feedback/FeedbackCard.tsx";
 import {useFeedbackModal} from "@hooks/useFeedbackModal.ts";
 import FeedbackModalProvider from "../../hoc/FeedbackModalProvider.tsx";
 import {ILoader} from "../../hoc/LoaderProvider.tsx";
-import FeedbackModalAdd from "@components/Result/FeedbackModalAdd.tsx";
-import FeedbackModalError from "@components/FeedbackModalError.tsx";
-import FeedbackModalError500 from "@components/FeedbackModalError500.tsx";
-import FeedbackModalSuccess from "@components/FeedbackModalSuccess.tsx";
+import FeedbackModalAdd from "@components/Feedback/FeedbackModalAdd.tsx";
+import FeedbackModalError from "@components/Feedback/FeedbackModalError.tsx";
+import FeedbackModalError500 from "@components/Feedback/FeedbackModalError500.tsx";
+import FeedbackModalSuccess from "@components/Feedback/FeedbackModalSuccess.tsx";
 
 export const FeedbacksPage = () => {
     const {setLoader} = useLoader() as ILoader;
@@ -40,7 +40,7 @@ export const FeedbacksPage = () => {
                     <div className={classes["feedbacks-wrap"]}>
                         {
                             (shortData ? data.slice(0, 4) : data).map((feedback: Feedback) =>
-                                <FeedbackCard feedback={feedback}/>
+                                <FeedbackCard feedback={feedback} key={feedback.id}/>
                             )}
                     </div>
                     <div className={classes["tools-wrap"]}>
