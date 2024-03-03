@@ -11,19 +11,20 @@ import FormLogin from "@components/FormLogin.tsx";
 import FormRegistration from "@components/FormRegistration.tsx";
 import PrivateResult from "./hoc/PrivateResult.tsx";
 import {ResultPage} from "@pages/result-page";
-import ResultSuccess from "@components/ResultSuccess.tsx";
-import ResultError from "@components/ResultError.tsx";
-import ResultErrorUserExist from "@components/ResultErrorUserExist.tsx";
-import ResultErrorLogin from "@components/ResultErrorLogin.tsx";
-import ResultErrorCheckEmailNoExist from "@components/ResultErrorCheckEmailNoExist.tsx";
-import ResultErrorCheckEmail from "@components/ResultErrorCheckEmail.tsx";
-import ResultErrorChangePassword from "@components/ResultErrorChangePassword.tsx";
-import ResultSuccessChangePassword from "@components/ResultSuccessChangePassword.tsx";
+import ResultSuccess from "@components/Result/ResultSuccess.tsx";
+import ResultError from "@components/Result/ResultError.tsx";
+import ResultErrorUserExist from "@components/Result/ResultErrorUserExist.tsx";
+import ResultErrorLogin from "@components/Result/ResultErrorLogin.tsx";
+import ResultErrorCheckEmailNoExist from "@components/Result/ResultErrorCheckEmailNoExist.tsx";
+import ResultErrorCheckEmail from "@components/Result/ResultErrorCheckEmail.tsx";
+import ResultErrorChangePassword from "@components/Result/ResultErrorChangePassword.tsx";
+import ResultSuccessChangePassword from "@components/Result/ResultSuccessChangePassword.tsx";
 import PrivateAuth from "./hoc/PrivateAuth.tsx";
-import FlowConfirmEmail from "@components/FlowConfirmEmail.tsx";
-import FlowChangePassword from "@components/FlowChangePassword.tsx";
+import FlowConfirmEmail from "@components/FlowsPassword/FlowConfirmEmail.tsx";
+import FlowChangePassword from "@components/FlowsPassword/FlowChangePassword.tsx";
 import PrivateChangePassword from "./hoc/PrivateChangePassword.tsx";
 import {FeedbacksPage} from "@pages/feedbacks-page";
+import FeedbackModalProvider from "./hoc/FeedbackModalProvider.tsx";
 
 const Router = () => {
     return (
@@ -32,7 +33,8 @@ const Router = () => {
                 <Route path='/' element={<PrivateMain><MainLayout/></PrivateMain>}>
                     <Route index element={<Navigate to={'main'}/>}/>
                     <Route path={'main'} element={<MainPage/>}/>
-                    <Route path={Paths.FEEDBACKS} element={<FeedbacksPage/>}/>
+                    <Route path={Paths.FEEDBACKS} element={
+                        <FeedbackModalProvider><FeedbacksPage/></FeedbackModalProvider>}/>
                 </Route>
                 <Route element={<PrivateAuth><AuthLayout/></PrivateAuth>}>
                     <Route path={Paths.AUTH + '/' + Paths.CHANGE_PASSWORD}

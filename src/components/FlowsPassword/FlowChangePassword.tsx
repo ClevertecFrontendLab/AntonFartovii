@@ -4,11 +4,11 @@ import {EyeInvisibleOutlined, EyeTwoTone} from "@ant-design/icons";
 import {Typography} from "antd/";
 import {useChangePasswordMutation} from "@redux/api/authApi.ts";
 import {useLocation} from "react-router-dom";
-import {PathsFull} from "../routes/Paths.ts";
+import {PathsFull} from "../../routes/Paths.ts";
 import {useLoader} from "@hooks/useLoader.ts";
 import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
 import {FormChangePassword, setFormChangePassword} from "@redux/formSlice.ts";
-import classes from "../pages/auth-page/auth.module.less"
+import classes from "@pages/auth-page/auth.module.less"
 import {push, replace} from "redux-first-history";
 
 const FlowChangePassword = () => {

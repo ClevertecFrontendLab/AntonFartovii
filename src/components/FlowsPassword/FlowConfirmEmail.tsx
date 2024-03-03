@@ -4,7 +4,7 @@ import {Typography} from "antd/";
 import {useConfirmEmailMutation} from "@redux/api/authApi.ts";
 import {useEffect, useState} from "react";
 import {ResultStatusType} from "antd/es/result";
-import {Paths} from "../routes/Paths.ts";
+import {Paths} from "../../routes/Paths.ts";
 import {useLoader} from "@hooks/useLoader.ts";
 import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
 import {replace} from "redux-first-history";

@@ -1,6 +1,6 @@
 import {createContext, ReactNode, useState} from "react";
 
-interface ILoader {
+export type ILoader = {
     loader: boolean;
     setLoader: (bool: boolean) => void;
 }

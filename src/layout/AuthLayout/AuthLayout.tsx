@@ -1,7 +1,7 @@
 import classes from "./authLayout.module.less";
 import {Outlet} from "react-router-dom";
 import {useLoader} from "@hooks/useLoader.ts";
-import Loader from "@components/Loader.tsx";
+import Loader from "@components/Loader/Loader.tsx";
 import {useEffect} from "react";
 
 const AuthLayout = () => {

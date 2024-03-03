@@ -4,7 +4,7 @@ import Header from "./Header.tsx";
 import classes from './layout.module.less';
 import Footer from "./Footer.tsx";
 import {Outlet} from "react-router-dom";
-import Loader from "@components/Loader.tsx";
+import Loader from "@components/Loader/Loader.tsx";
 import {useLoader} from "@hooks/useLoader.ts";
 
 const MainLayout = () => {

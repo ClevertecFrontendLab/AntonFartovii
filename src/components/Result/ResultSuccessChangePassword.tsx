@@ -1,5 +1,5 @@
 import {Button, Result} from "antd";
-import {Paths} from "../routes/Paths.ts";
+import {Paths} from "../../routes/Paths.ts";
 import {useAppDispatch} from "@hooks/typed-react-redux-hooks.ts";
 import {replace} from "redux-first-history";
 
