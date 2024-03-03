@@ -99,6 +99,10 @@ const FormLogin = () => {
         });
     }
 
+    const googleHandler = () => {
+        window.location.href = `https://marathon-api.clevertec.ru/auth/google`
+    }
+
     return (
         <Form
             style={{marginBottom: "81px"}}
@@ -148,7 +152,7 @@ const FormLogin = () => {
                 </Button>
             </Form.Item>
             <Form.Item>
-                <Button type="default" className={"google-form-button"}>
+                <Button type="default" className={"google-form-button"} onClick={googleHandler}>
                     <GooglePlusOutlined/> Войти через Google
                 </Button>
             </Form.Item>
