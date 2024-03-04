@@ -105,7 +105,7 @@ const FormLogin = () => {
 
     return (
         <Form
-            style={{marginBottom: "81px"}}
+            style={{marginBottom: "110px"}}
             name="login"
             initialValues={{remember: false}}
             onFinish={onFinish}
@@ -122,7 +122,7 @@ const FormLogin = () => {
                 </Form.Item>
 
                 <Form.Item
-                    style={{height: '86px'}}
+                    style={{height: '70px'}}
                     name="password"
                     rules={[{required: true, message: ''}]}
                 >

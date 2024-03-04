@@ -4,19 +4,17 @@ import {useWindowSize} from "@uidotdev/usehooks";
 import {useFeedbackModal} from "@hooks/useFeedbackModal.ts";
 import FeedbackModalProvider from "../../hoc/FeedbackModalProvider.tsx";
 import {useCreateFeedbackMutation} from "@redux/api/feedbacksApi.ts";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 
 const FeedbackModalAdd = () => {
     const feedbackModal = useFeedbackModal() as FeedbackModalProvider;
     const size = useWindowSize();
     const [createFeedback, createFeedbackEvents] = useCreateFeedbackMutation();
     const [form] = Form.useForm();
-    const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
     const writeFeedbackHandler = async () => {
         await createFeedback(form.getFieldsValue(['rating', 'message']));
         form.resetFields();
-        setIsDisabled(true);
     };
 
     useEffect(() => {
@@ -33,12 +31,6 @@ const FeedbackModalAdd = () => {
         }
     }, [createFeedbackEvents.isSuccess]);
 
-    const onChange = () => {
-        if (form.getFieldValue('rating') > 0 || form.getFieldValue('message').length > 0) {
-            setIsDisabled(false);
-        }
-    }
-
     return (
         <Modal
             width={size.width! > 800 ? 539 : 328}
@@ -52,7 +44,6 @@ const FeedbackModalAdd = () => {
             cancelButtonProps={{hidden: true}}
             okText="Опубликовать"
             okButtonProps={{
-                "disabled": isDisabled,
                 "data-test-id": "new-review-submit-button"
             } as ButtonProps}
             bodyStyle={size.width! > 800 ? {
@@ -60,7 +51,7 @@ const FeedbackModalAdd = () => {
                 padding: "24px"
             } : {display: "block", padding: "16px"}}
         >
-            <Form form={form} onValuesChange={onChange}>
+            <Form form={form}>
                 <Form.Item noStyle name="rating">
                     <Rate character={({value, index}) => {
                         return value && index! < value ? <StarFilled/> :

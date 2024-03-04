@@ -6,6 +6,14 @@ import {formatDate} from "../../utils.ts";
 
 const {Meta} = Card;
 
+const printFullName = (fullName: string) => {
+    if (!fullName) return "Пользователь";
+    const arr = fullName.split(' ');
+    if (arr.length === 2) return <>{arr[0]}<br/>{arr[1]}</>;
+    return fullName;
+
+}
+
 const FeedbackCard = ({feedback}: { feedback: Feedback }) => {
     return (
         <Card key={feedback.id}>
@@ -15,7 +23,7 @@ const FeedbackCard = ({feedback}: { feedback: Feedback }) => {
                         size={42}
                         icon={feedback.imageSrc ? <img src={feedback.imageSrc}/> :
                             <UserOutlined/>}/>
-                    <span>{feedback.fullName || "Пользователь"}</span>
+                    <span>{printFullName(feedback.fullName)}</span>
                 </>}
                   title={
                       <>
