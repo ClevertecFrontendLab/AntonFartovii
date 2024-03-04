@@ -1,1 +1,1 @@
-export {FeedbacksPage} from './feedbacks-page.tsx';
+export { FeedbacksPage } from './feedbacks-page.tsx';

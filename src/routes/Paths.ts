@@ -24,14 +24,23 @@ export enum PathsFull {
     RESULT_ERROR_LOGIN = Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_ERROR_LOGIN,
     RESULT_ERROR_USER_EXIST = Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_ERROR_USER_EXIST,
     RESULT_ERROR_CHECK_EMAIL = Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_ERROR_CHECK_EMAIL,
-    RESULT_ERROR_CHANGE_PASSWORD = Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_ERROR_CHANGE_PASSWORD,
-    RESULT_ERROR_CHECK_EMAIL_NO_EXIST = Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_ERROR_CHECK_EMAIL_NO_EXIST,
+    RESULT_ERROR_CHANGE_PASSWORD = Paths.MAIN +
+        Paths.RESULT +
+        '/' +
+        Paths.RESULT_ERROR_CHANGE_PASSWORD,
+    RESULT_ERROR_CHECK_EMAIL_NO_EXIST = Paths.MAIN +
+        Paths.RESULT +
+        '/' +
+        Paths.RESULT_ERROR_CHECK_EMAIL_NO_EXIST,
     FORGOT_PASSWORD = Paths.MAIN + Paths.RESULT + '/' + Paths.FORGOT_PASSWORD,
     RESULT_SUCCESS = Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_SUCCESS,
-    RESULT_SUCCESS_CHANGE_PASSWORD = Paths.MAIN + Paths.RESULT + '/' + Paths.RESULT_SUCCESS_CHANGE_PASSWORD
+    RESULT_SUCCESS_CHANGE_PASSWORD = Paths.MAIN +
+        Paths.RESULT +
+        '/' +
+        Paths.RESULT_SUCCESS_CHANGE_PASSWORD,
 }
 
 export const PathNames: { [key: string]: string } = {
-    [Paths.MAIN_PAGE]: "Главная",
+    [Paths.MAIN_PAGE]: 'Главная',
     [Paths.FEEDBACKS]: 'Отзывы пользователей',
-}
+};

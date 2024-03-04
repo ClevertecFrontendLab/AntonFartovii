@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface FormRegister {
     email: string;
@@ -11,7 +11,7 @@ export interface FormLogin {
 
 export interface FormChangePassword {
     password: string;
-    confirmPassword: string
+    confirmPassword: string;
 }
 
 export interface FormState {
@@ -39,9 +39,9 @@ export const formSlice = createSlice({
         setFormChangePassword: (state, action: PayloadAction<Partial<FormChangePassword>>) => {
             state.formChangePassword = action.payload;
         },
-    }
-})
+    },
+});
 
-export const {setFormRegister, setFormChangePassword, setFormLogin} = formSlice.actions;
+export const { setFormRegister, setFormChangePassword, setFormLogin } = formSlice.actions;
 
 export default formSlice.reducer;

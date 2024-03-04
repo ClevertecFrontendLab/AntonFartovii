@@ -1,1 +1,1 @@
-export {ResultPage} from './result-page.tsx';
+export { ResultPage } from './result-page.tsx';

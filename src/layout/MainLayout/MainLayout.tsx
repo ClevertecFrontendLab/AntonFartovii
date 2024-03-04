@@ -1,37 +1,34 @@
-import {useEffect, useState} from "react";
-import Sider from "./Sider.tsx";
-import Header from "./Header.tsx";
+import { useEffect, useState } from 'react';
+import { Sider } from './Sider.tsx';
+import { Header } from './Header.tsx';
 import classes from './layout.module.less';
-import Footer from "./Footer.tsx";
-import {Outlet} from "react-router-dom";
-import Loader from "@components/Loader/Loader.tsx";
-import {useLoader} from "@hooks/useLoader.ts";
+import { Outlet } from 'react-router-dom';
+import { Loader } from '@components/Loader/Loader.tsx';
+import { useLoader } from '@hooks/useLoader.ts';
+import { ILoader } from '../../hoc/LoaderProvider.tsx';
 
-const MainLayout = () => {
+export const MainLayout = () => {
     const [collapsedSider, setCollapsedSider] = useState<boolean>(false);
-    const {loader, setLoader} = useLoader();
+    const { loader, setLoader } = useLoader() as ILoader;
 
     useEffect(() => {
         return () => {
-            setLoader && setLoader(false);
-        }
+            setLoader(false);
+        };
     }, []);
 
     return (
         <>
-            <div className={classes["app-wrapper"]}>
+            <div className={classes['app-wrapper']}>
                 <Sider collapsed={collapsedSider} onCollapsed={setCollapsedSider}></Sider>
-                <div className={classes["wrapper"]}>
-                    <Header/>
+                <div className={classes['wrapper']}>
+                    <Header />
                     <main className={classes.main}>
-                        <Outlet/>
+                        <Outlet />
                     </main>
-                    <Footer/>
                 </div>
             </div>
-            <Loader active={loader}/>
+            <Loader active={loader} />
         </>
     );
 };
-
-export default MainLayout;

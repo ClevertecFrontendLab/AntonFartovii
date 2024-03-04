@@ -11,7 +11,7 @@
     flex-basis: 100%;
     max-width: 1440px;
     margin: 0 auto;
-    background-image: url("../../assets/images/Main page_light.png");
+    background-image: url('../../assets/images/Main page_light.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -41,7 +41,6 @@
     z-index: 2;
 
     :global {
-
         .ant-menu {
             margin-top: 6px;
 
@@ -50,7 +49,6 @@
                     fill: #061178;
                 }
             }
-
         }
 
         .ant-menu-item {
@@ -87,7 +85,6 @@
             padding: 0;
         }
     }
-
 }
 
 .logo.collapsed {
@@ -106,7 +103,7 @@
 }
 
 .logout {
-    border-top: 1px solid #F0F0F0;
+    border-top: 1px solid #f0f0f0;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -155,8 +152,8 @@
     filter: drop-shadow(3px 0px 2px rgba(0, 0, 0, 0.15));
 }
 
-.switcher svg, .switcher-mobile svg {
-
+.switcher svg,
+.switcher-mobile svg {
     path {
         fill: var(--character-light-secondary-45);
     }
@@ -178,7 +175,6 @@ header {
     z-index: 6;
 
     :global {
-
         .ant-breadcrumb li a,
         .ant-breadcrumb-separator {
             font-family: var(--font-family);
@@ -196,7 +192,8 @@ header {
             color: var(--character-light-title-85);
         }
 
-        .ant-typography, .ant-breadcrumb ol {
+        .ant-typography,
+        .ant-breadcrumb ol {
             margin: 0;
         }
 
@@ -269,7 +266,6 @@ header {
 }
 
 @media screen and (max-width: 1390px) {
-
     .main {
         display: flex;
         flex-direction: column;
@@ -282,7 +278,6 @@ header {
             .ant-typography {
                 font-weight: 500;
                 font-size: 24px;
-
             }
         }
     }
@@ -292,11 +287,9 @@ header {
             display: none;
         }
     }
-
 }
 
 @media screen and (max-width: 800px) {
-
     .sider {
         width: 106px;
         position: fixed;
@@ -347,7 +340,6 @@ header {
         }
 
         :global {
-
             .ant-menu {
                 margin-top: 20px;
             }
@@ -366,7 +358,6 @@ header {
                 margin-bottom: 10px;
             }
         }
-
     }
 
     header {
@@ -412,5 +403,4 @@ header {
         margin-top: 0px;
         padding: 24px 16px;
     }
-
 }

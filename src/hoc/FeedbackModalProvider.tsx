@@ -1,6 +1,6 @@
-import {createContext, ReactNode, useState} from "react";
+import { createContext, ReactNode, useState } from 'react';
 
-type FeedbackModalProvider = {
+export type FeedbackModalProviderProps = {
     modalAdd: boolean;
     setModalAdd: (bool: boolean) => void;
     modalError: boolean;
@@ -9,28 +9,30 @@ type FeedbackModalProvider = {
     setModalError500: (bool: boolean) => void;
     modalSuccess: boolean;
     setModalSuccess: (bool: boolean) => void;
-}
+};
 
-export const FeedbackModalContext = createContext<Partial<FeedbackModalProvider>>({});
+export const FeedbackModalContext = createContext<Partial<FeedbackModalProviderProps>>({});
 
-const FeedbackModalProvider = ({children}: { children: ReactNode }) => {
+export const FeedbackModalProvider = ({ children }: { children: ReactNode }) => {
     const [modalAdd, setModalAdd] = useState<boolean>(false);
     const [modalError, setModalError] = useState<boolean>(false);
     const [modalError500, setModalError500] = useState<boolean>(false);
     const [modalSuccess, setModalSuccess] = useState<boolean>(false);
 
     return (
-        <FeedbackModalContext.Provider value={{
-            modalAdd,
-            setModalAdd,
-            modalError,
-            setModalError,
-            modalError500,
-            setModalError500,
-            modalSuccess,
-            setModalSuccess,
-        }}>{children}</FeedbackModalContext.Provider>
+        <FeedbackModalContext.Provider
+            value={{
+                modalAdd,
+                setModalAdd,
+                modalError,
+                setModalError,
+                modalError500,
+                setModalError500,
+                modalSuccess,
+                setModalSuccess,
+            }}
+        >
+            {children}
+        </FeedbackModalContext.Provider>
     );
 };
-
-export default FeedbackModalProvider;

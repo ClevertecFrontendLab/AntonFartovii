@@ -1,11 +1,11 @@
-import {useEffect} from 'react';
-import {useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks.ts";
-import {setIsAuth, setLogout} from "@redux/authSlice.ts";
-import Router from "./Router.tsx";
-import LoaderProvider from "./hoc/LoaderProvider.tsx";
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks.ts';
+import { setIsAuth, setLogout } from '@redux/authSlice.ts';
+import { LoaderProvider } from './hoc/LoaderProvider.tsx';
+import { Router } from './Router.tsx';
 
-const App = () => {
-    const {accessToken, isSaveAuth} = useAppSelector((state) => state.authReducer);
+export const App = () => {
+    const { accessToken, isSaveAuth } = useAppSelector((state) => state.authReducer);
     const dispatch = useAppDispatch();
 
     const isTokenValid = !!accessToken;
@@ -16,14 +16,12 @@ const App = () => {
             if (!isSaveAuth) {
                 dispatch(setLogout());
             }
-        }
+        };
     }, []);
 
     return (
         <LoaderProvider>
-            <Router/>
+            <Router />
         </LoaderProvider>
     );
 };
-
-export default App;

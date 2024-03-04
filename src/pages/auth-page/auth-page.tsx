@@ -1,10 +1,10 @@
 import classes from './auth.module.less';
-import type {MenuProps} from 'antd';
-import {Menu} from "antd";
-import logo from '../../assets/svg/logo.svg'
-import {createContext, useState} from "react";
-import {Link, Outlet} from "react-router-dom";
-import {Paths} from "../../routes/Paths.ts";
+import type { MenuProps } from 'antd';
+import { Menu } from 'antd';
+import logo from '../../assets/svg/logo.svg';
+import { createContext, useState } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import { Paths } from '../../routes/Paths.ts';
 
 interface AuthMenu {
     current: string;
@@ -18,11 +18,11 @@ export const AuthPage = () => {
 
     const items: MenuProps['items'] = [
         {
-            label: (<Link to={''}>Вход</Link>),
+            label: <Link to={''}>Вход</Link>,
             key: 'login',
         },
         {
-            label: (<Link to={Paths.REGISTRATION}>Регистрация</Link>),
+            label: <Link to={Paths.REGISTRATION}>Регистрация</Link>,
             key: 'registration',
         },
     ];
@@ -32,14 +32,13 @@ export const AuthPage = () => {
     };
 
     return (
-        <div className={classes["auth-form-inner-wrapper"]}>
-            <div className={classes["logo"]}>
-                <img src={logo}/>
+        <div className={classes['auth-form-inner-wrapper']}>
+            <div className={classes['logo']}>
+                <img src={logo} alt='Logo cleverfit' />
             </div>
-            <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal"
-                  items={items}/>
-            <MenuContext.Provider value={{current, setCurrent}}>
-                <Outlet/>
+            <Menu onClick={onClick} selectedKeys={[current]} mode='horizontal' items={items} />
+            <MenuContext.Provider value={{ current, setCurrent }}>
+                <Outlet />
             </MenuContext.Provider>
         </div>
     );
