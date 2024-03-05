@@ -1,16 +1,16 @@
 export interface Credentials {
-    email: string,
-    password: string
+    email: string;
+    password: string;
 }
 
 export interface ConfirmEmail {
-    email: string,
-    code: string
+    email: string;
+    code: string;
 }
 
 export interface ChangePassword {
-    password: string,
-    confirmPassword: string
+    password: string;
+    confirmPassword: string;
 }
 
 export type ResponseError = {
@@ -18,6 +18,6 @@ export type ResponseError = {
         message?: string;
         error?: string;
         statusCode?: number;
-    },
+    };
     status: number;
-}
+};

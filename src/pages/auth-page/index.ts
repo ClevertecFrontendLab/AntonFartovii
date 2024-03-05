@@ -1,1 +1,1 @@
-export {AuthPage} from './auth-page.tsx';
+export { AuthPage } from './auth-page.tsx';

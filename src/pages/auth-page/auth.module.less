@@ -43,7 +43,7 @@
         width: 100%;
 
         .ant-form-item {
-            margin: 0px;
+            margin: 0;
         }
     }
 
@@ -62,7 +62,7 @@
 
     .ant-input-affix-wrapper:focus,
     .ant-input-affix-wrapper-focused,
-    .ant-input-password:has(input[type=text]) {
+    .ant-input-password:has(input[type='text']) {
         border: 1px solid var(--primary-light-5);
         box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
     }
@@ -111,11 +111,11 @@
 }
 
 .form-login-wrapper {
-    padding: 0px;
+    padding: 0;
 }
 
 .form-register-wrapper {
-    padding: 0px;
+    padding: 0;
 }
 
 .auth-form-inner-wrapper {
@@ -125,7 +125,7 @@
     align-items: center;
     justify-content: flex-start;
     width: 368px;
-    margin: 0px 54px 8px;
+    margin: 0 54px 8px;
 }
 
 .logo {
@@ -140,17 +140,17 @@
 }
 
 .login-input-wrap {
-    margin: 24px 0px;
+    margin: 24px 0;
 }
 
 .register-input-wrap {
-    margin: 32px 0px;
+    margin: 32px 0;
 }
 
 .change-password-wrap {
     width: 368px;
     height: 291px;
-    margin: 0px 53.5px 8px;
+    margin: 0 53.5px 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -171,7 +171,6 @@
 }
 
 @media screen and (max-width: 600px) {
-
     .logo {
         margin-bottom: 32px;
     }
@@ -183,7 +182,7 @@
 
     .auth-form-inner-wrapper {
         width: 300px;
-        margin: 0px;
+        margin: 0;
     }
 
     .flex-row {
@@ -191,30 +190,29 @@
     }
 
     :global {
-
         .ant-checkbox + span {
             font-family: var(--font-family);
             font-weight: 400;
             font-size: 14px;
             line-height: 130%;
             color: rgba(0, 0, 0, 0.85);
+
+            .forgot-form-button {
+                padding: 0 7px;
+                font-family: var(--font-family);
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 130%;
+                text-align: center;
+                color: var(--primary-light-6);
+            }
         }
 
-        .forgot-form-button {
-            padding: 0px 7px;
-            font-family: var(--font-family);
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 130%;
-            text-align: center;
-            color: var(--primary-light-6);
+        .change-password-wrap {
+            max-width: 298px;
+            width: auto;
+            height: 322px;
+            margin: 0;
         }
-    }
-
-    .change-password-wrap {
-        max-width: 298px;
-        width: auto;
-        height: 322px;
-        margin: 0px;
     }
 }
