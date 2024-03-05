@@ -17,7 +17,7 @@ export const App = () => {
                 dispatch(setLogout());
             }
         };
-    }, []);
+    }, [dispatch, isSaveAuth]);
 
     return (
         <LoaderProvider>

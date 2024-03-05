@@ -15,7 +15,7 @@ export const MainLayout = () => {
         return () => {
             setLoader(false);
         };
-    }, []);
+    }, [setLoader]);
 
     return (
         <>

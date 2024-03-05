@@ -22,7 +22,7 @@ export const FlowConfirmEmail = () => {
 
     useEffect(() => {
         setLoader(isLoading);
-    }, [isLoading]);
+    }, [isLoading, setLoader]);
 
     useEffect(() => {
         if (isError) {
@@ -38,7 +38,7 @@ export const FlowConfirmEmail = () => {
                 }),
             );
         }
-    }, [isSuccess, isError]);
+    }, [isSuccess, isError, dispatch]);
 
     const completeHandler = async (code: string) => {
         email && (await confirmEmail({ email, code }));

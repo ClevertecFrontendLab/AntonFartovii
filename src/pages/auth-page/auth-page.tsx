@@ -6,10 +6,10 @@ import { createContext, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Paths } from '../../routes/Paths.ts';
 
-interface AuthMenu {
+export type AuthMenu = {
     current: string;
     setCurrent: (bool: string) => void;
-}
+};
 
 export const MenuContext = createContext<Partial<AuthMenu>>({});
 

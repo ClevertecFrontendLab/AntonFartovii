@@ -11,6 +11,8 @@ import { FormLogin as IFormLogin } from '@redux/formSlice.ts';
 import { push } from 'redux-first-history';
 import { PathsFull } from '../routes/Paths.ts';
 import { ResponseError } from '@redux/interfaces.ts';
+import { ILoader } from '../hoc/LoaderProvider.tsx';
+import { AuthMenu } from '@pages/auth-page/auth-page.tsx';
 
 export const FormLogin = () => {
     const [isForgotDisabled, setIsForgotDisabled] = useState(false);
@@ -18,8 +20,8 @@ export const FormLogin = () => {
     const [login, loginStatus] = useLoginMutation();
     const [checkEmail, checkEmailStatus] = useCheckEmailMutation();
     const { formLogin } = useAppSelector((state) => state.formReducer);
-    const { setLoader } = useLoader();
-    const { setCurrent } = useMenu();
+    const { setLoader } = useLoader() as ILoader;
+    const { setCurrent } = useMenu() as AuthMenu;
     const location = useLocation();
     const [form] = Form.useForm();
     const dispatch = useAppDispatch();
@@ -30,19 +32,19 @@ export const FormLogin = () => {
                 await checkEmail(formLogin as IFormLogin);
             })();
         }
-    }, []);
+    }, [checkEmail, formLogin, location.state?.key]);
 
     useEffect(() => {
-        setCurrent && setCurrent('login');
-    }, []);
+        setCurrent('login');
+    }, [setCurrent]);
 
     useEffect(() => {
-        setLoader && setLoader(loginStatus.isLoading);
-    }, [loginStatus.isLoading]);
+        setLoader(loginStatus.isLoading);
+    }, [loginStatus.isLoading, setLoader]);
 
     useEffect(() => {
-        setLoader && setLoader(checkEmailStatus.isLoading);
-    }, [checkEmailStatus.isLoading]);
+        setLoader(checkEmailStatus.isLoading);
+    }, [checkEmailStatus.isLoading, setLoader]);
 
     useEffect(() => {
         const email = form.getFieldValue('email');
@@ -54,7 +56,7 @@ export const FormLogin = () => {
                     from: location.pathname,
                 }),
             );
-    }, [checkEmailStatus.isSuccess]);
+    }, [checkEmailStatus.isSuccess, dispatch, form, location.pathname]);
 
     useEffect(() => {
         if (checkEmailStatus.isError) {
@@ -74,7 +76,7 @@ export const FormLogin = () => {
                       }),
                   );
         }
-    }, [checkEmailStatus.isError]);
+    }, [checkEmailStatus.isError, checkEmailStatus.error, dispatch, location.pathname]);
 
     const onFinish = async () => {
         const body = {

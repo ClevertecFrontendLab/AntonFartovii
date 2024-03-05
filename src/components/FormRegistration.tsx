@@ -11,30 +11,32 @@ import { ResponseError } from '@redux/interfaces.ts';
 import { FormRegister, setFormRegister } from '@redux/formSlice.ts';
 import classes from '@pages/auth-page/auth.module.less';
 import { push } from 'redux-first-history';
+import { ILoader } from '../hoc/LoaderProvider.tsx';
+import { AuthMenu } from '@pages/auth-page/auth-page.tsx';
 
 export const FormRegistration = () => {
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
     const [form] = Form.useForm();
     const { formRegister } = useAppSelector((state) => state.formReducer);
     const [registerUser, { isSuccess, isError, isLoading, error, reset }] = useRegisterMutation();
-    const { setLoader } = useLoader();
-    const { setCurrent } = useMenu();
+    const { setLoader } = useLoader() as ILoader;
+    const { setCurrent } = useMenu() as AuthMenu;
     const dispatch = useAppDispatch();
     const location = useLocation();
 
     useEffect(() => {
-        setCurrent && setCurrent('registration');
-    }, []);
+        setCurrent('registration');
+    }, [setCurrent]);
 
     useEffect(() => {
-        setLoader && setLoader(isLoading);
-    }, [isLoading]);
+        setLoader(isLoading);
+    }, [isLoading, setLoader]);
 
     useEffect(() => {
         (async () => {
             location.state?.key === 'resend' && (await registerUser(formRegister as FormRegister));
         })();
-    }, []);
+    }, [formRegister, location.state?.key, registerUser]);
 
     useEffect(() => {
         if (isSuccess) {
@@ -46,7 +48,7 @@ export const FormRegistration = () => {
             );
         }
         reset();
-    }, [isSuccess]);
+    }, [isSuccess, dispatch, reset]);
 
     useEffect(() => {
         if (error) {
@@ -65,7 +67,7 @@ export const FormRegistration = () => {
                       }),
                   );
         }
-    }, [isError]);
+    }, [isError, dispatch, error, location.pathname]);
 
     const onFinish = async () => {
         const body = {

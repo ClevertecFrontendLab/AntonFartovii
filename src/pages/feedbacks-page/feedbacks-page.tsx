@@ -24,11 +24,11 @@ export const FeedbacksPage = () => {
 
     useEffect(() => {
         setLoader(isLoading);
-    }, [isLoading]);
+    }, [isLoading, setLoader]);
 
     useEffect(() => {
         isError && feedbackModal.setModalError500(true);
-    }, [isError]);
+    }, [isError, feedbackModal]);
 
     const expandHandler = async () => {
         setShortData(!shortData);

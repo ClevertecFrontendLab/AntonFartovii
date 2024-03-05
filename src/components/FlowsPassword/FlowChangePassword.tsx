@@ -53,7 +53,7 @@ export const FlowChangePassword = () => {
         }
 
         reset();
-    }, [isError, isSuccess]);
+    }, [isError, isSuccess, dispatch, location.pathname, reset]);
 
     const iconRender = (visible: boolean) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />);
 

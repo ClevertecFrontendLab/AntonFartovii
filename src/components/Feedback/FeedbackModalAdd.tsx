@@ -21,15 +21,16 @@ export const FeedbackModalAdd = () => {
         if (createFeedbackEvents.isError) {
             feedbackModal.setModalAdd(false);
             feedbackModal.setModalError(true);
+            createFeedbackEvents.reset();
         }
-    }, [createFeedbackEvents.isError]);
+    }, [createFeedbackEvents.isError, feedbackModal]);
 
     useEffect(() => {
         if (createFeedbackEvents.isSuccess) {
             feedbackModal.setModalAdd(false);
             feedbackModal.setModalSuccess(createFeedbackEvents.isSuccess);
         }
-    }, [createFeedbackEvents.isSuccess]);
+    }, [createFeedbackEvents.isSuccess, feedbackModal]);
 
     return (
         <Modal

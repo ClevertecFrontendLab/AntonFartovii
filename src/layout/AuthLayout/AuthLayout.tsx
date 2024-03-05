@@ -12,7 +12,7 @@ export const AuthLayout = () => {
         return () => {
             setLoader(false);
         };
-    }, []);
+    }, [setLoader]);
 
     return (
         <div className={classes['auth-wrapper']}>
