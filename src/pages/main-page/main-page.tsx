@@ -54,7 +54,7 @@ export const MainPage: React.FC = () => (
                 <div className={classes['card-button']}>
                     <a>
                         <CalendarTwoTone className={classes['card-icon']} />
-                        <span>Календарь</span>
+                        <Link to={Paths.MAIN + Paths.CALENDAR_PAGE}>Календарь</Link>
                     </a>
                 </div>
             </div>

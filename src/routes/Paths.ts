@@ -1,6 +1,7 @@
 export enum Paths {
     MAIN = '/',
     MAIN_PAGE = 'main',
+    CALENDAR_PAGE = 'calendar',
     AUTH = 'auth',
     FEEDBACKS = 'feedbacks',
     REGISTRATION = 'registration',
@@ -43,4 +44,5 @@ export enum PathsFull {
 export const PathNames: { [key: string]: string } = {
     [Paths.MAIN_PAGE]: 'Главная',
     [Paths.FEEDBACKS]: 'Отзывы пользователей',
+    [Paths.CALENDAR_PAGE]: 'Календарь',
 };

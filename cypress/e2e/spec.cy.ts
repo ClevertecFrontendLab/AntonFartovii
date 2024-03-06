@@ -8,7 +8,7 @@ const DATA_TEST_ID = {
     modalErrorUserTrainingButton: 'modal-error-user-training-button',
     modalErrorUserTrainingButtonClose: 'modal-error-user-training-button-close',
     menuButtonTraining: 'menu-button-training',
-    menuButtonCalendar: 'menu-button-calendar',
+    menuButtonCalendar: 'menu-button-calendar-page',
     menuButtonProfile: 'menu-button-profile',
     modalCreateTraining: 'modal-create-training',
     modalCreateTrainingButtonClose: 'modal-create-training-button-close',
@@ -230,8 +230,8 @@ const postUserTraining = {
     id: '',
     name: 'Спина',
     exercises: [
-        { name: 'Становая тяга', approaches: 10, weight: 50, replays: 3, index: 0 },
-        { name: 'Сведение лопаток', approaches: 10, weight: 50, replays: 3, index: 1 },
+        {name: 'Становая тяга', approaches: 10, weight: 50, replays: 3, index: 0},
+        {name: 'Сведение лопаток', approaches: 10, weight: 50, replays: 3, index: 1},
     ],
     date: dayAfterTomorrow,
 };
@@ -296,11 +296,11 @@ function getFormatDate(date, isStandardFormat) {
 }
 
 const trainingList = [
-    { name: 'Ноги', key: 'legs' },
-    { name: 'Руки', key: 'hands' },
-    { name: 'Силовая', key: 'strenght' },
-    { name: 'Спина', key: 'back' },
-    { name: 'Грудь', key: 'chest' },
+    {name: 'Ноги', key: 'legs'},
+    {name: 'Руки', key: 'hands'},
+    {name: 'Силовая', key: 'strenght'},
+    {name: 'Спина', key: 'back'},
+    {name: 'Грудь', key: 'chest'},
 ];
 
 const trainingArray = ['Ноги', 'Руки', 'Силовая', 'Спина', 'Грудь'];
@@ -320,13 +320,13 @@ const remainingSelectOptions = reduceItem(userTraining, trainingArray, threeDays
 describe('Sprint 4', () => {
     describe('Calendar', () => {
         const resolutionFull = [
-            { width: 360, height: 740 },
-            { width: 833, height: 900 },
-            { width: 1440, height: 900 },
+            {width: 360, height: 740},
+            {width: 833, height: 900},
+            {width: 1440, height: 900},
         ];
-        const resolutionMobile = [{ width: 360, height: 740 }];
-        const resolutionTablet = [{ width: 833, height: 900 }];
-        const resolutionLaptop = [{ width: 1440, height: 900 }];
+        const resolutionMobile = [{width: 360, height: 740}];
+        const resolutionTablet = [{width: 833, height: 900}];
+        const resolutionLaptop = [{width: 1440, height: 900}];
 
         function takeScreenshots(screenshotName, resolution = resolutionFull) {
             cy.wait(1000);
@@ -475,6 +475,7 @@ describe('Sprint 4', () => {
                 .should('equal', 'Прыжки с нагрузкой');
             cy.get(`[data-test-id=${DATA_TEST_ID.modalDrawerRightButtonClose}]`).click();
         }
+
         function goToCalendar() {
             cy.intercept('GET', 'catalogs/training-list', {
                 body: trainingList,
@@ -495,7 +496,7 @@ describe('Sprint 4', () => {
             }).as('putUserTraining');
 
             cy.get(`[data-test-id=${DATA_TEST_ID.menuButtonCalendar}]`).click();
-            cy.url().should('include', '/calendar');
+            cy.url().should('include', '/calendar-page');
             cy.get(`[title=${getFormatDate(today, true)}]`).contains('Ноги');
         }
 
@@ -514,7 +515,7 @@ describe('Sprint 4', () => {
 
         beforeEach(() => {
             cy.visit('/');
-            cy.intercept('POST', 'auth/login', { accessToken: 'SUPERUSER' }).as('login');
+            cy.intercept('POST', 'auth/login', {accessToken: 'SUPERUSER'}).as('login');
             cy.visit('/auth');
             cy.get('[data-test-id=login-email]').type('valadzkoaliaksei@tut.by');
             cy.get('[data-test-id=login-password]').type('1234qqQQ');
@@ -522,7 +523,7 @@ describe('Sprint 4', () => {
             cy.url().should('include', '/main');
         });
 
-        it('come to calendar', () => {
+        it('come to calendar-page', () => {
             cy.viewport(1440, 900);
             cy.intercept('GET', 'training', {
                 statusCode: 404,
@@ -546,13 +547,13 @@ describe('Sprint 4', () => {
             }).as('getUserTraining');
             cy.get(`[data-test-id=${DATA_TEST_ID.menuButtonCalendar}]`).click();
             cy.wait('@getTrainingList');
-            cy.url().should('include', '/calendar');
+            cy.url().should('include', '/calendar-page');
             takeScreenshots('get-training-list-error', resolutionLaptop);
             cy.get(`[data-test-id=${DATA_TEST_ID.modalErrorUserTrainingButton}]`).click();
             cy.wait('@getTrainingList');
             cy.get(`[data-test-id=${DATA_TEST_ID.modalErrorUserTrainingButtonClose}]`).click();
-            cy.url().should('include', '/calendar');
-            takeScreenshots('empty-calendar-page', resolutionLaptop);
+            cy.url().should('include', '/calendar-page');
+            takeScreenshots('empty-calendar-page-page', resolutionLaptop);
             cy.intercept('GET', 'catalogs/training-list', {
                 body: trainingList,
                 statusCode: 200,
@@ -560,7 +561,7 @@ describe('Sprint 4', () => {
             cy.contains('Главная').click();
             cy.get(`[data-test-id=${DATA_TEST_ID.menuButtonCalendar}]`).click();
             cy.wait(1000);
-            takeScreenshots('calendar-page', resolutionLaptop);
+            takeScreenshots('calendar-page-page', resolutionLaptop);
             cy.contains('Ноги').should('be.exist');
         });
 
@@ -658,8 +659,8 @@ describe('Sprint 4', () => {
                 body: userTraining.map((el) =>
                     el._id === '8'
                         ? JSON.parse(
-                              JSON.stringify(returnUpdateUserTraining('8', threeDaysLater, false)),
-                          )
+                            JSON.stringify(returnUpdateUserTraining('8', threeDaysLater, false)),
+                        )
                         : JSON.parse(JSON.stringify(el)),
                 ),
                 statusCode: 200,

@@ -1,6 +1,8 @@
 import { combineReducers, configureStore, Middleware } from '@reduxjs/toolkit';
 import { authApi } from '@redux/api/authApi.ts';
 import { feedbackApi } from '@redux/api/feedbacksApi.ts';
+import { catalogsApi } from '@redux/api/catalogsApi.ts';
+import { trainingApi } from '@redux/api/trainingApi.ts';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import authReducer from './authSlice.ts';
 import formReducer from './formSlice.ts';
@@ -15,6 +17,8 @@ const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHisto
 const rootReducer = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
     [feedbackApi.reducerPath]: feedbackApi.reducer,
+    [catalogsApi.reducerPath]: catalogsApi.reducer,
+    [trainingApi.reducerPath]: trainingApi.reducer,
     authReducer,
     formReducer,
     router: routerReducer,
@@ -45,6 +49,8 @@ export const store = configureStore({
         getDefaultMiddleware().concat([
             authApi.middleware,
             feedbackApi.middleware,
+            catalogsApi.middleware,
+            trainingApi.middleware,
             localStorageMiddleware,
             routerMiddleware,
         ]),

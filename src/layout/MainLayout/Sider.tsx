@@ -18,6 +18,8 @@ import { Layout, Menu } from 'antd';
 import { Logo } from '@components/Logo.tsx';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { Key, ReactNode } from 'react';
+import { Paths } from '../../routes/Paths.ts';
+import { Link } from 'react-router-dom';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -52,7 +54,11 @@ export const Sider = ({ collapsed, onCollapsed }: ISider) => {
     };
 
     const items: MenuItem[] = [
-        getItem('Календарь', '1', size.width && size.width > 800 && <CalendarTwoTone />),
+        getItem(
+            <Link to={Paths.MAIN + Paths.CALENDAR_PAGE}>Календарь</Link>,
+            'calendar',
+            size.width && size.width > 800 && <CalendarTwoTone />,
+        ),
         getItem('Тренировки', '2', size.width && size.width > 800 && <TrophyTwoTone />),
         getItem('Достижения', '3', size.width && size.width > 800 && <HeartTwoTone />),
         getItem('Профиль', '4', size.width && size.width > 800 && <IdcardOutlined />),
