@@ -10,6 +10,11 @@ export const FeedbackModalError500 = () => {
     const size = useWindowSize();
     const dispatch = useAppDispatch();
 
+    const buttonHandler = () => {
+        feedbackModal.setModalError500(false);
+        dispatch(push('/main'));
+    };
+
     return (
         <Modal
             width={size.width && size.width > 800 ? 539 : 328}
@@ -26,7 +31,7 @@ export const FeedbackModalError500 = () => {
                 title='Что-то пошло не так'
                 subTitle='Произошла ошибка, попробуйте ещё раз.'
                 extra={
-                    <Button type='primary' onClick={() => dispatch(push('/main'))}>
+                    <Button type='primary' onClick={buttonHandler}>
                         Назад
                     </Button>
                 }

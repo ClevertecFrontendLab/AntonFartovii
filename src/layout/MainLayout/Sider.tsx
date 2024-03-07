@@ -18,8 +18,7 @@ import { Layout, Menu } from 'antd';
 import { Logo } from '@components/Logo.tsx';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { Key, ReactNode } from 'react';
-import { Paths } from '../../routes/Paths.ts';
-import { Link } from 'react-router-dom';
+import { useMainContext } from '@hooks/useMainContext.ts';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -45,6 +44,7 @@ function getItem(
 }
 
 export const Sider = ({ collapsed, onCollapsed }: ISider) => {
+    const { setSkip } = useMainContext();
     const dispatch = useAppDispatch();
     const size = useWindowSize();
 
@@ -55,7 +55,7 @@ export const Sider = ({ collapsed, onCollapsed }: ISider) => {
 
     const items: MenuItem[] = [
         getItem(
-            <Link to={Paths.MAIN + Paths.CALENDAR_PAGE}>Календарь</Link>,
+            <a onClick={() => setSkip(false)}>Календарь</a>,
             'calendar',
             size.width && size.width > 800 && <CalendarTwoTone />,
         ),

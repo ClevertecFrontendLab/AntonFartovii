@@ -29,22 +29,17 @@ export const Router = () => (
             <Route
                 path={Paths.MAIN}
                 element={
-                    <PrivateMain>
-                        <MainLayout />
-                    </PrivateMain>
+                    <FeedbackModalProvider>
+                        <PrivateMain>
+                            <MainLayout />
+                        </PrivateMain>
+                    </FeedbackModalProvider>
                 }
             >
                 <Route index element={<Navigate to={Paths.MAIN_PAGE} />} />
                 <Route path={Paths.CALENDAR_PAGE} element={<CalendarPage />} />
                 <Route path={Paths.MAIN_PAGE} element={<MainPage />} />
-                <Route
-                    path={Paths.FEEDBACKS}
-                    element={
-                        <FeedbackModalProvider>
-                            <FeedbacksPage />
-                        </FeedbackModalProvider>
-                    }
-                />
+                <Route path={Paths.FEEDBACKS} element={<FeedbacksPage />} />
             </Route>
             <Route
                 element={
