@@ -2,15 +2,12 @@ import { useWindowSize } from '@uidotdev/usehooks';
 import { Button, Modal, Result } from 'antd';
 import { useMainContext } from '@hooks/useMainContext.ts';
 import { MainContextType } from '../../layout/MainLayout/MainLayout.tsx';
-import { useNavigate } from 'react-router-dom';
 
 export const Modal500 = () => {
-    const { modal500, setModal500, setSkip } = useMainContext() as MainContextType;
+    const { modal500, setModal500 } = useMainContext() as MainContextType;
     const size = useWindowSize();
-    const navigate = useNavigate();
 
     const buttonHandler = () => {
-        setSkip(true);
         setModal500(false);
     };
 

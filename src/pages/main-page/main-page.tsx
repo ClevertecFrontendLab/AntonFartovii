@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from './main.module.less';
 import { Typography } from 'antd/';
 import {
@@ -13,9 +13,29 @@ import { Paths } from '../../routes/Paths.ts';
 import { useMainContext } from '@hooks/useMainContext.ts';
 import { MainContextType } from '../../layout/MainLayout/MainLayout.tsx';
 import { Modal500 } from '@components/Calendar/Modal500.tsx';
+import { useLazyGetTrainingQuery } from '@redux/api/trainingApi.ts';
+import { useLoader } from '@hooks/useLoader.ts';
+import { ILoader } from '../../hoc/LoaderProvider.tsx';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
+import { push } from 'redux-first-history';
 
 export const MainPage: React.FC = () => {
-    const { setSkip } = useMainContext() as MainContextType;
+    const { setModal500 } = useMainContext() as MainContextType;
+    const { setLoader } = useLoader() as ILoader;
+    const [query, queryState] = useLazyGetTrainingQuery();
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        setLoader(queryState.isLoading);
+    }, [queryState.isLoading, setLoader]);
+
+    useEffect(() => {
+        queryState.isError && setModal500(true);
+    }, [queryState.isError, setModal500]);
+
+    useEffect(() => {
+        queryState.isSuccess && dispatch(push('/calendar-page'));
+    }, [queryState.isSuccess, dispatch]);
 
     return (
         <>
@@ -59,13 +79,7 @@ export const MainPage: React.FC = () => {
                             <a>Назначить календарь</a>
                         </div>
                         <div className={classes['card-button']}>
-                            <a
-                                onClick={() => {
-                                    // setSkip(true);
-                                    setSkip(false);
-                                }}
-                                data-test-id='menu-button-calendar-page'
-                            >
+                            <a onClick={() => query()} data-test-id='menu-button-calendar-page'>
                                 <CalendarTwoTone className={classes['card-icon']} />
                                 <span>Календарь</span>
                             </a>

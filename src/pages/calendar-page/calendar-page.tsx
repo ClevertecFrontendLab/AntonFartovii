@@ -12,42 +12,33 @@ import { Exercise } from '@redux/api/trainingApi.ts';
 import ModalTrainingList from '@components/Calendar/ModalTrainingList.tsx';
 import ModalExercises from '@components/Calendar/ModalExercises.tsx';
 import { CloseCircleOutlined } from '@ant-design/icons';
+import { useGetTrainingListQuery } from '@redux/api/catalogsApi.ts';
 
 export const CalendarPage = () => {
-    const {
-        drawerExercise,
-        setDrawerExercise,
-        setModalExercise,
-        setModalTraining,
-        setRefetch,
-        setSkip,
-        modalErrorInfo,
-    } = useMainContext() as MainContextType;
+    const { drawerExercise, setDrawerExercise, setModalExercise, setModalTraining } =
+        useMainContext() as MainContextType;
+    const [modalErrorInfo, setModalErrorInfo] = useState<boolean>(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const [savedExercises, onSaveExercises] = useState<Exercise[]>([]);
     const { error } = Modal;
+    const { currentDate, currentTraining } = useAppSelector((state) => state.calendarReducer);
+    const { isError, refetch } = useGetTrainingListQuery();
     const dispatch = useAppDispatch();
 
-    const { currentDate, currentTraining } = useAppSelector((state) => state.calendarReducer);
+    useEffect(() => {
+        isError && setModalErrorInfo(true);
+    }, [refetch, isError, setModalErrorInfo]);
 
     useEffect(() => {
         return () => {
             setModalTraining(false);
             setModalExercise(false);
         };
-    }, []);
+    }, [setModalTraining, setModalExercise]);
 
     useEffect(() => {
-        if (modalErrorInfo) {
-            Modal.destroyAll();
-            showModalError();
-        }
+        modalErrorInfo && showModalError();
     }, [modalErrorInfo]);
-
-    const refetch = () => {
-        Modal.destroyAll();
-        setRefetch(true);
-    };
 
     const showModalError = useCallback(
         () =>
@@ -63,8 +54,7 @@ export const CalendarPage = () => {
                     </span>
                 ),
                 icon: <CloseCircleOutlined data-test-id='modal-error-user-training-button-close' />,
-                onOk: refetch,
-                onCancel: () => setSkip(true),
+                onOk: () => refetch(),
                 okButtonProps: {
                     'data-test-id': 'modal-error-user-training-button',
                 } as ButtonProps,
