@@ -6,6 +6,7 @@ import { trainingApi } from '@redux/api/trainingApi.ts';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import authReducer from './authSlice.ts';
 import formReducer from './formSlice.ts';
+import calendarReducer from './calendarSlice.ts';
 import { createReduxHistoryContext } from 'redux-first-history';
 import { createBrowserHistory } from 'history';
 
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     [trainingApi.reducerPath]: trainingApi.reducer,
     authReducer,
     formReducer,
+    calendarReducer,
     router: routerReducer,
 });
 

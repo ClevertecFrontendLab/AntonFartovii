@@ -88,7 +88,8 @@ export const FormLogin = () => {
     };
 
     const onChange = () => {
-        form.getFieldValue('email').length > 0 && setIsForgotDisabled(false);
+        const email = form.getFieldValue('email');
+        email && email.length > 0 && setIsForgotDisabled(false);
         form.validateFields(['email'])
             .then(() => {
                 setFormValid(false);

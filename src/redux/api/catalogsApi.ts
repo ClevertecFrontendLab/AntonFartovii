@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '@redux/configure-store.ts';
+import { setTrainingList } from '@redux/calendarSlice.ts';
 
 export type TrainingListItem = {
     name: string;
@@ -45,6 +46,19 @@ export const catalogsApi = createApi({
                 };
             },
             providesTags: ['TrainingList'],
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(setTrainingList(data));
+                    //     const { data } = await queryFulfilled;
+                    //     const obj = data.reduce((acc: TrainingList, item) => {
+                    //         return { ...acc, [item.key]: item.name };
+                    //     }, {});
+                    //     dispatch(setTrainingList(obj));
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         }),
         getUserList: builder.query<User[], void>({
             query: () => {
@@ -78,6 +92,7 @@ export const catalogsApi = createApi({
 
 export const {
     useGetTrainingListQuery,
+    useLazyGetTrainingListQuery,
     useGetUserListQuery,
     useGetTariffListQuery,
     useGetUserJointTrainingListQuery,

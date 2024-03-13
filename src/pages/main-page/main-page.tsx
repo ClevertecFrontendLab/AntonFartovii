@@ -10,11 +10,12 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { Paths } from '../../routes/Paths.ts';
-import { FeedbackModalError500 } from '@components/Feedback/FeedbackModalError500.tsx';
 import { useMainContext } from '@hooks/useMainContext.ts';
+import { MainContextType } from '../../layout/MainLayout/MainLayout.tsx';
+import { Modal500 } from '@components/Calendar/Modal500.tsx';
 
 export const MainPage: React.FC = () => {
-    const { setSkip } = useMainContext();
+    const { setSkip } = useMainContext() as MainContextType;
 
     return (
         <>
@@ -58,7 +59,13 @@ export const MainPage: React.FC = () => {
                             <a>Назначить календарь</a>
                         </div>
                         <div className={classes['card-button']}>
-                            <a onClick={() => setSkip(false)} data-test-id='menu-button-calendar'>
+                            <a
+                                onClick={() => {
+                                    // setSkip(true);
+                                    setSkip(false);
+                                }}
+                                data-test-id='menu-button-calendar-page'
+                            >
                                 <CalendarTwoTone className={classes['card-icon']} />
                                 <span>Календарь</span>
                             </a>
@@ -108,7 +115,7 @@ export const MainPage: React.FC = () => {
                     </div>
                 </div>
             </section>
-            <FeedbackModalError500 />
+            <Modal500 />
         </>
     );
 };

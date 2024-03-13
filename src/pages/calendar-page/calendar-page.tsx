@@ -1,106 +1,104 @@
-import { Calendar, Modal, Select } from 'antd';
-import { useCallback, useEffect, useState } from 'react';
-import { useLoader } from '@hooks/useLoader.ts';
-import { ILoader } from '../../hoc/LoaderProvider.tsx';
-import { TrainingListItem, useGetTrainingListQuery } from '@redux/api/catalogsApi.ts';
-import { ArrowLeftOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import { formatDate } from '../../utils.ts';
+import { ButtonProps, Calendar, Drawer, Modal } from 'antd';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import classes from './calendar.module.less';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks.ts';
+import { addTemporaryDay } from '@redux/calendarSlice.ts';
+import { CalendarCellDay } from '@components/CalendarCellDay.tsx';
+import { useMainContext } from '@hooks/useMainContext.ts';
+import { MainContextType } from '../../layout/MainLayout/MainLayout.tsx';
+import moment from 'moment';
+import { ExerciseList } from '@components/ExerciseList.tsx';
+import { Exercise } from '@redux/api/trainingApi.ts';
+import ModalTrainingList from '@components/Calendar/ModalTrainingList.tsx';
+import ModalExercises from '@components/Calendar/ModalExercises.tsx';
+import { CloseCircleOutlined } from '@ant-design/icons';
 
 export const CalendarPage = () => {
-    const [modalDate, setModalDate] = useState<boolean>(false);
-    const [modalAdd, setModalAdd] = useState<boolean>(false);
-    const [date, setDate] = useState<string>('');
-    const { setLoader } = useLoader() as ILoader;
-    const trainingQueryList = useGetTrainingListQuery(undefined);
+    const {
+        drawerExercise,
+        setDrawerExercise,
+        setModalExercise,
+        setModalTraining,
+        setRefetch,
+        setSkip,
+        modalErrorInfo,
+    } = useMainContext() as MainContextType;
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [savedExercises, onSaveExercises] = useState<Exercise[]>([]);
     const { error } = Modal;
-    // data-test-id='modal-error-user-training-title'
-    // data-test-id='modal-error-user-training-subtitle'
-    // data-test-id='modal-error-user-training-button'
-    // data-test-id='modal-error-user-training-button-close'
+    const dispatch = useAppDispatch();
 
-    const refetch = useCallback(() => {
+    const { currentDate, currentTraining } = useAppSelector((state) => state.calendarReducer);
+
+    useEffect(() => {
+        return () => {
+            setModalTraining(false);
+            setModalExercise(false);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (modalErrorInfo) {
+            Modal.destroyAll();
+            showModalError();
+        }
+    }, [modalErrorInfo]);
+
+    const refetch = () => {
         Modal.destroyAll();
-        trainingQueryList.refetch();
-    }, [trainingQueryList]);
+        setRefetch(true);
+    };
 
-    const modalInfo = useCallback(
+    const showModalError = useCallback(
         () =>
             error({
-                title: 'При открытии данных произошла ошибка',
-                content: 'Попробуйте ещё раз',
-                icon: <CloseCircleOutlined />,
+                title: (
+                    <span data-test-id='modal-error-user-training-title'>
+                        При открытии данных произошла ошибка
+                    </span>
+                ),
+                content: (
+                    <span data-test-id='modal-error-user-training-subtitle'>
+                        Попробуйте ещё раз
+                    </span>
+                ),
+                icon: <CloseCircleOutlined data-test-id='modal-error-user-training-button-close' />,
                 onOk: refetch,
+                onCancel: () => setSkip(true),
+                okButtonProps: {
+                    'data-test-id': 'modal-error-user-training-button',
+                } as ButtonProps,
             }),
         [error, refetch],
     );
 
-    useEffect(() => {
-        setLoader(trainingQueryList.isLoading);
-    }, [trainingQueryList.isLoading, setLoader]);
-
-    useEffect(() => {
-        trainingQueryList.isError && modalInfo();
-    }, [trainingQueryList.isError, modalInfo]);
-
-    useEffect(() => {
-        if (trainingQueryList.isSuccess) {
-            console.log('trainingQueryList.isSuccess', trainingQueryList.data);
-        }
-    }, [trainingQueryList.isSuccess, trainingQueryList.data]);
-
-    const onSelect = (date) => {
-        setDate(formatDate(date._d));
-        setModalDate(true);
-    };
-
-    const clickModal = () => {
-        setModalDate(false);
-        setModalAdd(true);
-    };
-
-    const handleChange = () => {
-        console.log('1');
-    };
-
-    const printTrainingList = ({ name, key }: TrainingListItem) => {
-        return { name: key, label: name };
+    const closeDrawerHandler = () => {
+        setDrawerExercise(false);
+        const data = savedExercises.filter((exercise: Exercise) => exercise.name !== '');
+        dispatch(addTemporaryDay({ name: currentTraining, exercises: data }));
     };
 
     return (
-        <div>
-            <Calendar onSelect={onSelect} />
+        <div ref={containerRef}>
+            <Calendar dateFullCellRender={(date) => <CalendarCellDay date={moment(date)} />} />
+            <ModalTrainingList />
+            <ModalExercises />
 
-            <Modal
-                title={<>Тренировки на {date}</>}
-                open={modalDate}
-                closable={true}
-                cancelButtonProps={{ hidden: true }}
-                onCancel={() => setModalDate(false)}
-                onOk={clickModal}
-                okText='Создать тренировку'
-                okButtonProps={{ style: { width: '100%' } }}
+            <Drawer
+                className={classes['drawer-exercise-wrap']}
+                title={<div>+ Добавление упражнений</div>}
+                closable
+                open={drawerExercise}
+                onClose={closeDrawerHandler}
             >
-                Нет активных тренировок
-            </Modal>
-            <Modal
-                className={classes['modal-create-training']}
-                closable={false}
-                onCancel={() => setModalAdd(false)}
-                open={modalAdd}
-                title={
-                    <>
-                        <ArrowLeftOutlined />
-                        <Select
-                            defaultValue='Выбор типа тренировки'
-                            style={{ width: '100%' }}
-                            onChange={handleChange}
-                            options={trainingQueryList.data?.map(printTrainingList)}
-                        />
-                    </>
-                }
-                okText='Добавить упражнения'
-            ></Modal>
+                <div className={classes['drawer-subtitle']}>
+                    <span>{currentTraining}</span>
+                    <span>{currentDate}</span>
+                </div>
+                <div className={classes['drawer-exercises-container']}>
+                    <ExerciseList onSaveExercises={onSaveExercises} />
+                </div>
+            </Drawer>
         </div>
     );
 };

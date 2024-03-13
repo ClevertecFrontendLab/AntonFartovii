@@ -1,21 +1,111 @@
-.modal-create-training {
+
+.modal-wrap {
+    height: min-content;
+    overflow: hidden;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    background: var(--character-light-primary-inverse);
+    width: 312px;
+}
+
+.modal-training {
+    min-height: 200px;
+}
+
+.modal-exercise {
+    min-height: 240px;
+}
+
+.modal-training,
+.modal-exercise {
     width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: 0px auto;
+    padding: 0px;
+    transition: unset;
 
     :global {
+
         .ant-modal-title {
             display: flex;
             flex-direction: row;
             gap: 10px;
         }
 
+        .ant-modal-header {
+            padding: 12px;
+        }
+
         .ant-modal-body {
-            min-height: 50px;
+            width: 100%;
+            min-height: 84px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ant-modal-content {
+            box-shadow: unset;
         }
 
         .ant-modal-footer {
+            height: 64px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
     }
+}
+
+.modal-training-item {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.drawer-subtitle {
+    width: 100%;
+    padding-bottom: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.drawer-exercise-wrap {
+
+    :global {
+
+        .ant-drawer-header {
+            padding: 24px 32px 16px;
+
+            .ant-drawer-header-title {
+                flex-direction: row-reverse;
+            }
+        }
+
+        .ant-drawer-body {
+            padding: 24px 32px;
+        }
+    }
+
+    .drawer-exercises-container {
+        .drawer-exercise {
+            width: 100%;
+        }
+    }
+
+    .form-flex-row {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .form-flex-col {
+        display: flex;
+        flex-direction: column;
+    }
+
 }

@@ -1,7 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '@redux/configure-store.ts';
+import { setUserCalendar, UserCalendar } from '@redux/calendarSlice.ts';
+import { formatDate } from '../../utils.ts';
 
-export type Exercises = {
+export type Exercise = {
     _id: string;
     name: string;
     replays: number;
@@ -24,7 +26,7 @@ export type Training = {
     isImplementation: boolean;
     userId: string;
     parameters: Parameter;
-    exercises: Exercises[];
+    exercises: Exercise[];
 };
 
 export const trainingApi = createApi({
@@ -47,6 +49,20 @@ export const trainingApi = createApi({
                 method: 'GET',
             }),
             providesTags: ['Trainings'],
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    const obj: UserCalendar = {};
+                    data.forEach((training: Training) => {
+                        const date = formatDate(training.date);
+                        const prevStare = obj[date] ? obj[date] : [];
+                        obj[date] = [...prevStare, training];
+                    });
+                    dispatch(setUserCalendar(obj));
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         }),
         createTraining: builder.mutation<Training, Omit<Training, 'userId'>>({
             query: (body) => ({
@@ -76,6 +92,7 @@ export const trainingApi = createApi({
 
 export const {
     useGetTrainingQuery,
+    useLazyGetTrainingQuery,
     useCreateTrainingMutation,
     useUpdateTrainingMutation,
     useDeleteTrainingMutation,
