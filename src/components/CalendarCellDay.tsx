@@ -3,16 +3,19 @@ import { useMainContext } from '@hooks/useMainContext.ts';
 import { MainContextType } from '../layout/MainLayout/MainLayout.tsx';
 import { formatDate } from '../utils.ts';
 import { setCurrentDate, setCurrentTraining } from '@redux/calendarSlice.ts';
-import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks.ts';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
 import { Moment } from 'moment';
 import { Training } from '@redux/api/trainingApi.ts';
 import { Badge } from 'antd';
+import { useWindowSize } from '@uidotdev/usehooks';
 
 export const CalendarCellDay = ({ date }: { date: Moment }) => {
     const refElement = useRef(null);
     const [day, setDay] = useState<number | null>(null);
-    const { setCoords, setModalTraining, setModalExercise } = useMainContext() as MainContextType;
-    const { userCalendar, trainingList } = useAppSelector((state) => state.calendarReducer);
+    const [data, setData] = useState<Training[] | undefined>(undefined);
+    const { setCoords, setModalTraining, setModalExercise, calendar, setDate } =
+        useMainContext() as MainContextType;
+    const size = useWindowSize();
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -20,7 +23,14 @@ export const CalendarCellDay = ({ date }: { date: Moment }) => {
         setDay(day);
     }, []);
 
+    useEffect(() => {
+        if (calendar[formatDate(date._d)]) {
+            setData(calendar[formatDate(date._d)]);
+        }
+    }, [calendar]);
+
     const onSelectCalendar = () => {
+        setDate(new Date(date._d));
         const coords =
             refElement.current && (refElement.current as HTMLDivElement).getBoundingClientRect();
         setCoords(coords);
@@ -37,14 +47,16 @@ export const CalendarCellDay = ({ date }: { date: Moment }) => {
             className='ant-picker-cell-inner ant-picker-calendar-date'
         >
             <div className='ant-picker-calendar-date-value'>{day}</div>
-            <div className='ant-picker-calendar-date-content'>
-                {trainingList &&
-                    trainingList.length > 0 &&
-                    userCalendar[formatDate(date._d)] &&
-                    userCalendar[formatDate(date._d)].map(({ name }: Training) => (
-                        <Badge color='blue' text={name} />
-                    ))}
-            </div>
+            {size.width && size.width > 800 && (
+                <div className='ant-picker-calendar-date-content'>
+                    {data &&
+                        data.map(({ name }: Training) => (
+                            <div key={name}>
+                                <Badge color='blue' text={name} />
+                            </div>
+                        ))}
+                </div>
+            )}
         </div>
     );
 };

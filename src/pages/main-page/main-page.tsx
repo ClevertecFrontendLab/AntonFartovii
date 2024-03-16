@@ -18,9 +18,11 @@ import { useLoader } from '@hooks/useLoader.ts';
 import { ILoader } from '../../hoc/LoaderProvider.tsx';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
 import { push } from 'redux-first-history';
+import { formatCalendar } from '../../utils.ts';
+import { deleteTemporaryDay } from '@redux/calendarSlice.ts';
 
 export const MainPage: React.FC = () => {
-    const { setModal500 } = useMainContext() as MainContextType;
+    const { setModal500, setCalendar } = useMainContext() as MainContextType;
     const { setLoader } = useLoader() as ILoader;
     const [query, queryState] = useLazyGetTrainingQuery();
     const dispatch = useAppDispatch();
@@ -34,8 +36,16 @@ export const MainPage: React.FC = () => {
     }, [queryState.isError, setModal500]);
 
     useEffect(() => {
-        queryState.isSuccess && dispatch(push('/calendar-page'));
-    }, [queryState.isSuccess, dispatch]);
+        if (queryState.isSuccess) {
+            const calendar = queryState.data && formatCalendar(queryState.data);
+            calendar && setCalendar(calendar);
+            dispatch(push(Paths.MAIN + Paths.CALENDAR_PAGE));
+        }
+    }, [queryState.isSuccess, dispatch, queryState.data, setCalendar]);
+
+    useEffect(() => {
+        dispatch(deleteTemporaryDay());
+    }, []);
 
     return (
         <>

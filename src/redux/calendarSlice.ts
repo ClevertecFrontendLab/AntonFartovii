@@ -9,29 +9,34 @@ export type UserCalendar = { [key: string]: Training[] };
 export type TemporaryDay = Training[];
 
 export type CalendarState = {
-    userCalendar: UserCalendar;
     temporaryDay: TemporaryDay;
     currentDate: string;
     currentTraining: string;
+    currentIndex: number;
+    currentEditTraining: Training | undefined;
     trainingList: TrainingListItem[];
-    exercises: Exercise[];
 };
 
 const initialState: CalendarState = {
-    userCalendar: {},
     temporaryDay: [],
+    currentEditTraining: undefined,
     currentDate: '',
     currentTraining: '',
+    currentIndex: 0,
     trainingList: [],
-    exercises: [],
 };
 
 export const calendarSlice = createSlice({
     name: 'calendar',
     initialState,
     reducers: {
+        setCurrentEditTraining: (state, action: PayloadAction<Training | undefined>) => {
+            state.currentEditTraining = action.payload;
+        },
+        setCurrentIndex: (state, action: PayloadAction<number>) => {
+            state.currentIndex = action.payload;
+        },
         clearCalendar: (state) => {
-            state.exercises = [];
             state.temporaryDay = [];
         },
         setTemporaryDay: (state, action: PayloadAction<TemporaryDay>) => {
@@ -63,9 +68,6 @@ export const calendarSlice = createSlice({
         deleteTemporaryDay: (state) => {
             state.temporaryDay = [];
         },
-        setUserCalendar: (state, action: PayloadAction<UserCalendar>) => {
-            state.userCalendar = action.payload;
-        },
         setCurrentDate: (state, action: PayloadAction<string>) => {
             state.currentDate = action.payload;
         },
@@ -75,31 +77,15 @@ export const calendarSlice = createSlice({
         setTrainingList: (state, action: PayloadAction<TrainingListItem[]>) => {
             state.trainingList = action.payload;
         },
-        setExercises: (state, action: PayloadAction<Exercise[]>) => {
-            state.exercises = action.payload;
-        },
-        addExercises: (state, action: PayloadAction<Exercise[]>) => {
-            if (Array.isArray(state.exercises)) {
-                const exercisesToAdd = action.payload.filter(Boolean) as Exercise[];
-                state.exercises = [...state.exercises, ...exercisesToAdd];
-            } else {
-                state.exercises = action.payload.filter(Boolean) as Exercise[];
-            }
-        },
-        deleteExercises: (state) => {
-            state.exercises = [];
-        },
     },
 });
 
 export const {
+    setCurrentEditTraining,
+    setCurrentIndex,
     setTemporaryDay,
     addTemporaryDay,
     deleteTemporaryDay,
-    deleteExercises,
-    setUserCalendar,
-    addExercises,
-    setExercises,
     setCurrentDate,
     setTrainingList,
     setCurrentTraining,
