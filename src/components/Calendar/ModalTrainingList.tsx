@@ -8,6 +8,7 @@ import { deleteTemporaryDay, setCurrentDate } from '@redux/calendarSlice.ts';
 import { useEffect, useState } from 'react';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { ModalContentTraining } from '@components/Calendar/ModalContentTraining.tsx';
+import { getModalCoords } from '../../utils.ts';
 
 export const ModalTrainingList = () => {
     const [okDisabled, setOkDisabled] = useState<boolean>(false);
@@ -20,27 +21,16 @@ export const ModalTrainingList = () => {
         modalTraining,
         setModalTraining,
         setModalExercise,
-        coords,
         calendar,
         date,
         setEditMode,
+        cellRef,
     } = useMainContext() as MainContextType;
 
     useEffect(() => {
-        if (size && coords) {
-            const value =
-                size.width && size.width > coords.left && coords?.left + 312
-                    ? {
-                          left: coords?.left,
-                          top: coords?.top,
-                      }
-                    : {
-                          left: coords?.right - 312,
-                          top: coords?.top,
-                      };
-            setModalCoords(value);
-        }
-    }, []);
+        const coords = getModalCoords(cellRef, size);
+        coords && setModalCoords(coords);
+    }, [size, cellRef]);
 
     useEffect(() => {
         const today = new Date();
@@ -57,7 +47,7 @@ export const ModalTrainingList = () => {
                 setOkDisabled(false);
             }
         }
-    }, [currentDate, calendar]);
+    }, [currentDate, calendar, date, trainingList.length]);
 
     const onClose = () => {
         setEditMode(false);
@@ -68,16 +58,17 @@ export const ModalTrainingList = () => {
 
     const title = (
         <>
-            Тренировки на {currentDate}
-            <br />
-            {!calendar[currentDate] && 'Нет активных тренировок'}
+            <span className={classes['title-training']}>Тренировки на {currentDate}</span>
+            {!calendar[currentDate] && (
+                <span className={classes['subtitle-training']}>Нет активных тренировок</span>
+            )}
         </>
     );
 
     return (
         <Modal
             mask={false}
-            width='100%'
+            width={264}
             wrapProps={{
                 style: { ...modalCoords },
                 'data-test-id': 'modal-create-training',

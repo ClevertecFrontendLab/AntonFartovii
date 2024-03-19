@@ -15,11 +15,10 @@ import { TrainingListItem } from '@redux/api/catalogsApi.ts';
 import { useEffect, useState } from 'react';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { ModalContentExercises } from '@components/Calendar/ModalContentExercises.tsx';
-import { formatCalendar } from '../../utils.ts';
+import { formatCalendar, getModalCoords } from '../../utils.ts';
 
 export const ModalExercises = () => {
     const dispatch = useAppDispatch();
-    const [buttonOkDisabled, setButtonOkDisabled] = useState<boolean>(false);
     const [buttonCancelDisabled, setButtonCancelDisabled] = useState<boolean>(true);
     const [buttonLoading, setButtonLoading] = useState<boolean>(false);
     const [createTraining, createState] = useCreateTrainingMutation();
@@ -32,13 +31,13 @@ export const ModalExercises = () => {
         modalExercise,
         setModalExercise,
         setDrawerExercise,
-        coords,
         calendar,
         setCalendar,
         date,
         setModalErrorSave,
         editMode,
         setEditMode,
+        cellRef,
         changeForm,
     } = useMainContext() as MainContextType;
     const { currentDate, temporaryDay, currentTraining, trainingList, currentEditTraining } =
@@ -46,23 +45,12 @@ export const ModalExercises = () => {
     const size = useWindowSize();
 
     useEffect(() => {
-        if (size && coords) {
-            const value =
-                size.width && size.width > coords.left && coords?.left + 312
-                    ? {
-                          left: coords?.left,
-                          top: coords?.top,
-                      }
-                    : {
-                          left: coords?.right - 312,
-                          top: coords?.top,
-                      };
-            setModalCoords(value);
-        }
-    }, []);
+        const coords = getModalCoords(cellRef, size);
+        coords && setModalCoords(coords);
+    }, [size, cellRef]);
 
     useEffect(() => {
-        setButtonOkDisabled(!currentTraining);
+        setButtonCancelDisabled(!currentTraining);
     }, [currentTraining]);
 
     useEffect(() => {
@@ -73,26 +61,31 @@ export const ModalExercises = () => {
         if (updateState.isSuccess || createState.isSuccess) {
             query();
         }
-    }, [updateState.isSuccess, createState.isSuccess]);
+    }, [updateState.isSuccess, createState.isSuccess, query]);
 
     useEffect(() => {
         if (queryState.isSuccess) {
             const calendar = queryState.data && formatCalendar(queryState.data);
             calendar && setCalendar(calendar);
-            setButtonCancelDisabled(true);
             setModalExercise(false);
             setModalTraining(true);
         }
-    }, [queryState.isSuccess, dispatch, queryState.data, setCalendar]);
+    }, [
+        queryState.isSuccess,
+        dispatch,
+        queryState.data,
+        setCalendar,
+        setModalExercise,
+        setModalTraining,
+    ]);
 
     useEffect(() => {
         if (updateState.isError) {
             setModalTraining(false);
             setModalExercise(false);
             setModalErrorSave(true);
-            setButtonCancelDisabled(true);
         }
-    }, [updateState.isError]);
+    }, [updateState.isError, setModalExercise, setModalTraining, setModalErrorSave]);
 
     useEffect(() => {
         if (createState.isError) {
@@ -100,17 +93,16 @@ export const ModalExercises = () => {
             setModalExercise(false);
             setModalErrorSave(true);
         }
-    }, [createState.isError]);
+    }, [createState.isError, setModalTraining, setModalExercise, setModalErrorSave]);
 
     const backToModalTraining = () => {
         dispatch(deleteTemporaryDay());
         dispatch(setCurrentTraining(''));
         setModalExercise(false);
         setModalTraining(true);
-        setButtonCancelDisabled(true);
     };
 
-    const onChangeTraining = ({ label }: { [name: string]: any }) => {
+    const onChangeTraining = ({ label }: { [name: string]: string }) => {
         dispatch(setCurrentTraining(label));
     };
 
@@ -146,28 +138,31 @@ export const ModalExercises = () => {
             name: currentTraining,
             exercises: training?.exercises || [],
         };
-        editMode ? updateTraining(body) : createTraining(body);
+        editMode ? updateTraining(body as Training) : createTraining(body);
     };
 
     return (
         <Modal
             mask={false}
-            focusTriggerAfterClose={false}
-            forceRender={false}
-            width='100%'
+            width={264}
             zIndex={999}
             data-test-id='modal-create-exercise'
-            wrapProps={{ style: { ...modalCoords }, tabIndex: -1 }}
+            wrapProps={{ style: { ...modalCoords } }}
             wrapClassName={classes['modal-wrap']}
             className={classes['modal-exercise']}
             closable={false}
-            cancelText={size.width && size.width < 800 ? 'Сохранить изменения' : 'Сохранить'}
-            cancelButtonProps={{
+            cancelText='Добавить упражнения'
+            cancelButtonProps={{ disabled: buttonCancelDisabled }}
+            onCancel={() => {
+                setEditMode(false);
+                setDrawerExercise(true);
+            }}
+            okText={size.width && size.width < 800 ? 'Сохранить изменения' : 'Сохранить'}
+            okButtonProps={{
                 disabled: modalExercise ? !changeForm : true,
                 loading: buttonLoading,
             }}
-            okButtonProps={{ disabled: buttonOkDisabled }}
-            onCancel={onSaveExercises}
+            onOk={onSaveExercises}
             open={modalExercise}
             title={
                 <>
@@ -186,11 +181,6 @@ export const ModalExercises = () => {
                     />
                 </>
             }
-            okText='Добавить упражнения'
-            onOk={() => {
-                setEditMode(false);
-                setDrawerExercise(true);
-            }}
             children={<ModalContentExercises />}
         ></Modal>
     );

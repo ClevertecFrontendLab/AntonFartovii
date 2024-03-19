@@ -1,4 +1,4 @@
-import { ButtonProps, Calendar, Drawer, Modal } from 'antd';
+import { ButtonProps, Calendar, Drawer, Modal, Typography } from 'antd';
 import { useEffect, useState } from 'react';
 import classes from './calendar.module.less';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks.ts';
@@ -10,21 +10,29 @@ import moment from 'moment';
 import { ExerciseList } from '@components/ExerciseList.tsx';
 import { ModalTrainingList } from '@components/Calendar/ModalTrainingList.tsx';
 import { ModalExercises } from '@components/Calendar/ModalExercises.tsx';
-import { CloseCircleOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons';
+import {
+    CloseCircleOutlined,
+    CloseCircleTwoTone,
+    CloseOutlined,
+    EditOutlined,
+    PlusOutlined,
+} from '@ant-design/icons';
 import { useGetTrainingListQuery } from '@redux/api/catalogsApi.ts';
 import { useWindowSize } from '@uidotdev/usehooks';
-import ruRu from 'antd/lib/locale-provider/ru_RU';
-import LocaleProvider from 'antd/es/locale-provider';
-import 'moment/locale/ru.js';
+import { calendarLocale } from '../../utils.ts';
 
-moment.locale('ru_RU');
+moment.locale('ru');
+moment.updateLocale('ru', {
+    week: {
+        dow: 1,
+    },
+});
 
 export const CalendarPage = () => {
     const {
         drawerExercise,
         setDrawerExercise,
         setModalExercise,
-        setModalTraining,
         modalErrorSave,
         editMode,
         setCollapsedSider,
@@ -38,74 +46,67 @@ export const CalendarPage = () => {
     const size = useWindowSize();
 
     useEffect(() => {
-        if (size.width && size.width < 800) {
-            setFullScreen(false);
-            setCollapsedSider(true);
-        } else {
-            setFullScreen(true);
-            setCollapsedSider(false);
+        if (size.width) {
+            const isFullScreen = size.width >= 800;
+            setFullScreen(isFullScreen);
+            setCollapsedSider(!isFullScreen);
         }
-    }, [size]);
+    }, [size, setFullScreen, setCollapsedSider]);
+
     useEffect(() => {
         dispatch(deleteTemporaryDay());
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         isError && setModalErrorInfo(true);
-    }, [refetch, isError, setModalErrorInfo]);
+    }, [isError, setModalErrorInfo]);
 
     useEffect(() => {
-        return () => {
-            setModalTraining(false);
-            setModalExercise(false);
-        };
-    }, [setModalTraining, setModalExercise]);
+        modalErrorInfo &&
+            error({
+                title: (
+                    <span data-test-id='modal-error-user-training-title'>
+                        При открытии данных произошла ошибка
+                    </span>
+                ),
+                content: (
+                    <span data-test-id='modal-error-user-training-subtitle'>
+                        Попробуйте ещё раз
+                    </span>
+                ),
+                icon: <CloseCircleTwoTone data-test-id='modal-error-user-training-button-close' />,
+                onOk: () => refetch(),
+                okButtonProps: {
+                    'data-test-id': 'modal-error-user-training-button',
+                } as ButtonProps,
+                centered: true,
+                className: 'modal-error',
+                width: 384,
+                closeIcon: true,
+                closable: true,
+            });
+    }, [modalErrorInfo, error, refetch]);
 
     useEffect(() => {
-        modalErrorInfo && showModalError();
-    }, [modalErrorInfo]);
-
-    useEffect(() => {
-        modalErrorSave && showModalSaveError();
-    }, [modalErrorSave]);
-
-    const showModalError = () => {
-        error({
-            title: (
-                <span data-test-id='modal-error-user-training-title'>
-                    При открытии данных произошла ошибка
-                </span>
-            ),
-            content: (
-                <span data-test-id='modal-error-user-training-subtitle'>Попробуйте ещё раз</span>
-            ),
-            icon: <CloseCircleOutlined data-test-id='modal-error-user-training-button-close' />,
-            onOk: () => refetch(),
-            okButtonProps: {
-                'data-test-id': 'modal-error-user-training-button',
-            } as ButtonProps,
-        });
-    };
-
-    const showModalSaveError = () => {
-        error({
-            title: (
-                <span data-test-id='modal-error-user-training-title'>
-                    При сохранении данных произошла ошибка'
-                </span>
-            ),
-            content: (
-                <span data-test-id='modal-error-user-training-subtitle'>
-                    Придётся попробовать ещё раз'
-                </span>
-            ),
-            icon: <CloseCircleOutlined data-test-id='modal-error-user-training-button-close' />,
-            okText: 'Закрыть',
-            okButtonProps: {
-                'data-test-id': 'modal-error-user-training-button',
-            } as ButtonProps,
-        });
-    };
+        modalErrorSave &&
+            error({
+                title: (
+                    <span data-test-id='modal-error-user-training-title'>
+                        При сохранении данных произошла ошибка'
+                    </span>
+                ),
+                content: (
+                    <span data-test-id='modal-error-user-training-subtitle'>
+                        Придётся попробовать ещё раз'
+                    </span>
+                ),
+                icon: <CloseCircleOutlined data-test-id='modal-error-user-training-button-close' />,
+                okText: 'Закрыть',
+                okButtonProps: {
+                    'data-test-id': 'modal-error-user-training-button',
+                } as ButtonProps,
+            });
+    }, [modalErrorSave, error]);
 
     const closeDrawerHandler = () => {
         setDrawerExercise(false);
@@ -114,42 +115,47 @@ export const CalendarPage = () => {
 
     return (
         <>
-            <LocaleProvider locale={ruRu}>
-                <Calendar
-                    fullscreen={fullScreen}
-                    dateFullCellRender={(date) => <CalendarCellDay date={moment(date)} />}
-                />
-            </LocaleProvider>
+            <Calendar
+                locale={calendarLocale}
+                fullscreen={fullScreen}
+                dateFullCellRender={(date) => <CalendarCellDay date={moment(date)} />}
+            />
 
             <ModalTrainingList />
             <ModalExercises />
 
             <Drawer
+                maskStyle={{ background: 'unset' }}
+                maskClosable={false}
                 autoFocus={true}
                 data-test-id='modal-drawer-right'
                 destroyOnClose={true}
-                forceRender={true}
                 zIndex={1001}
+                width={size.width && size.width > 800 ? 408 : 360}
                 className={classes['drawer-exercise-wrap']}
                 title={
                     <div>
                         {editMode ? (
-                            <>
+                            <Typography.Title level={4}>
                                 <EditOutlined /> Редактирование
-                            </>
+                            </Typography.Title>
                         ) : (
-                            '+ Добавление упражнений'
+                            <Typography.Title level={4}>
+                                <PlusOutlined width='14px' height='14px' size={14} /> Добавление
+                                упражнений
+                            </Typography.Title>
                         )}
                     </div>
                 }
                 closeIcon={<CloseOutlined data-test-id='modal-drawer-right-button-close' />}
                 closable
                 open={drawerExercise}
+                // open={true}
                 onClose={closeDrawerHandler}
             >
                 <div className={classes['drawer-subtitle']}>
                     <span>{currentTraining}</span>
-                    <span>{currentDate}</span>
+                    <span className={classes['training-date']}>{currentDate}</span>
                 </div>
                 <div className={classes['drawer-exercises-container']}>
                     <ExerciseList />

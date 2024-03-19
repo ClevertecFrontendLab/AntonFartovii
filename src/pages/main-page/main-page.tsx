@@ -45,7 +45,7 @@ export const MainPage: React.FC = () => {
 
     useEffect(() => {
         dispatch(deleteTemporaryDay());
-    }, []);
+    }, [dispatch]);
 
     return (
         <>

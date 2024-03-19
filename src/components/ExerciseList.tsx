@@ -6,6 +6,7 @@ import { useMainContext } from '@hooks/useMainContext.ts';
 import { MainContextType } from '../layout/MainLayout/MainLayout.tsx';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks.ts';
 import { addTemporaryDay, setTemporaryDay } from '@redux/calendarSlice.ts';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 
 export const ExerciseList = () => {
     const { calendar, drawerExercise, editMode, setChangeForm } =
@@ -46,7 +47,17 @@ export const ExerciseList = () => {
         } else {
             form.resetFields();
         }
-    }, [drawerExercise]);
+    }, [
+        drawerExercise,
+        calendar,
+        currentDate,
+        currentEditTraining,
+        currentTraining,
+        dispatch,
+        editMode,
+        form,
+        setChangeForm,
+    ]);
 
     const setInitialValue = () => {
         const training =
@@ -82,7 +93,7 @@ export const ExerciseList = () => {
             style={{ maxWidth: 600, zIndex: '1000' }}
         >
             <Form.List name='items' initialValue={setInitialValue()} key='formList'>
-                {(fields, { add, remove }, { errors }) => (
+                {(fields, { add, remove }) => (
                     <>
                         {fields.map(({ key, name, ...restField }, index: number) => (
                             <Form.Item noStyle key={key}>
@@ -94,7 +105,6 @@ export const ExerciseList = () => {
                                         name={'input_name' + key}
                                         placeholder='Упражнение'
                                         data-test-id={`modal-drawer-right-input-exercise${index}`}
-                                        autoFocus
                                         autoComplete='off'
                                         tabIndex={0}
                                         addonAfter={
@@ -107,15 +117,19 @@ export const ExerciseList = () => {
                                         }
                                     />
                                 </Form.Item>
+
                                 <div className={classes['form-flex-row']}>
                                     <div className={classes['form-flex-col']}>
-                                        Подходы
                                         <Form.Item
                                             name={[name, 'approaches']}
                                             {...restField}
                                             noStyle
                                         >
+                                            <span className={classes['input-label']}>Подходы</span>
                                             <Input
+                                                addonBefore={
+                                                    <PlusOutlined width='10px' height='10px' />
+                                                }
                                                 type='number'
                                                 width='90px'
                                                 placeholder='1'
@@ -123,8 +137,12 @@ export const ExerciseList = () => {
                                             />
                                         </Form.Item>
                                     </div>
+                                    <div
+                                        className={classes['form-flex-col']}
+                                        style={{ width: '10px' }}
+                                    ></div>
                                     <div className={classes['form-flex-col']}>
-                                        Вес
+                                        <span className={classes['input-label']}>Вес, кг</span>
                                         <Form.Item name={[name, 'weight']} {...restField} noStyle>
                                             <Input
                                                 type='number'
@@ -134,8 +152,9 @@ export const ExerciseList = () => {
                                             />
                                         </Form.Item>
                                     </div>
+                                    <div className={classes['form-flex-col']}>X</div>
                                     <div className={classes['form-flex-col']}>
-                                        Количество
+                                        <span className={classes['input-label']}>Количество</span>
                                         <Form.Item name={[name, 'replays']} {...restField} noStyle>
                                             <Input
                                                 type='number'
@@ -148,32 +167,32 @@ export const ExerciseList = () => {
                                 </div>
                             </Form.Item>
                         ))}
-
-                        <Button
-                            type='dashed'
-                            autoFocus={false}
-                            name='add'
-                            onClick={() => {
-                                add();
-                                setDisabled(false);
-                            }}
-                        >
-                            + Добавить ещё
-                        </Button>
-                        <Form.ErrorList errors={errors} />
-                        {editMode && (
+                        <div className={classes['drawer-buttons-container']}>
                             <Button
-                                type='dashed'
-                                name='remove'
+                                type='link'
+                                autoFocus={false}
+                                name='add'
                                 onClick={() => {
-                                    remove(indexes);
-                                    setIndexes([]);
+                                    add();
+                                    setDisabled(false);
                                 }}
-                                disabled={disabled}
                             >
-                                - Удалить
+                                <PlusOutlined /> Добавить ещё
                             </Button>
-                        )}
+                            {editMode && (
+                                <Button
+                                    type='text'
+                                    name='remove'
+                                    onClick={() => {
+                                        remove(indexes);
+                                        setIndexes([]);
+                                    }}
+                                    disabled={disabled}
+                                >
+                                    <MinusOutlined /> Удалить
+                                </Button>
+                            )}
+                        </div>
                     </>
                 )}
             </Form.List>

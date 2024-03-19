@@ -1,7 +1,6 @@
 import { Training } from '@redux/api/trainingApi.ts';
 import classes from '@pages/calendar-page/calendar.module.less';
 import { Badge, Button, Empty } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks.ts';
 import { useMainContext } from '@hooks/useMainContext.ts';
 import { MainContextType } from '../../layout/MainLayout/MainLayout.tsx';
@@ -12,6 +11,7 @@ import {
     setTemporaryDay,
 } from '@redux/calendarSlice.ts';
 import { useEffect, useState } from 'react';
+import { EditTwoTone } from '@ant-design/icons';
 
 export const ModalContentTraining = () => {
     const { modalTraining, setModalTraining, setModalExercise, calendar, setEditMode } =
@@ -24,7 +24,7 @@ export const ModalContentTraining = () => {
         const trainings = calendar[currentDate] || [];
         setTrainings(trainings);
         dispatch(setTemporaryDay(trainings));
-    }, [modalTraining, calendar, currentDate]);
+    }, [modalTraining, calendar, currentDate, dispatch]);
 
     const openEditModalExercises = (name: string, index: number, isImplementation: boolean) => {
         if (isImplementation) return;
@@ -49,10 +49,7 @@ export const ModalContentTraining = () => {
                 disabled={isImplementation}
             >
                 <Badge color='blue' text={name} />
-                <EditOutlined
-                    data-test-id='dal-update-training-edit-button'
-                    disabled={isImplementation}
-                />
+                <EditTwoTone disabled={isImplementation} />
             </Button>
         );
     };
@@ -61,7 +58,7 @@ export const ModalContentTraining = () => {
 
     return (
         <>
-            {trainings ? (
+            {trainings && trainings.length > 0 ? (
                 trainings.map(printTraining)
             ) : (
                 <Empty

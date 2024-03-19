@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, RefObject, useState } from 'react';
 import { Sider } from './Sider.tsx';
 import { Header } from './Header.tsx';
 import classes from './layout.module.less';
@@ -7,8 +7,6 @@ import { Loader } from '@components/Loader/Loader.tsx';
 import { useLoader } from '@hooks/useLoader.ts';
 import { ILoader } from '../../hoc/LoaderProvider.tsx';
 import { UserCalendar } from '@redux/calendarSlice.ts';
-import { ConfigProvider } from 'antd';
-import ruRu from 'antd/lib/locale/ru_RU';
 
 export type MainContextType = {
     modal500: boolean;
@@ -33,6 +31,8 @@ export type MainContextType = {
     setChangeForm: (bool: boolean) => void;
     collapsedSider: boolean;
     setCollapsedSider: (bool: boolean) => void;
+    cellRef: RefObject<HTMLDivElement>;
+    setCellRef: (ref: RefObject<HTMLDivElement>) => void;
 };
 
 export const MainContext = createContext<Partial<MainContextType>>({});
@@ -49,47 +49,48 @@ export const MainLayout = () => {
     const [coords, setCoords] = useState<DOMRect | null>(null);
     const [date, setDate] = useState<Date>();
     const [calendar, setCalendar] = useState<UserCalendar>({});
+    const [cellRef, setCellRef] = useState<RefObject<HTMLDivElement>>();
     const { loader } = useLoader() as ILoader;
 
     return (
-        <ConfigProvider locale={ruRu}>
-            <MainContext.Provider
-                value={{
-                    modalTraining,
-                    setModalTraining,
-                    modalExercise,
-                    setModalExercise,
-                    drawerExercise,
-                    setDrawerExercise,
-                    coords,
-                    setCoords,
-                    modal500,
-                    setModal500,
-                    calendar,
-                    setCalendar,
-                    date,
-                    setDate,
-                    modalErrorSave,
-                    setModalErrorSave,
-                    editMode,
-                    setEditMode,
-                    changeForm,
-                    setChangeForm,
-                    collapsedSider,
-                    setCollapsedSider,
-                }}
-            >
-                <div className={classes['app-wrapper']}>
-                    <Sider collapsed={collapsedSider} onCollapsed={setCollapsedSider}></Sider>
-                    <div className={classes['wrapper']}>
-                        <Header />
-                        <main className={classes.main}>
-                            <Outlet />
-                        </main>
-                    </div>
+        <MainContext.Provider
+            value={{
+                modalTraining,
+                setModalTraining,
+                modalExercise,
+                setModalExercise,
+                drawerExercise,
+                setDrawerExercise,
+                coords,
+                setCoords,
+                modal500,
+                setModal500,
+                calendar,
+                setCalendar,
+                date,
+                setDate,
+                modalErrorSave,
+                setModalErrorSave,
+                editMode,
+                setEditMode,
+                changeForm,
+                setChangeForm,
+                collapsedSider,
+                setCollapsedSider,
+                cellRef,
+                setCellRef,
+            }}
+        >
+            <div className={classes['app-wrapper']}>
+                <Sider collapsed={collapsedSider} onCollapsed={setCollapsedSider}></Sider>
+                <div className={classes['wrapper']}>
+                    <Header />
+                    <main className={classes.main}>
+                        <Outlet />
+                    </main>
                 </div>
-                <Loader active={loader} />
-            </MainContext.Provider>
-        </ConfigProvider>
+            </div>
+            <Loader active={loader} />
+        </MainContext.Provider>
     );
 };

@@ -17,8 +17,14 @@ import type { MenuProps } from 'antd';
 import { Layout, Menu } from 'antd';
 import { Logo } from '@components/Logo.tsx';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { Key, ReactNode } from 'react';
+import { Key, ReactNode, useEffect } from 'react';
+import { useLazyGetTrainingQuery } from '@redux/api/trainingApi.ts';
+import { formatCalendar } from '../../utils.ts';
+import { Paths } from '../../routes/Paths.ts';
+import { useLoader } from '@hooks/useLoader.ts';
+import { ILoader } from '../../hoc/LoaderProvider.tsx';
 import { useMainContext } from '@hooks/useMainContext.ts';
+import { MainContextType } from './MainLayout.tsx';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -44,9 +50,11 @@ function getItem(
 }
 
 export const Sider = ({ collapsed, onCollapsed }: ISider) => {
-    const { setSkip } = useMainContext();
     const dispatch = useAppDispatch();
     const size = useWindowSize();
+    const [query, queryState] = useLazyGetTrainingQuery();
+    const { setLoader } = useLoader() as ILoader;
+    const { setModal500, setCalendar } = useMainContext() as MainContextType;
 
     const logoutHandler = async () => {
         dispatch(setLogout());
@@ -55,7 +63,7 @@ export const Sider = ({ collapsed, onCollapsed }: ISider) => {
 
     const items: MenuItem[] = [
         getItem(
-            <a onClick={() => setSkip(false)}>Календарь</a>,
+            <a onClick={() => query()}>Календарь</a>,
             'calendar',
             size.width && size.width > 800 && <CalendarTwoTone />,
         ),
@@ -63,6 +71,22 @@ export const Sider = ({ collapsed, onCollapsed }: ISider) => {
         getItem('Достижения', '3', size.width && size.width > 800 && <HeartTwoTone />),
         getItem('Профиль', '4', size.width && size.width > 800 && <IdcardOutlined />),
     ];
+
+    useEffect(() => {
+        setLoader(queryState.isLoading);
+    }, [queryState.isLoading, setLoader]);
+
+    useEffect(() => {
+        queryState.isError && setModal500(true);
+    }, [queryState.isError, setModal500]);
+
+    useEffect(() => {
+        if (queryState.isSuccess) {
+            const calendar = queryState.data && formatCalendar(queryState.data);
+            calendar && setCalendar(calendar);
+            dispatch(push(Paths.MAIN + Paths.CALENDAR_PAGE));
+        }
+    }, [queryState.isSuccess, dispatch, queryState.data, setCalendar]);
 
     return (
         <Layout.Sider
