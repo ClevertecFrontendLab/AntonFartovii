@@ -5,6 +5,7 @@ import { FeedbackModalProviderProps } from '../../hoc/FeedbackModalProvider.tsx'
 
 export const FeedbackWelcome = () => {
     const feedbackModal = useFeedbackModal() as FeedbackModalProviderProps;
+    const openModalAdd = () => feedbackModal.setModalAdd(true);
 
     return (
         <div className={classes['welcome-container']}>
@@ -22,7 +23,7 @@ export const FeedbackWelcome = () => {
                 type='primary'
                 className={classes['btn-add-feedback']}
                 data-test-id='write-review'
-                onClick={() => feedbackModal.setModalAdd(true)}
+                onClick={openModalAdd}
             >
                 Написать отзав
             </Button>

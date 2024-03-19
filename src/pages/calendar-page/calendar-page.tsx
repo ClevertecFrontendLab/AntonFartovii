@@ -80,10 +80,13 @@ export const CalendarPage = () => {
                     'data-test-id': 'modal-error-user-training-button',
                 } as ButtonProps,
                 centered: true,
-                className: 'modal-error',
+                className: 'modal-error-open',
                 width: 384,
-                closeIcon: true,
+                closeIcon: <CloseOutlined />,
                 closable: true,
+                maskClosable: true,
+                mask: false,
+                wrapClassName: 'calendar-wrapper-blur',
             });
     }, [modalErrorInfo, error, refetch]);
 
@@ -92,12 +95,12 @@ export const CalendarPage = () => {
             error({
                 title: (
                     <span data-test-id='modal-error-user-training-title'>
-                        При сохранении данных произошла ошибка'
+                        При сохранении данных произошла ошибка
                     </span>
                 ),
                 content: (
                     <span data-test-id='modal-error-user-training-subtitle'>
-                        Придётся попробовать ещё раз'
+                        Придётся попробовать ещё раз
                     </span>
                 ),
                 icon: <CloseCircleOutlined data-test-id='modal-error-user-training-button-close' />,
@@ -105,6 +108,12 @@ export const CalendarPage = () => {
                 okButtonProps: {
                     'data-test-id': 'modal-error-user-training-button',
                 } as ButtonProps,
+                centered: true,
+                width: 384,
+                closable: true,
+                maskClosable: true,
+                mask: false,
+                wrapClassName: 'calendar-wrapper-blur',
             });
     }, [modalErrorSave, error]);
 
@@ -150,7 +159,6 @@ export const CalendarPage = () => {
                 closeIcon={<CloseOutlined data-test-id='modal-drawer-right-button-close' />}
                 closable
                 open={drawerExercise}
-                // open={true}
                 onClose={closeDrawerHandler}
             >
                 <div className={classes['drawer-subtitle']}>

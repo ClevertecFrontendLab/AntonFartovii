@@ -47,6 +47,8 @@ export const MainPage: React.FC = () => {
         dispatch(deleteTemporaryDay());
     }, [dispatch]);
 
+    const openCalendar = () => query();
+
     return (
         <>
             <section className={classes['main-container']}>
@@ -89,7 +91,7 @@ export const MainPage: React.FC = () => {
                             <a>Назначить календарь</a>
                         </div>
                         <div className={classes['card-button']}>
-                            <a onClick={() => query()} data-test-id='menu-button-calendar-page'>
+                            <a onClick={openCalendar} data-test-id='menu-button-calendar'>
                                 <CalendarTwoTone className={classes['card-icon']} />
                                 <span>Календарь</span>
                             </a>

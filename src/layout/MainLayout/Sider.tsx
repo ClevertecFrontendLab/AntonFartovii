@@ -17,7 +17,7 @@ import type { MenuProps } from 'antd';
 import { Layout, Menu } from 'antd';
 import { Logo } from '@components/Logo.tsx';
 import { useWindowSize } from '@uidotdev/usehooks';
-import { Key, ReactNode, useEffect } from 'react';
+import { Key, ReactNode, useEffect, useState } from 'react';
 import { useLazyGetTrainingQuery } from '@redux/api/trainingApi.ts';
 import { formatCalendar } from '../../utils.ts';
 import { Paths } from '../../routes/Paths.ts';
@@ -25,6 +25,7 @@ import { useLoader } from '@hooks/useLoader.ts';
 import { ILoader } from '../../hoc/LoaderProvider.tsx';
 import { useMainContext } from '@hooks/useMainContext.ts';
 import { MainContextType } from './MainLayout.tsx';
+import { useLocation } from 'react-router-dom';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -55,19 +56,28 @@ export const Sider = ({ collapsed, onCollapsed }: ISider) => {
     const [query, queryState] = useLazyGetTrainingQuery();
     const { setLoader } = useLoader() as ILoader;
     const { setModal500, setCalendar } = useMainContext() as MainContextType;
+    const [key, setKey] = useState<string>('');
+    const location = useLocation();
+
+    useEffect(() => {
+        const pathName = location.pathname.split('/')[1];
+        setKey(pathName);
+    }, [setKey, location]);
 
     const logoutHandler = async () => {
         dispatch(setLogout());
-        dispatch(push('/auth'));
+        dispatch(push(Paths.MAIN + Paths.AUTH));
     };
+
+    const openCalendar = () => query();
 
     const items: MenuItem[] = [
         getItem(
-            <a onClick={() => query()}>Календарь</a>,
-            'calendar',
+            <a onClick={openCalendar}>Календарь</a>,
+            Paths.CALENDAR_PAGE,
             size.width && size.width > 800 && <CalendarTwoTone />,
         ),
-        getItem('Тренировки', '2', size.width && size.width > 800 && <TrophyTwoTone />),
+        getItem('Тренировки', 'trainings', size.width && size.width > 800 && <TrophyTwoTone />),
         getItem('Достижения', '3', size.width && size.width > 800 && <HeartTwoTone />),
         getItem('Профиль', '4', size.width && size.width > 800 && <IdcardOutlined />),
     ];
@@ -88,6 +98,8 @@ export const Sider = ({ collapsed, onCollapsed }: ISider) => {
         }
     }, [queryState.isSuccess, dispatch, queryState.data, setCalendar]);
 
+    const switchSider = () => onCollapsed(!collapsed);
+
     return (
         <Layout.Sider
             theme={'light'}
@@ -102,7 +114,7 @@ export const Sider = ({ collapsed, onCollapsed }: ISider) => {
             <Logo collapsed={collapsed} />
             <Menu
                 theme='light'
-                defaultSelectedKeys={['1']}
+                selectedKeys={[key]}
                 mode='inline'
                 items={items}
                 inlineIndent={size.width && size.width > 800 ? 17 : 8}
@@ -114,11 +126,7 @@ export const Sider = ({ collapsed, onCollapsed }: ISider) => {
                     {!collapsed && <span className={classes['logout-title']}>Выход</span>}
                 </a>
             </div>
-            <div
-                className={classes.switcher}
-                onClick={() => onCollapsed(!collapsed)}
-                data-test-id='sider-switch'
-            >
+            <div className={classes.switcher} onClick={switchSider} data-test-id='sider-switch'>
                 <img className={classes.trapezoid} src={switcher} alt='switcher icon' />
                 {!collapsed ? (
                     <MenuUnfoldOutlined className={classes['switcher-icon']} />
@@ -128,7 +136,7 @@ export const Sider = ({ collapsed, onCollapsed }: ISider) => {
             </div>
             <div
                 className={classes['switcher-mobile']}
-                onClick={() => onCollapsed(!collapsed)}
+                onClick={switchSider}
                 data-test-id='sider-switch-mobile'
             >
                 <img className={classes.trapezoid} src={switcher_mobile} alt='switcher icon' />

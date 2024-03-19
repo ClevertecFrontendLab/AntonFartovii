@@ -7,9 +7,7 @@ export const Modal500 = () => {
     const { modal500, setModal500 } = useMainContext() as MainContextType;
     const size = useWindowSize();
 
-    const buttonHandler = () => {
-        setModal500(false);
-    };
+    const buttonHandler = () => setModal500(false);
 
     return (
         <Modal

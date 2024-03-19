@@ -4,6 +4,7 @@ import { useWindowSize } from '@uidotdev/usehooks';
 import { Button, Modal, Result } from 'antd';
 import { push } from 'redux-first-history';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
+import { Paths } from '../../routes/Paths.ts';
 
 export const FeedbackModalError500 = () => {
     const feedbackModal = useFeedbackModal() as FeedbackModalProviderProps;
@@ -12,7 +13,7 @@ export const FeedbackModalError500 = () => {
 
     const buttonHandler = () => {
         feedbackModal.setModalError500(false);
-        dispatch(push('/main'));
+        dispatch(push(Paths.MAIN + Paths.MAIN_PAGE));
     };
 
     return (

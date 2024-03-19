@@ -1,7 +1,7 @@
 export enum Paths {
     MAIN = '/',
     MAIN_PAGE = 'main',
-    CALENDAR_PAGE = 'calendar-page',
+    CALENDAR_PAGE = 'calendar',
     AUTH = 'auth',
     FEEDBACKS = 'feedbacks',
     REGISTRATION = 'registration',

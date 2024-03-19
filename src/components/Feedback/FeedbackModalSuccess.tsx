@@ -6,6 +6,7 @@ import { useWindowSize } from '@uidotdev/usehooks';
 export const FeedbackModalSuccess = () => {
     const feedbackModal = useFeedbackModal() as FeedbackModalProviderProps;
     const size = useWindowSize();
+    const openModalSuccess = () => feedbackModal.setModalSuccess(false);
 
     return (
         <Modal
@@ -22,7 +23,7 @@ export const FeedbackModalSuccess = () => {
                 status='success'
                 title='Отзыв успешно опубликован'
                 extra={
-                    <Button type='primary' onClick={() => feedbackModal.setModalSuccess(false)}>
+                    <Button type='primary' onClick={openModalSuccess}>
                         Отлично
                     </Button>
                 }

@@ -8,7 +8,7 @@ const DATA_TEST_ID = {
     modalErrorUserTrainingButton: 'modal-error-user-training-button',
     modalErrorUserTrainingButtonClose: 'modal-error-user-training-button-close',
     menuButtonTraining: 'menu-button-training',
-    menuButtonCalendar: 'menu-button-calendar-page',
+    menuButtonCalendar: 'menu-button-calendar',
     menuButtonProfile: 'menu-button-profile',
     modalCreateTraining: 'modal-create-training',
     modalCreateTrainingButtonClose: 'modal-create-training-button-close',
@@ -496,7 +496,7 @@ describe('Sprint 4', () => {
             }).as('putUserTraining');
 
             cy.get(`[data-test-id=${DATA_TEST_ID.menuButtonCalendar}]`).click();
-            cy.url().should('include', '/calendar-page');
+            cy.url().should('include', '/calendar');
             cy.get(`[title=${getFormatDate(today, true)}]`).contains('Ноги');
         }
 
@@ -523,7 +523,7 @@ describe('Sprint 4', () => {
             cy.url().should('include', '/main');
         });
 
-        it('come to calendar-page', () => {
+        it('come to calendar', () => {
             cy.viewport(1440, 900);
             cy.intercept('GET', 'training', {
                 statusCode: 404,
@@ -547,13 +547,13 @@ describe('Sprint 4', () => {
             }).as('getUserTraining');
             cy.get(`[data-test-id=${DATA_TEST_ID.menuButtonCalendar}]`).click();
             cy.wait('@getTrainingList');
-            cy.url().should('include', '/calendar-page');
+            cy.url().should('include', '/calendar');
             takeScreenshots('get-training-list-error', resolutionLaptop);
             cy.get(`[data-test-id=${DATA_TEST_ID.modalErrorUserTrainingButton}]`).click();
             cy.wait('@getTrainingList');
             cy.get(`[data-test-id=${DATA_TEST_ID.modalErrorUserTrainingButtonClose}]`).click();
-            cy.url().should('include', '/calendar-page');
-            takeScreenshots('empty-calendar-page-page', resolutionLaptop);
+            cy.url().should('include', '/calendar');
+            takeScreenshots('empty-calendar-page', resolutionLaptop);
             cy.intercept('GET', 'catalogs/training-list', {
                 body: trainingList,
                 statusCode: 200,
@@ -561,7 +561,7 @@ describe('Sprint 4', () => {
             cy.contains('Главная').click();
             cy.get(`[data-test-id=${DATA_TEST_ID.menuButtonCalendar}]`).click();
             cy.wait(1000);
-            takeScreenshots('calendar-page-page', resolutionLaptop);
+            takeScreenshots('calendar-page', resolutionLaptop);
             cy.contains('Ноги').should('be.exist');
         });
 

@@ -22,6 +22,11 @@ export const ModalContentExercises = () => {
         }
     }, [temporaryDay, currentTraining, modalExercise, calendar]);
 
+    const clickExercise = () => {
+        setEditMode(true);
+        setDrawerExercise(true);
+    };
+
     if (!modalExercise) return <></>;
 
     return (
@@ -34,10 +39,7 @@ export const ModalContentExercises = () => {
                     <div
                         className={classes['modal-training-item']}
                         key={exercise.name}
-                        onClick={() => {
-                            setEditMode(true);
-                            setDrawerExercise(true);
-                        }}
+                        onClick={clickExercise}
                     >
                         <Badge color='blue' text={exercise?.name} />
                         <EditOutlined />

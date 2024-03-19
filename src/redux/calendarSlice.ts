@@ -36,9 +36,6 @@ export const calendarSlice = createSlice({
         setCurrentIndex: (state, action: PayloadAction<number>) => {
             state.currentIndex = action.payload;
         },
-        clearCalendar: (state) => {
-            state.temporaryDay = [];
-        },
         setTemporaryDay: (state, action: PayloadAction<TemporaryDay>) => {
             state.temporaryDay = action.payload;
         },
@@ -62,7 +59,7 @@ export const calendarSlice = createSlice({
                     name,
                     exercises,
                 };
-                state.temporaryDay.push(training);
+                state.temporaryDay.push(training as Training);
             }
         },
         deleteTemporaryDay: (state) => {

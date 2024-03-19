@@ -34,20 +34,11 @@ export const ModalTrainingList = () => {
 
     useEffect(() => {
         const today = new Date();
-        if (date <= today) {
-            setOkDisabled(true);
-        } else {
-            if (calendar[currentDate]) {
-                if (calendar[currentDate].length === trainingList.length) {
-                    setOkDisabled(true);
-                } else if (calendar[currentDate].length > 0) {
-                    setOkDisabled(false);
-                }
-            } else {
-                setOkDisabled(false);
-            }
-        }
-    }, [currentDate, calendar, date, trainingList.length]);
+        const isBeforeDay = date <= today;
+        const dayList = calendar[currentDate] || [];
+        const isCountEqual = dayList.length === trainingList.length;
+        setOkDisabled(isBeforeDay || isCountEqual || false);
+    }, [setOkDisabled, currentDate, calendar, date, trainingList.length]);
 
     const onClose = () => {
         setEditMode(false);
@@ -68,7 +59,7 @@ export const ModalTrainingList = () => {
     return (
         <Modal
             mask={false}
-            width={264}
+            width={size.width && size.width > 480 ? 264 : 360}
             wrapProps={{
                 style: { ...modalCoords },
                 'data-test-id': 'modal-create-training',

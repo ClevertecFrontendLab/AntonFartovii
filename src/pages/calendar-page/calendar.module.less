@@ -250,6 +250,11 @@ main {
                 font-size: 16px;
                 line-height: 130%;
                 color: var(--character-light-title-85);
+
+                span[data-test-id='modal-error-user-training-title'] {
+                    display: block;
+                    padding-right: 100px;
+                }
             }
 
             .ant-modal-confirm-content span {
@@ -457,6 +462,25 @@ main {
         }
 
         .ant-picker-calendar-header .ant-picker-calendar-mode-switch {
+        }
+    }
+}
+
+.modal-wrap {
+    width: 360px;
+}
+
+.modal-training,
+.modal-exercise {
+    width: 360px;
+
+    :global {
+        .ant-modal-footer {
+            width: 360px;
+
+            .ant-btn-default {
+                width: 360px;
+            }
         }
     }
 }

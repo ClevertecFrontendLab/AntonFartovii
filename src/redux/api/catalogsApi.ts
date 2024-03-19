@@ -50,11 +50,6 @@ export const catalogsApi = createApi({
                 try {
                     const { data } = await queryFulfilled;
                     dispatch(setTrainingList(data));
-                    //     const { data } = await queryFulfilled;
-                    //     const obj = data.reduce((acc: TrainingList, item) => {
-                    //         return { ...acc, [item.key]: item.name };
-                    //     }, {});
-                    //     dispatch(setTrainingList(obj));
                 } catch (error) {
                     console.log(error);
                 }

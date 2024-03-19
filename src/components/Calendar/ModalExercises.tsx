@@ -144,7 +144,7 @@ export const ModalExercises = () => {
     return (
         <Modal
             mask={false}
-            width={264}
+            width={size.width && size.width > 480 ? 264 : 360}
             zIndex={999}
             data-test-id='modal-create-exercise'
             wrapProps={{ style: { ...modalCoords } }}

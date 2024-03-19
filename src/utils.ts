@@ -10,26 +10,19 @@ type Size = {
 
 export const getModalCoords = (cellRef: RefObject<HTMLDivElement>, size: Size) => {
     const coords = cellRef && cellRef.current && cellRef.current.getBoundingClientRect();
-    if (coords) {
-        if (size.width && coords.left) {
-            if (size.width >= 800) {
-                const value =
-                    size.width > coords.left + 312
-                        ? {
-                              left: coords.left,
-                              top: coords.top,
-                          }
-                        : {
-                              left: coords.right - 312,
-                              top: coords.top,
-                          };
-                return value;
-            } else {
-                return {
-                    left: size.width / 2 - 156,
-                    top: coords.top + 22,
-                };
-            }
+
+    if (coords && size.width) {
+        if (size.width >= 800) {
+            const isExcessWidth = size.width > coords.left + 264;
+            return {
+                left: isExcessWidth ? coords.left : coords.right - 264,
+                top: coords.top,
+            };
+        } else {
+            return {
+                left: size.width / 2 - 180,
+                top: coords.top + 22,
+            };
         }
     }
     return undefined;
