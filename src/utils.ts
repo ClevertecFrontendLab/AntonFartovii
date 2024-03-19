@@ -20,7 +20,7 @@ export const getModalCoords = (cellRef: RefObject<HTMLDivElement>, size: Size) =
             };
         } else {
             return {
-                left: size.width / 2 - 180,
+                left: size.width / 2 - 152,
                 top: coords.top + 22,
             };
         }

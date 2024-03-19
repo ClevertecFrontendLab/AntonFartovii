@@ -59,7 +59,7 @@ export const ModalTrainingList = () => {
     return (
         <Modal
             mask={false}
-            width={size.width && size.width > 480 ? 264 : 360}
+            width={size.width && size.width > 480 ? 264 : 312}
             wrapProps={{
                 style: { ...modalCoords },
                 'data-test-id': 'modal-create-training',
