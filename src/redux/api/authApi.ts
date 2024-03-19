@@ -3,7 +3,7 @@ import { setAccessToken, setRememberAuth } from '@redux/authSlice.ts';
 import { ChangePassword, ConfirmEmail, Credentials } from '@redux/interfaces.ts';
 import { setFormChangePassword, setFormLogin, setFormRegister } from '@redux/formSlice.ts';
 import { push } from 'redux-first-history';
-import { PathsFull } from '../../routes/Paths.ts';
+import { Paths, PathsFull } from '../../routes/Paths.ts';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -44,7 +44,7 @@ export const authApi = createApi({
                     } = await queryFulfilled;
                     dispatch(setAccessToken(accessToken));
                     dispatch(setRememberAuth(remember));
-                    dispatch(push('/main'));
+                    dispatch(push(Paths.MAIN + Paths.MAIN_PAGE));
                 } catch (error) {
                     dispatch(
                         push(PathsFull.RESULT_ERROR_LOGIN, {

@@ -1,29 +1,23 @@
-import { useFeedbackModal } from '@hooks/useFeedbackModal.ts';
-import { FeedbackModalProviderProps } from '../../hoc/FeedbackModalProvider.tsx';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { Button, Modal, Result } from 'antd';
-import { push } from 'redux-first-history';
-import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
-import { Paths } from '../../routes/Paths.ts';
+import { useMainContext } from '@hooks/useMainContext.ts';
+import { MainContextType } from '../../layout/MainLayout/MainLayout.tsx';
 
-export const FeedbackModalError500 = () => {
-    const feedbackModal = useFeedbackModal() as FeedbackModalProviderProps;
+export const Modal500 = () => {
+    const { modal500, setModal500 } = useMainContext() as MainContextType;
     const size = useWindowSize();
-    const dispatch = useAppDispatch();
 
-    const buttonHandler = () => {
-        feedbackModal.setModalError500(false);
-        dispatch(push(Paths.MAIN + Paths.MAIN_PAGE));
-    };
+    const buttonHandler = () => setModal500(false);
 
     return (
         <Modal
             width={size.width && size.width > 800 ? 539 : 328}
             wrapClassName='main-wrapper-blur'
+            data-test-id='modal-no-review'
             maskStyle={{ background: 'unset' }}
             centered
             closable={false}
-            open={feedbackModal.modalError500}
+            open={modal500}
             okButtonProps={{ hidden: true }}
             cancelButtonProps={{ hidden: true }}
         >

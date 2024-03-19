@@ -23,7 +23,7 @@ export const FeedbackModalAdd = () => {
             feedbackModal.setModalError(true);
             createFeedbackEvents.reset();
         }
-    }, [createFeedbackEvents.isError, feedbackModal]);
+    }, [createFeedbackEvents, createFeedbackEvents.isError, feedbackModal]);
 
     useEffect(() => {
         if (createFeedbackEvents.isSuccess) {

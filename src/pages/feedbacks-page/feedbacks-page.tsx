@@ -34,6 +34,8 @@ export const FeedbacksPage = () => {
         setShortData(!shortData);
     };
 
+    const openModalAdd = () => feedbackModal.setModalAdd(true);
+
     return (
         <>
             {data && data.length > 0 ? (
@@ -48,7 +50,7 @@ export const FeedbacksPage = () => {
                             type='primary'
                             className={classes['btn-add-feedback']}
                             data-test-id='write-review'
-                            onClick={() => feedbackModal.setModalAdd(true)}
+                            onClick={openModalAdd}
                         >
                             Написать отзав
                         </Button>

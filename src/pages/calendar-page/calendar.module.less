@@ -1,0 +1,536 @@
+.modal-wrap {
+    height: min-content;
+    overflow: hidden;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    background: var(--character-light-primary-inverse);
+    width: 264px;
+}
+
+.modal-training,
+.modal-exercise {
+    width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    margin: 0px auto;
+    padding: 0px;
+    transition: unset;
+
+    .modal-training-item {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 18px;
+        padding: 0px;
+    }
+
+    :global {
+        .ant-modal-body {
+            width: 100%;
+            min-height: 84px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+}
+
+.modal-training {
+    .title-training {
+        font-family: var(--font-family);
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 130%;
+        color: var(--character-light-title-85);
+    }
+
+    .subtitle-training {
+        font-family: var(--font-family);
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 130%;
+        color: var(--character-light-secondary-45);
+    }
+
+    :global {
+        .ant-modal-content {
+            width: 100%;
+
+            .ant-modal-header {
+                padding: 12px;
+
+                .ant-modal-title {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    gap: 0;
+                }
+            }
+
+            .ant-modal-footer {
+                padding: 12px;
+                width: 100%;
+                height: 64px;
+
+                .ant-modal
+                    .ant-modal-footer
+                    .ant-btn
+                    + .ant-btn:not(.ant-dropdown-trigger)[disabled],
+                .ant-btn + .ant-btn:not(.ant-dropdown-trigger) {
+                    margin: 0 auto;
+                }
+            }
+        }
+    }
+}
+
+.modal-exercise {
+    min-height: 240px;
+
+    div[aria-hidden='true'] {
+        display: none;
+    }
+
+    :global {
+        .ant-modal-content {
+            box-shadow: unset;
+            width: 100%;
+
+            .ant-modal-header {
+                padding: 12px;
+
+                .ant-modal-title {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 10px;
+                }
+            }
+
+            .ant-modal-footer {
+                height: 64px;
+                padding: 12px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .ant-modal
+                    .ant-modal-footer
+                    .ant-btn
+                    + .ant-btn:not(.ant-dropdown-trigger)[disabled],
+                .ant-btn + .ant-btn:not(.ant-dropdown-trigger) {
+                    margin: 0 auto;
+                }
+            }
+        }
+
+        .ant-modal-footer {
+            .ant-btn-default {
+                border: 1px solid var(--character-light-border);
+                border-radius: 2px;
+                padding: 4px 15px;
+                width: 240px;
+                height: 32px;
+                box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.02);
+                background: var(--character-light-primary-inverse);
+            }
+
+            .ant-btn-primary {
+                border: 0px;
+                background-color: unset;
+                border-radius: 2px;
+                padding: 4px 15px;
+                width: 240px;
+                height: 32px;
+            }
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--character-light-disable-25);
+    border-radius: 99px;
+    padding: 0px 4px;
+    width: 8px;
+    height: 80px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #fff; /* цвет трека */
+}
+
+.drawer-subtitle {
+    width: 100%;
+    padding-bottom: 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.drawer-exercise-wrap {
+    .drawer-exercises-container {
+        max-height: 932px;
+        overflow: hidden;
+
+        .drawer-exercise {
+            width: 100%;
+        }
+    }
+
+    .form-flex-row {
+        display: flex;
+        flex-direction: row;
+        margin: 10px 0px 20px;
+    }
+
+    .form-flex-col {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+
+    .drawer-buttons-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 0 0 6px 6px;
+        width: 344px;
+        height: 40px;
+        background: var(--character-light-dividers);
+    }
+
+    .training-name {
+    }
+
+    .training-date {
+        font-family: var(--font-family);
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 130%;
+        color: var(--character-light-secondary-45);
+    }
+}
+
+main {
+    background: var(--primary-light-1);
+}
+
+.input-label {
+    border-bottom: 1px solid var(--character-light-dividers);
+    padding: 8px;
+    width: 100%;
+    height: 24px;
+    background: var(--character-light-dividers);
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 10px;
+    color: var(--character-light-title-85);
+}
+
+:global {
+    .ant-modal-confirm-error {
+        .ant-modal-content {
+            border-radius: 4px;
+            padding: 16px 24px;
+            background: var(--character-light-primary-inverse);
+
+            .ant-modal-confirm-title {
+                font-family: var(--font-family);
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 130%;
+                color: var(--character-light-title-85);
+
+                span[data-test-id='modal-error-user-training-title'] {
+                    display: block;
+                    padding-right: 100px;
+                }
+            }
+
+            .ant-modal-confirm-content span {
+            }
+        }
+    }
+
+    .ant-drawer {
+        z-index: 1001;
+
+        .ant-drawer-content-wrapper {
+            border-radius: 8px 0 0 8px;
+            box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.05), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+                0 6px 16px 0 rgba(0, 0, 0, 0.08);
+            background: var(--character-light-primary-inverse);
+
+            .ant-drawer-content {
+                background-color: unset;
+            }
+
+            .ant-drawer-header {
+                border-bottom: 0px;
+                padding: 24px 32px 16px;
+
+                .ant-drawer-header-title {
+                    flex-direction: row-reverse;
+                }
+            }
+
+            .ant-drawer-body {
+                margin: 0px 32px 24px;
+                padding: 0px;
+            }
+
+            .ant-input {
+                height: 24px;
+            }
+        }
+    }
+
+    .ant-picker-calendar-full .ant-picker-panel .ant-picker-body th {
+        font-family: var(--font-family);
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 130%;
+        color: var(--character-light-secondary-45);
+    }
+
+    .ant-picker-calendar,
+    .ant-picker-panel,
+    .ant-picker-body {
+        background: var(--primary-light-1);
+    }
+
+    .ant-picker-calendar-full .ant-picker-panel .ant-picker-body td {
+        background: var(--primary-light-1);
+    }
+
+    .ant-picker-cell-inner .ant-picker-calendar-date {
+        background: #fff;
+    }
+
+    .ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date {
+        border: 0;
+        border-top: 2px solid var(--character-light-dividers);
+        background: var(--character-light-primary-inverse);
+        background: #fff;
+    }
+
+    .ant-picker-calendar-full
+        .ant-picker-panel
+        .ant-picker-cell-selected
+        .ant-picker-calendar-date
+        .ant-picker-calendar-date-value {
+        font-family: var(--font-family);
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 130%;
+        text-align: right;
+        color: var(--character-light-title-85);
+    }
+
+    .ant-picker-calendar-full
+        .ant-picker-panel
+        .ant-picker-cell-selected
+        .ant-picker-calendar-date {
+        background: var(--character-light-background);
+    }
+
+    .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner {
+        border-top: 2px solid var(--blue-dark-6);
+        background: var(--character-light-primary-inverse);
+    }
+
+    .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
+        border: 0;
+    }
+
+    .ant-modal,
+    .ant-modal-wrap,
+    .ant-modal-mask {
+        z-index: 999;
+    }
+
+    .ant-picker-calendar {
+        z-index: 1;
+    }
+
+    .ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date-content {
+        overflow: hidden;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    :global {
+        .ant-drawer {
+            z-index: 1001;
+
+            .ant-drawer-content-wrapper {
+                border-radius: 24px 24px 0 0;
+                height: 100%;
+                box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.05), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+                    0 6px 16px 0 rgba(0, 0, 0, 0.08);
+                background: var(--character-light-primary-inverse);
+
+                .ant-drawer-header {
+                    padding: 24px 16px 16px;
+
+                    .ant-drawer-header-title {
+                        flex-direction: row-reverse;
+                    }
+                }
+
+                .ant-drawer-body {
+                    margin: 0px 16px 24px;
+                    padding: 0px;
+                }
+            }
+        }
+
+        .ant-picker-calendar-header {
+            background: var(--character-light-primary-inverse);
+        }
+
+        .ant-picker-content th,
+        .ant-picker-content td {
+            height: 30px;
+        }
+
+        .ant-picker-date-panel .ant-picker-content th {
+            font-family: var(--font-family);
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 130%;
+            text-align: center;
+            color: var(--character-light-title-85);
+        }
+
+        .ant-picker-content td:has(div.with-data) {
+            background: var(--primary-light-1);
+        }
+
+        .ant-picker-calendar-date-value {
+            font-family: var(--font-family);
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 130%;
+            text-align: center;
+            color: var(--character-light-title-85);
+        }
+
+        .ant-picker-calendar .ant-picker-panel .ant-picker-body {
+            background: var(--character-light-primary-inverse);
+        }
+
+        .ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner {
+            border: 1px solid var(--primary-light-6);
+            background: var(--character-light-primary-inverse);
+            border-radius: 2px;
+            padding: 1px;
+            width: 37px;
+            height: 24px;
+        }
+
+        .ant-picker-cell-inner .ant-picker-calendar-date-value {
+            font-family: var(--font-family);
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 130%;
+            text-align: center;
+            color: var(--character-light-title-85);
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .modal-wrap {
+        width: 312px;
+    }
+
+    :global {
+        .ant-modal-confirm-error
+            .ant-modal-content
+            .ant-modal-confirm-title
+            span[data-test-id='modal-error-user-training-title'] {
+            padding-right: 20px;
+        }
+
+        .ant-modal-content {
+            width: 312px;
+
+            .ant-modal-header {
+                width: 100%;
+            }
+
+            .ant-modal-footer {
+                width: 100%;
+
+                .ant-btn-default,
+                .ant-btn-primary {
+                    width: 100%;
+                }
+
+                .ant-btn-primary {
+                    background: white;
+                }
+            }
+        }
+
+        .ant-picker-calendar-header {
+            display: flex;
+            justify-content: flex-end;
+            padding: 12px 0;
+
+            .ant-picker-calendar-mini .ant-picker-calendar-header {
+                padding-right: 0px;
+                padding-left: 8px;
+            }
+
+            .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
+                height: 24px;
+                padding: 0 7px;
+            }
+
+            .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+                width: 70px;
+                height: 32px;
+                padding: 0 11px;
+            }
+
+            .ant-picker-calendar-year-select {
+                width: 77px;
+                padding: 0 7px;
+            }
+
+            .ant-picker-calendar-mode-switch {
+                width: auto;
+                margin-left: 8px;
+                margin-top: 0px;
+            }
+
+            .ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector {
+                height: 24px;
+                padding: 0 7px;
+            }
+
+            .ant-select-single.ant-select-sm:not(.ant-select-customize-input).ant-select-show-arrow
+                .ant-select-selection-search {
+                right: 28px;
+            }
+
+            .ant-picker-calendar-month-select {
+                width: auto;
+            }
+
+            .ant-picker-calendar-mode-switch > label {
+                width: auto;
+            }
+        }
+    }
+}

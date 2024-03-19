@@ -12,6 +12,7 @@ export const FeedbackModalError = () => {
         feedbackModal.setModalError(false);
         feedbackModal.setModalAdd(true);
     };
+    const openModalError = () => feedbackModal.setModalError(false);
 
     return (
         <Modal
@@ -34,7 +35,7 @@ export const FeedbackModalError = () => {
                     </Button>,
                     <Button
                         className={classes['btn-close-error']}
-                        onClick={() => feedbackModal.setModalError(false)}
+                        onClick={openModalError}
                         data-test-id='write-review-not-saved-modal'
                     >
                         Закрыть

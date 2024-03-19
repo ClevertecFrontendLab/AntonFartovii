@@ -230,8 +230,8 @@ const postUserTraining = {
     id: '',
     name: 'Спина',
     exercises: [
-        { name: 'Становая тяга', approaches: 10, weight: 50, replays: 3, index: 0 },
-        { name: 'Сведение лопаток', approaches: 10, weight: 50, replays: 3, index: 1 },
+        {name: 'Становая тяга', approaches: 10, weight: 50, replays: 3, index: 0},
+        {name: 'Сведение лопаток', approaches: 10, weight: 50, replays: 3, index: 1},
     ],
     date: dayAfterTomorrow,
 };
@@ -296,11 +296,11 @@ function getFormatDate(date, isStandardFormat) {
 }
 
 const trainingList = [
-    { name: 'Ноги', key: 'legs' },
-    { name: 'Руки', key: 'hands' },
-    { name: 'Силовая', key: 'strenght' },
-    { name: 'Спина', key: 'back' },
-    { name: 'Грудь', key: 'chest' },
+    {name: 'Ноги', key: 'legs'},
+    {name: 'Руки', key: 'hands'},
+    {name: 'Силовая', key: 'strenght'},
+    {name: 'Спина', key: 'back'},
+    {name: 'Грудь', key: 'chest'},
 ];
 
 const trainingArray = ['Ноги', 'Руки', 'Силовая', 'Спина', 'Грудь'];
@@ -320,13 +320,13 @@ const remainingSelectOptions = reduceItem(userTraining, trainingArray, threeDays
 describe('Sprint 4', () => {
     describe('Calendar', () => {
         const resolutionFull = [
-            { width: 360, height: 740 },
-            { width: 833, height: 900 },
-            { width: 1440, height: 900 },
+            {width: 360, height: 740},
+            {width: 833, height: 900},
+            {width: 1440, height: 900},
         ];
-        const resolutionMobile = [{ width: 360, height: 740 }];
-        const resolutionTablet = [{ width: 833, height: 900 }];
-        const resolutionLaptop = [{ width: 1440, height: 900 }];
+        const resolutionMobile = [{width: 360, height: 740}];
+        const resolutionTablet = [{width: 833, height: 900}];
+        const resolutionLaptop = [{width: 1440, height: 900}];
 
         function takeScreenshots(screenshotName, resolution = resolutionFull) {
             cy.wait(1000);
@@ -475,6 +475,7 @@ describe('Sprint 4', () => {
                 .should('equal', 'Прыжки с нагрузкой');
             cy.get(`[data-test-id=${DATA_TEST_ID.modalDrawerRightButtonClose}]`).click();
         }
+
         function goToCalendar() {
             cy.intercept('GET', 'catalogs/training-list', {
                 body: trainingList,
@@ -514,7 +515,7 @@ describe('Sprint 4', () => {
 
         beforeEach(() => {
             cy.visit('/');
-            cy.intercept('POST', 'auth/login', { accessToken: 'SUPERUSER' }).as('login');
+            cy.intercept('POST', 'auth/login', {accessToken: 'SUPERUSER'}).as('login');
             cy.visit('/auth');
             cy.get('[data-test-id=login-email]').type('valadzkoaliaksei@tut.by');
             cy.get('[data-test-id=login-password]').type('1234qqQQ');
@@ -658,8 +659,8 @@ describe('Sprint 4', () => {
                 body: userTraining.map((el) =>
                     el._id === '8'
                         ? JSON.parse(
-                              JSON.stringify(returnUpdateUserTraining('8', threeDaysLater, false)),
-                          )
+                            JSON.stringify(returnUpdateUserTraining('8', threeDaysLater, false)),
+                        )
                         : JSON.parse(JSON.stringify(el)),
                 ),
                 statusCode: 200,
