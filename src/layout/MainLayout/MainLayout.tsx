@@ -12,6 +12,8 @@ import { push } from 'redux-first-history';
 import { Paths } from '../../routes/Paths.ts';
 import { useLazyGetTrainingQuery } from '@redux/api/trainingApi.ts';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
+import { useGetUserQuery } from '@redux/api/userApi.ts';
+import { setUser } from '@redux/userSlice.ts';
 
 export type MainContextType = {
     modal500: boolean;
@@ -60,7 +62,12 @@ export const MainLayout = () => {
     const [cellRef, setCellRef] = useState<RefObject<HTMLDivElement>>();
     const { loader, setLoader } = useLoader() as ILoader;
     const [queryUserCalendar, queryUserCalendarState] = useLazyGetTrainingQuery();
+    const queryUser = useGetUserQuery();
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        queryUser.data && dispatch(setUser(queryUser.data));
+    }, [queryUser.data, dispatch]);
 
     useLayoutEffect(() => {
         refetchUserCalendar && queryUserCalendar();
@@ -91,7 +98,6 @@ export const MainLayout = () => {
         setCalendar,
         dispatch,
     ]);
-    console.log(typeof useLazyGetTrainingQuery);
 
     return (
         <MainContext.Provider

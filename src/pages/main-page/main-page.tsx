@@ -75,7 +75,7 @@ export const MainPage: React.FC = () => {
                 </div>
                 <div className={classes.card}>
                     <div className={classes['card-title']}>
-                        <a>Заполнить профиль</a>
+                        <Link to={Paths.MAIN + Paths.PROFILE_PAGE}>Заполнить профиль</Link>
                     </div>
                     <div className={classes['card-button']}>
                         <a>
@@ -88,7 +88,7 @@ export const MainPage: React.FC = () => {
             <div className={classes['main-footer']}>
                 <div className={classes['footer-container']}>
                     <div className={classes['left']}>
-                        <Link to={Paths.MAIN + Paths.FEEDBACKS} data-test-id='see-reviews'>
+                        <Link to={Paths.MAIN + Paths.FEEDBACKS_PAGE} data-test-id='see-reviews'>
                             Смотреть отзывы
                         </Link>
                     </div>

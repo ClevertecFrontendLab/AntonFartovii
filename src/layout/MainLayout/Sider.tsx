@@ -19,7 +19,7 @@ import { Logo } from '@components/Logo.tsx';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { Key, ReactNode, useEffect, useState } from 'react';
 import { Paths } from '../../routes/Paths.ts';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { MainContextType } from './MainLayout.tsx';
 import { useMainContext } from '@hooks/useMainContext.ts';
 
@@ -74,7 +74,11 @@ export const Sider = () => {
         ),
         getItem('Тренировки', 'trainings', size.width && size.width > 800 && <TrophyTwoTone />),
         getItem('Достижения', '3', size.width && size.width > 800 && <HeartTwoTone />),
-        getItem('Профиль', '4', size.width && size.width > 800 && <IdcardOutlined />),
+        getItem(
+            <Link to={Paths.MAIN + Paths.PROFILE_PAGE}>Профиль</Link>,
+            Paths.PROFILE_PAGE,
+            size.width && size.width > 800 && <IdcardOutlined />,
+        ),
     ];
 
     const switchSider = () => setCollapsedSider(!collapsedSider);

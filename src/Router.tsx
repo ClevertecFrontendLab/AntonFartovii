@@ -3,7 +3,15 @@ import { history } from '@redux/configure-store.ts';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { PrivateMain } from './hoc/PrivateMain.tsx';
 import { MainLayout } from './layout/MainLayout/MainLayout.tsx';
-import { AuthPage, CalendarPage, FeedbacksPage, MainPage, ResultPage } from '@pages/index.ts';
+import {
+    AuthPage,
+    CalendarPage,
+    FeedbacksPage,
+    MainPage,
+    ProfilePage,
+    ResultPage,
+    SettingsPage,
+} from '@pages/index.ts';
 import { AuthLayout } from './layout/AuthLayout/AuthLayout.tsx';
 import { Paths } from './routes/Paths.ts';
 import { FormLogin } from '@components/FormLogin.tsx';
@@ -39,7 +47,9 @@ export const Router = () => (
                 <Route index element={<Navigate to={Paths.MAIN_PAGE} />} />
                 <Route path={Paths.CALENDAR_PAGE} element={<CalendarPage />} />
                 <Route path={Paths.MAIN_PAGE} element={<MainPage />} />
-                <Route path={Paths.FEEDBACKS} element={<FeedbacksPage />} />
+                <Route path={Paths.FEEDBACKS_PAGE} element={<FeedbacksPage />} />
+                <Route path={Paths.PROFILE_PAGE} element={<ProfilePage />} />
+                <Route path={Paths.SETTINGS_PAGE} element={<SettingsPage />} />
             </Route>
             <Route
                 element={

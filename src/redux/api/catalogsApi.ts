@@ -1,13 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '@redux/configure-store.ts';
-import { setTrainingList } from '@redux/calendarSlice.ts';
+import {
+    setTariffList,
+    setTrainingList,
+    setUserJointTrainingList,
+    setUserList,
+} from '@redux/catalogsSlice.ts';
 
 export type TrainingListItem = {
     name: string;
     key: string;
 };
 
-export type User = {
+export type UserListItem = {
     id: string;
     name: string;
 };
@@ -18,10 +23,20 @@ export type Period = {
     days: number;
 };
 
-export type Tariff = {
+export type TariffListItem = {
     _id: string;
     name: string;
     periods: Period[];
+};
+
+export type UserJointTrainingListItem = {
+    id: string;
+    name: string;
+    trainingType: string;
+    imageSrc: null;
+    avgWeightInWeek: number;
+    status: null;
+    inviteId: null;
 };
 
 export const catalogsApi = createApi({
@@ -55,7 +70,7 @@ export const catalogsApi = createApi({
                 }
             },
         }),
-        getUserList: builder.query<User[], void>({
+        getUserList: builder.query<UserListItem[], void>({
             query: () => {
                 return {
                     url: 'user-list',
@@ -63,8 +78,16 @@ export const catalogsApi = createApi({
                 };
             },
             providesTags: ['UserList'],
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(setUserList(data));
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         }),
-        getTariffList: builder.query<Tariff[], void>({
+        getTariffList: builder.query<TariffListItem[], void>({
             query: () => {
                 return {
                     url: 'tariff-list',
@@ -72,8 +95,16 @@ export const catalogsApi = createApi({
                 };
             },
             providesTags: ['TariffList'],
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(setTariffList(data));
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         }),
-        getUserJointTrainingList: builder.query<Tariff[], void>({
+        getUserJointTrainingList: builder.query<UserJointTrainingListItem[], void>({
             query: () => {
                 return {
                     url: 'user-joint-training-list',
@@ -81,6 +112,14 @@ export const catalogsApi = createApi({
                 };
             },
             providesTags: ['UserJointTrainingList'],
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(setUserJointTrainingList(data));
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         }),
     }),
 });

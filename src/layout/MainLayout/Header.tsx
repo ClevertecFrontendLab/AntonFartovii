@@ -36,7 +36,7 @@ export const Header = () => {
                                     <SettingOutlined />
                                 </div>
                                 <div className={classes['setting-title']}>
-                                    <a>Настройки</a>
+                                    <Link to={Paths.MAIN + Paths.SETTINGS_PAGE}>Настройки</Link>
                                 </div>
                             </div>
                         </div>
