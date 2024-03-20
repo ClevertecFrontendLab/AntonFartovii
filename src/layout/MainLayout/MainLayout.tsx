@@ -1,4 +1,4 @@
-import { createContext, RefObject, useState } from 'react';
+import { createContext, RefObject, useEffect, useLayoutEffect, useState } from 'react';
 import { Sider } from './Sider.tsx';
 import { Header } from './Header.tsx';
 import classes from './layout.module.less';
@@ -7,6 +7,11 @@ import { Loader } from '@components/Loader/Loader.tsx';
 import { useLoader } from '@hooks/useLoader.ts';
 import { ILoader } from '../../hoc/LoaderProvider.tsx';
 import { UserCalendar } from '@redux/calendarSlice.ts';
+import { formatCalendar } from '../../utils.ts';
+import { push } from 'redux-first-history';
+import { Paths } from '../../routes/Paths.ts';
+import { useLazyGetTrainingQuery } from '@redux/api/trainingApi.ts';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
 
 export type MainContextType = {
     modal500: boolean;
@@ -33,6 +38,8 @@ export type MainContextType = {
     setCollapsedSider: (bool: boolean) => void;
     cellRef: RefObject<HTMLDivElement>;
     setCellRef: (ref: RefObject<HTMLDivElement>) => void;
+    refetchUserCalendar: boolean;
+    setRefetchUserCalendar: (bool: boolean) => void;
 };
 
 export const MainContext = createContext<Partial<MainContextType>>({});
@@ -45,12 +52,46 @@ export const MainLayout = () => {
     const [changeForm, setChangeForm] = useState<boolean>(false);
     const [collapsedSider, setCollapsedSider] = useState<boolean>(false);
     const [drawerExercise, setDrawerExercise] = useState<boolean>(false);
+    const [refetchUserCalendar, setRefetchUserCalendar] = useState<boolean>(false);
     const [editMode, setEditMode] = useState<boolean>(false);
     const [coords, setCoords] = useState<DOMRect | null>(null);
     const [date, setDate] = useState<Date>();
     const [calendar, setCalendar] = useState<UserCalendar>({});
     const [cellRef, setCellRef] = useState<RefObject<HTMLDivElement>>();
-    const { loader } = useLoader() as ILoader;
+    const { loader, setLoader } = useLoader() as ILoader;
+    const [queryUserCalendar, queryUserCalendarState] = useLazyGetTrainingQuery();
+    const dispatch = useAppDispatch();
+
+    useLayoutEffect(() => {
+        refetchUserCalendar && queryUserCalendar();
+        return () => {
+            setRefetchUserCalendar(false);
+        };
+    }, [refetchUserCalendar, queryUserCalendar]);
+
+    useEffect(() => {
+        setLoader(queryUserCalendarState.isLoading);
+    }, [queryUserCalendarState.isLoading, queryUserCalendarState.isFetching, setLoader]);
+
+    useEffect(() => {
+        queryUserCalendarState.isError && setModal500(true);
+    }, [queryUserCalendarState.isError, queryUserCalendarState.isFetching, setModal500]);
+
+    useEffect(() => {
+        if (queryUserCalendarState.isSuccess) {
+            const calendar =
+                queryUserCalendarState.data && formatCalendar(queryUserCalendarState.data);
+            calendar && setCalendar(calendar);
+            dispatch(push(Paths.MAIN + Paths.CALENDAR_PAGE));
+        }
+    }, [
+        queryUserCalendarState.isSuccess,
+        queryUserCalendarState.isFetching,
+        queryUserCalendarState.data,
+        setCalendar,
+        dispatch,
+    ]);
+    console.log(typeof useLazyGetTrainingQuery);
 
     return (
         <MainContext.Provider
@@ -79,10 +120,11 @@ export const MainLayout = () => {
                 setCollapsedSider,
                 cellRef,
                 setCellRef,
+                setRefetchUserCalendar,
             }}
         >
             <div className={classes['app-wrapper']}>
-                <Sider collapsed={collapsedSider} onCollapsed={setCollapsedSider}></Sider>
+                <Sider />
                 <div className={classes['wrapper']}>
                     <Header />
                     <main className={classes.main}>
