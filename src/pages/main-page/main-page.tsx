@@ -15,6 +15,8 @@ import { MainContextType } from '../../layout/MainLayout/MainLayout.tsx';
 import { Modal500 } from '@components/Calendar/Modal500.tsx';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
 import { deleteTemporaryDay } from '@redux/calendarSlice.ts';
+import { Button } from 'antd';
+import { push } from 'redux-first-history';
 
 export const MainPage: React.FC = () => {
     const { setRefetchUserCalendar } = useMainContext() as MainContextType;
@@ -25,6 +27,7 @@ export const MainPage: React.FC = () => {
     }, [dispatch]);
 
     const openCalendar = useCallback(() => setRefetchUserCalendar(true), [setRefetchUserCalendar]);
+    const openProfilePage = () => dispatch(push(Paths.MAIN + Paths.PROFILE_PAGE));
 
     return (
         <section className={classes['main-container']}>
@@ -78,10 +81,15 @@ export const MainPage: React.FC = () => {
                         <Link to={Paths.MAIN + Paths.PROFILE_PAGE}>Заполнить профиль</Link>
                     </div>
                     <div className={classes['card-button']}>
-                        <a>
-                            <IdcardOutlined className={classes['card-icon']} />
-                            <span>Профиль</span>
-                        </a>
+                        <Button
+                            onClick={openProfilePage}
+                            className={classes['card-button']}
+                            type='text'
+                            icon={<IdcardOutlined className={classes['card-icon']} />}
+                            data-test-id='menu-button-profile'
+                        >
+                            Профиль
+                        </Button>
                     </div>
                 </div>
             </div>

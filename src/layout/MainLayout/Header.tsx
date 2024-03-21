@@ -1,12 +1,16 @@
 import { Typography } from 'antd/';
 import classes from './layout.module.less';
 import { SettingOutlined } from '@ant-design/icons';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Button } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { PathNames, Paths } from '../../routes/Paths.ts';
+import { push } from 'redux-first-history';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
 
 export const Header = () => {
     const { pathname } = useLocation();
+    const dispatch = useAppDispatch();
+
     const paths = pathname.split('/').slice(1);
     const templateLink = (path: string) => (
         <Breadcrumb.Item key={path}>
@@ -14,6 +18,7 @@ export const Header = () => {
         </Breadcrumb.Item>
     );
     const printPath = (path: string) => path !== Paths.MAIN_PAGE && templateLink(path);
+    const openSettingPage = () => dispatch(push(Paths.MAIN + Paths.SETTINGS_PAGE));
 
     return (
         <header>
@@ -32,12 +37,14 @@ export const Header = () => {
                         </div>
                         <div className={classes['header-setting']}>
                             <div className={classes['wrap-extra']}>
-                                <div className={classes['setting-icon']}>
-                                    <SettingOutlined />
-                                </div>
-                                <div className={classes['setting-title']}>
-                                    <Link to={Paths.MAIN + Paths.SETTINGS_PAGE}>Настройки</Link>
-                                </div>
+                                <Button
+                                    type='text'
+                                    icon={<SettingOutlined />}
+                                    onClick={openSettingPage}
+                                    data-test-id='header-settings'
+                                >
+                                    Настройки
+                                </Button>
                             </div>
                         </div>
                     </div>
