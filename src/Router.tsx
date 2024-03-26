@@ -8,6 +8,7 @@ import {
     CalendarPage,
     FeedbacksPage,
     MainPage,
+    Page404,
     ProfilePage,
     ResultPage,
     SettingsPage,
@@ -111,6 +112,8 @@ export const Router = () => (
                     />
                 </Route>
             </Route>
+            <Route path={Paths.PAGE_404} element={<Page404 />} />
+            <Route path='*' element={<Navigate to={`/${Paths.PAGE_404}`} />} />
         </Routes>
     </HistoryRouter>
 );

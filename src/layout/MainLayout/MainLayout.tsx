@@ -62,7 +62,9 @@ export const MainLayout = () => {
     const [cellRef, setCellRef] = useState<RefObject<HTMLDivElement>>();
     const { loader, setLoader } = useLoader() as ILoader;
     const [queryUserCalendar, queryUserCalendarState] = useLazyGetTrainingQuery();
-    const queryUser = useGetUserQuery();
+    const queryUser = useGetUserQuery(undefined, {
+        refetchOnReconnect: true,
+    });
     const dispatch = useAppDispatch();
 
     useEffect(() => {

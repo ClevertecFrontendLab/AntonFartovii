@@ -7,6 +7,7 @@ export const ResultErrorLogin = () => {
     const dispatch = useAppDispatch();
     const location = useLocation();
 
+    console.log(location);
     const clickHandler = () => {
         dispatch(replace(location.state.from));
     };

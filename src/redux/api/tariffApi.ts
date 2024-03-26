@@ -1,27 +1,23 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '@redux/configure-store.ts';
 
-export type UserTariff = {
+export type TariffCheckout = {
+    userId: string;
     tariffId: string;
-    expired: string;
+    days: number;
+    key: string;
 };
 
-export type UserEntity = {
-    email: string;
-    firstName: string;
-    lastName: string;
-    birthday: string;
-    imgSrc: string;
-    readyForJointTraining: boolean;
-    sendNotification: boolean;
-    tariff: UserTariff;
+export type BayTariff = {
+    tariffId: string;
+    days: number;
 };
 
-export const userApi = createApi({
-    reducerPath: 'userApi',
+export const tariffApi = createApi({
+    reducerPath: 'tariffApi',
     refetchOnFocus: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://marathon-api.clevertec.ru/user',
+        baseUrl: 'https://marathon-api.clevertec.ru/tariff',
         credentials: 'include',
         prepareHeaders: (headers, { getState }) => {
             const { accessToken } = (getState() as RootState).authReducer;
@@ -29,26 +25,26 @@ export const userApi = createApi({
             return headers;
         },
     }),
-    tagTypes: ['User'],
+    tagTypes: ['Tariff'],
     endpoints: (builder) => ({
-        getUser: builder.query<UserEntity, void>({
+        getTariffCheckout: builder.query<{ message: string }, void>({
             query: () => {
                 return {
-                    url: '/me',
+                    url: '/checkout',
                     method: 'GET',
                 };
             },
-            providesTags: ['User'],
+            providesTags: ['Tariff'],
         }),
-        updateUser: builder.mutation<UserEntity, Partial<UserEntity>>({
+        bayTariff: builder.mutation<void, BayTariff>({
             query: (body) => ({
                 url: '',
-                method: 'PUT',
+                method: 'POST',
                 body,
             }),
-            invalidatesTags: ['User'],
+            invalidatesTags: ['Tariff'],
         }),
     }),
 });
 
-export const { useGetUserQuery, useUpdateUserMutation } = userApi;
+export const { useLazyGetTariffCheckoutQuery, useBayTariffMutation } = tariffApi;

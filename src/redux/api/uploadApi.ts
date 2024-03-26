@@ -15,7 +15,7 @@ export const uploadApi = createApi({
     reducerPath: 'uploadApi',
     refetchOnFocus: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://marathon-api.clevertec.ru/upload-image/',
+        baseUrl: 'https://marathon-api.clevertec.ru/upload-image',
         credentials: 'include',
         prepareHeaders: (headers, { getState }) => {
             const { accessToken } = (getState() as RootState).authReducer;

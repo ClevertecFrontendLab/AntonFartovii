@@ -1,14 +1,15 @@
 import { Typography } from 'antd/';
 import classes from './layout.module.less';
-import { SettingOutlined } from '@ant-design/icons';
-import { Breadcrumb, Button } from 'antd';
+import { ArrowLeftOutlined, SettingOutlined } from '@ant-design/icons';
+import { Breadcrumb, Button, Col, Row } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { PathNames, Paths } from '../../routes/Paths.ts';
 import { push } from 'redux-first-history';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
+import React from 'react';
 
 export const Header = () => {
-    const { pathname } = useLocation();
+    const { pathname, state } = useLocation();
     const dispatch = useAppDispatch();
 
     const paths = pathname.split('/').slice(1);
@@ -18,37 +19,67 @@ export const Header = () => {
         </Breadcrumb.Item>
     );
     const printPath = (path: string) => path !== Paths.MAIN_PAGE && templateLink(path);
-    const openSettingPage = () => dispatch(push(Paths.MAIN + Paths.SETTINGS_PAGE));
-
-    return (
-        <header>
-            <div className={classes['inner-wrapper']}>
+    const openSettingPage = () =>
+        dispatch(
+            push(Paths.MAIN + Paths.SETTINGS_PAGE, {
+                from: pathname,
+            }),
+        );
+    const settingBackHandler = () => dispatch(push(state.from || `/${Paths.MAIN_PAGE}`));
+    const printHeader = () => {
+        if (pathname === `/${Paths.PROFILE_PAGE}`) {
+            return <Typography.Title level={5}>Профиль</Typography.Title>;
+        }
+        if (pathname === `/${Paths.SETTINGS_PAGE}`) {
+            return (
+                <Button
+                    type='text'
+                    icon={<ArrowLeftOutlined />}
+                    onClick={settingBackHandler}
+                    data-test-id='settings-back'
+                >
+                    Настройки
+                </Button>
+            );
+        } else {
+            return (
                 <Breadcrumb>
                     {templateLink(Paths.MAIN_PAGE)}
                     {paths.map(printPath)}
                 </Breadcrumb>
-                {pathname === `/${Paths.MAIN_PAGE}` && (
-                    <div className={classes['header-body']}>
-                        <div className={classes['header-title']}>
-                            <Typography.Title level={1}>
-                                Приветствуем тебя в&nbsp;CleverFit — приложении,
-                                <br /> которое поможет тебе добиться своей мечты!
-                            </Typography.Title>
-                        </div>
-                        <div className={classes['header-setting']}>
-                            <div className={classes['wrap-extra']}>
-                                <Button
-                                    type='text'
-                                    icon={<SettingOutlined />}
-                                    onClick={openSettingPage}
-                                    data-test-id='header-settings'
-                                >
-                                    Настройки
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
-                )}
+            );
+        }
+    };
+    return (
+        <header>
+            <div className={classes['inner-wrapper']}>
+                <Row justify={'space-between'} wrap={false}>
+                    <Col flex={'auto'}>
+                        <Row>{printHeader()}</Row>
+                        {pathname === `/${Paths.MAIN_PAGE}` && (
+                            <Row style={{ marginTop: '13px' }}>
+                                <div className={classes['header-title']}>
+                                    <Typography.Title level={1}>
+                                        Приветствуем тебя в&nbsp;CleverFit — приложении,
+                                        <br /> которое поможет тебе добиться своей мечты!
+                                    </Typography.Title>
+                                </div>
+                            </Row>
+                        )}
+                    </Col>
+                    {pathname !== `/${Paths.SETTINGS_PAGE}` && (
+                        <Col className='setting-container'>
+                            <Button
+                                type='text'
+                                icon={<SettingOutlined />}
+                                onClick={openSettingPage}
+                                data-test-id='header-settings'
+                            >
+                                Настройки
+                            </Button>
+                        </Col>
+                    )}
+                </Row>
             </div>
         </header>
     );

@@ -5,6 +5,7 @@ export enum Paths {
     PROFILE_PAGE = 'profile',
     SETTINGS_PAGE = 'settings',
     AUTH = 'auth',
+    PAGE_404 = '404',
     FEEDBACKS_PAGE = 'feedbacks',
     REGISTRATION = 'registration',
     CHANGE_PASSWORD = 'change-password',
