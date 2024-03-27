@@ -1,3 +1,8 @@
+.calendar-container {
+    padding: 24px;
+    background: var(--primary-light-1);
+}
+
 .modal-wrap {
     height: min-content;
     overflow: hidden;
@@ -76,9 +81,9 @@
                 height: 64px;
 
                 .ant-modal
-                    .ant-modal-footer
-                    .ant-btn
-                    + .ant-btn:not(.ant-dropdown-trigger)[disabled],
+                .ant-modal-footer
+                .ant-btn
+                + .ant-btn:not(.ant-dropdown-trigger)[disabled],
                 .ant-btn + .ant-btn:not(.ant-dropdown-trigger) {
                     margin: 0 auto;
                 }
@@ -117,9 +122,9 @@
                 align-items: center;
 
                 .ant-modal
-                    .ant-modal-footer
-                    .ant-btn
-                    + .ant-btn:not(.ant-dropdown-trigger)[disabled],
+                .ant-modal-footer
+                .ant-btn
+                + .ant-btn:not(.ant-dropdown-trigger)[disabled],
                 .ant-btn + .ant-btn:not(.ant-dropdown-trigger) {
                     margin: 0 auto;
                 }
@@ -218,9 +223,9 @@
     }
 }
 
-main {
-    background: var(--primary-light-1);
-}
+//main {
+//background: var(--primary-light-1);
+//}
 
 .input-label {
     border-bottom: 1px solid var(--character-light-dividers);
@@ -236,6 +241,7 @@ main {
 }
 
 :global {
+
     .ant-modal-confirm-error {
         .ant-modal-content {
             border-radius: 4px;
@@ -266,7 +272,7 @@ main {
         .ant-drawer-content-wrapper {
             border-radius: 8px 0 0 8px;
             box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.05), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
-                0 6px 16px 0 rgba(0, 0, 0, 0.08);
+            0 6px 16px 0 rgba(0, 0, 0, 0.08);
             background: var(--character-light-primary-inverse);
 
             .ant-drawer-content {
@@ -323,10 +329,10 @@ main {
     }
 
     .ant-picker-calendar-full
-        .ant-picker-panel
-        .ant-picker-cell-selected
-        .ant-picker-calendar-date
-        .ant-picker-calendar-date-value {
+    .ant-picker-panel
+    .ant-picker-cell-selected
+    .ant-picker-calendar-date
+    .ant-picker-calendar-date-value {
         font-family: var(--font-family);
         font-weight: 400;
         font-size: 14px;
@@ -336,9 +342,9 @@ main {
     }
 
     .ant-picker-calendar-full
-        .ant-picker-panel
-        .ant-picker-cell-selected
-        .ant-picker-calendar-date {
+    .ant-picker-panel
+    .ant-picker-cell-selected
+    .ant-picker-calendar-date {
         background: var(--character-light-background);
     }
 
@@ -367,6 +373,7 @@ main {
 }
 
 @media screen and (max-width: 800px) {
+
     :global {
         .ant-drawer {
             z-index: 1001;
@@ -375,7 +382,7 @@ main {
                 border-radius: 24px 24px 0 0;
                 height: 100%;
                 box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.05), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
-                    0 6px 16px 0 rgba(0, 0, 0, 0.08);
+                0 6px 16px 0 rgba(0, 0, 0, 0.08);
                 background: var(--character-light-primary-inverse);
 
                 .ant-drawer-header {
@@ -449,15 +456,16 @@ main {
 }
 
 @media screen and (max-width: 480px) {
+
     .modal-wrap {
         width: 312px;
     }
 
     :global {
         .ant-modal-confirm-error
-            .ant-modal-content
-            .ant-modal-confirm-title
-            span[data-test-id='modal-error-user-training-title'] {
+        .ant-modal-content
+        .ant-modal-confirm-title
+        span[data-test-id='modal-error-user-training-title'] {
             padding-right: 20px;
         }
 
@@ -520,7 +528,7 @@ main {
             }
 
             .ant-select-single.ant-select-sm:not(.ant-select-customize-input).ant-select-show-arrow
-                .ant-select-selection-search {
+            .ant-select-selection-search {
                 right: 28px;
             }
 
