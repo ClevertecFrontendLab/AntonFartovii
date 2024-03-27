@@ -1,4 +1,8 @@
 .profile-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background: var(--character-light-primary-inverse);
     border-radius: 8px;
     margin: 24px;
@@ -6,6 +10,7 @@
     min-height: 886px;
 
     .profile-top {
+        margin-bottom: 11px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -44,7 +49,6 @@
     }
 
     :global {
-
         .ant-btn-primary {
             width: 206px;
             height: 40px;
@@ -52,14 +56,33 @@
             border-radius: 2px;
             padding: 4px 15px;
         }
+
+        .ant-alert {
+            position: fixed;
+            left: calc(50% - 197px);
+            bottom: 10%;
+            margin: 0 auto;
+            border: 1px solid #b7eb8f;
+            border-radius: 2px;
+            padding: 9px 16px;
+            max-width: 395px;
+            width: 100%;
+            height: 36px;
+            background: #f6ffed;
+            font-family: var(--font-family);
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 130%;
+            color: var(--character-light-title-85);
+        }
     }
 }
 
 @media screen and (max-width: 576px) {
-
     .profile-container {
         margin: 24px 0px 42px;
         padding: 16px 24px;
+        min-height: 693px;
 
         .profile-top {
             display: flex;
@@ -75,7 +98,15 @@
             .ant-btn-primary {
                 width: 100%;
             }
+
+            .ant-alert {
+                left: calc(50% - 156px);
+                border: 1px solid #b7eb8f;
+                border-radius: 2px;
+                padding: 9px 16px;
+                width: 312px;
+                height: 54px;
+            }
         }
     }
-
 }

@@ -26,7 +26,13 @@ const TariffsParamsList = ({ activePro }: { activePro: boolean }) => {
                 <Col style={{ width: '126px' }}>
                     <Row wrap={false} justify='space-between'>
                         <div className={classes['tag-free']}>FREE</div>
-                        <div className={classes['tag-pro']}>
+                        <div
+                            className={
+                                activePro
+                                    ? classes['tag-pro'] + ' ' + classes['active']
+                                    : classes['tag-pro']
+                            }
+                        >
                             PRO
                             {activePro && (
                                 <>

@@ -147,7 +147,6 @@ body {
     background: transparent;
 }
 
-
 .auth-wrapper-blur.active {
     z-index: 15;
 }

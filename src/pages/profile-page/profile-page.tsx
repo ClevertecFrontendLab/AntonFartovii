@@ -23,9 +23,7 @@ import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 
 const { error } = Modal;
 
-type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
-
-const getBase64 = (file: FileType): Promise<string> =>
+const getBase64 = (file: File): Promise<string> =>
     new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -38,11 +36,11 @@ export const ProfilePage = () => {
     const [disabledButton, setDisabledButton] = useState<boolean>(true);
     const [fileList, setFileList] = useState<UploadFile[]>([]);
     const [previewOpen, setPreviewOpen] = useState(false);
-    const [modalErrorUpload, setModalErrorUpload] = useState<boolean>(false);
     const [successAlert, setSuccessAlert] = useState<boolean>(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
     const { user } = useAppSelector((state) => state.userReducer);
+    const { accessToken } = useAppSelector((state) => state.authReducer);
     const [updateUser, updateState] = useUpdateUserMutation();
     const screens = useBreakpoint();
 
@@ -55,32 +53,9 @@ export const ProfilePage = () => {
 
     useEffect(() => {
         if (user && user.imgSrc) {
-            setFileList([{ uid: '-1', name: 'avatar.png', status: 'done', url: user.imgSrc }]);
+            setFileList([{ uid: '-1', name: '', status: 'done', url: user.imgSrc }]);
         }
     }, [user]);
-
-    useEffect(() => {
-        modalErrorUpload &&
-            error({
-                title: 'Файл слишком большой',
-                content: (
-                    <span data-test-id='modal-error-user-training-subtitle'>
-                        Выберите файл размером [......] МБ.
-                    </span>
-                ),
-                icon: <CloseCircleOutlined />,
-                okText: 'Закрыть',
-                okButtonProps: {
-                    'data-test-id': 'big-file-error-close',
-                } as ButtonProps,
-                centered: true,
-                width: 384,
-                closable: true,
-                maskClosable: true,
-                mask: false,
-                wrapClassName: 'calendar-wrapper-blur',
-            });
-    }, [modalErrorUpload]);
 
     const onChange = () => {
         form.validateFields([
@@ -102,7 +77,7 @@ export const ProfilePage = () => {
     const props: UploadProps = {
         name: 'file',
         headers: {
-            authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWZiMmM5Zjc3NTM2YjdlNDU2OWIwYTMiLCJlbWFpbCI6ImFudG9uQHJ6YS5ieSIsInJlYWR5Rm9ySm9pbnRUcmFpbmluZyI6ZmFsc2UsInNlbmROb3RpZmljYXRpb24iOmZhbHNlLCJpbWdTcmMiOiJodHRwczovL3RyYWluaW5nLWFwaS5jbGV2ZXJ0ZWMucnUvbWVkaWEvYXZhdGFyLzY1ZmIyYzlmNzc1MzZiN2U0NTY5YjBhMy5wbmciLCJpYXQiOjE3MTEyMjI3NzUsImV4cCI6MTc5NzYyMjc3NX0.rEfIKU3lKu6FzuXJb1CB-4uM7vXCVvxDTjIWNLAllYM`,
+            authorization: `Bearer ${accessToken}`,
         },
     };
 
@@ -130,12 +105,15 @@ export const ProfilePage = () => {
     const removeImage = () => setFileList([]);
     const handlePreview = async (file: UploadFile) => {
         if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj as FileType);
+            file.preview = await getBase64(file.originFileObj as File);
         }
 
         setPreviewImage(file.url || (file.preview as string));
         setPreviewOpen(true);
-        setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf('/') + 1));
+        const previewTitle = file.url
+            ? file.url.substring(file.url.lastIndexOf('/') + 1)
+            : file.name;
+        setPreviewTitle(previewTitle);
     };
 
     const handleRequest = async (options) => {
@@ -145,7 +123,7 @@ export const ProfilePage = () => {
         const config = {
             headers: {
                 'content-type': 'multipart/form-data',
-                authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWZiMmM5Zjc3NTM2YjdlNDU2OWIwYTMiLCJlbWFpbCI6ImFudG9uQHJ6YS5ieSIsInJlYWR5Rm9ySm9pbnRUcmFpbmluZyI6ZmFsc2UsInNlbmROb3RpZmljYXRpb24iOmZhbHNlLCJpbWdTcmMiOiJodHRwczovL3RyYWluaW5nLWFwaS5jbGV2ZXJ0ZWMucnUvbWVkaWEvYXZhdGFyLzY1ZmIyYzlmNzc1MzZiN2U0NTY5YjBhMy5wbmciLCJpYXQiOjE3MTEyMjI3NzUsImV4cCI6MTc5NzYyMjc3NX0.rEfIKU3lKu6FzuXJb1CB-4uM7vXCVvxDTjIWNLAllYM`,
+                authorization: `Bearer ${accessToken}`,
             },
         };
         fmData.append('file', file);
@@ -154,7 +132,25 @@ export const ProfilePage = () => {
             onSuccess();
         } catch (err) {
             if (err.response.status === 409) {
-                setModalErrorUpload(true);
+                error({
+                    title: 'Файл слишком большой',
+                    content: (
+                        <span data-test-id='modal-error-user-training-subtitle'>
+                            Выберите файл размером {(file.size / 1024 / 1014).toFixed(2)} МБ.
+                        </span>
+                    ),
+                    icon: <CloseCircleOutlined />,
+                    okText: 'Закрыть',
+                    okButtonProps: {
+                        'data-test-id': 'big-file-error-close',
+                    } as ButtonProps,
+                    centered: true,
+                    width: 384,
+                    closable: true,
+                    maskClosable: true,
+                    mask: false,
+                    wrapClassName: 'calendar-wrapper-blur',
+                });
                 setDisabledButton(true);
             }
             onError({ err });
@@ -165,7 +161,6 @@ export const ProfilePage = () => {
         const user = {};
         updateUser(user);
     };
-    // gutter={[0, { xs: 8, sm: 8, lg: 16 }]}
     return (
         <section className={classes['profile-container']}>
             <Row style={{ maxWidth: '480px' }}>
@@ -183,7 +178,7 @@ export const ProfilePage = () => {
                                             style={{ padding: '0px', margin: '0px' }}
                                             {...props}
                                             maxCount={1}
-                                            listType={screens.xs ? 'text' : 'picture-card'}
+                                            listType={screens.xs ? 'picture' : 'picture-card'}
                                             fileList={fileList}
                                             onPreview={handlePreview}
                                             onChange={handleChange}
@@ -197,8 +192,9 @@ export const ProfilePage = () => {
                                 <Col>
                                     <Row gutter={[0, 16]} style={{ width: '100%' }}>
                                         <Col span={24}>
-                                            <Form.Item name='name' noStyle>
+                                            <Form.Item name='name' style={{ height: '40px' }}>
                                                 <Input
+                                                    size='large'
                                                     type='text'
                                                     placeholder='Имя'
                                                     data-test-id='profile-name'
@@ -206,8 +202,9 @@ export const ProfilePage = () => {
                                             </Form.Item>
                                         </Col>
                                         <Col span={24}>
-                                            <Form.Item name='last-name' noStyle>
+                                            <Form.Item name='last-name' style={{ height: '40px' }}>
                                                 <Input
+                                                    size='large'
                                                     type='text'
                                                     placeholder='Фамилия'
                                                     data-test-id='profile-surname'
@@ -215,8 +212,12 @@ export const ProfilePage = () => {
                                             </Form.Item>
                                         </Col>
                                         <Col span={24}>
-                                            <Form.Item name='date-of-birth' noStyle>
+                                            <Form.Item
+                                                name='date-of-birth'
+                                                style={{ height: '40px' }}
+                                            >
                                                 <DatePicker
+                                                    size='large'
                                                     style={{ width: '100%' }}
                                                     placeholder='Дата рождения'
                                                     data-test-id='profile-birthday'
@@ -315,7 +316,7 @@ export const ProfilePage = () => {
             </Modal>
             {successAlert && (
                 <Alert
-                    message='Данные профиля успешно обновлены'
+                    message={'Данные профиля успешно обновлены'}
                     type='success'
                     showIcon
                     data-test-id='alert'

@@ -1,314 +1,380 @@
 .settings-container {
-    background: var(--character-light-background);
-    padding: 24px 24px 42px;
-    min-height: 888px;
+  background: var(--character-light-background);
+  padding: 24px 24px 42px;
+  min-height: 888px;
 
-    :global {
-        .ant-drawer {
-            .ant-drawer-content-wrapper {
-                box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.05), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
-                0 6px 16px 0 rgba(0, 0, 0, 0.08);
-                background: var(--character-light-primary-inverse);
-
-                .ant-drawer-body {
-                }
-            }
-        }
-
-        .ant-card {
-            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
-            background: var(--character-light-primary-inverse);
-            border-radius: 2px;
-
-            .ant-card-head {
-                padding: 3px 24px;
-
-                .ant-card-head-title {
-                    font-family: var(--font-family);
-                    font-weight: 500;
-                    font-size: 16px;
-                    line-height: 130%;
-                    color: var(--character-light-title-85);
-                }
-
-                .ant-card-extra {
-                    .ant-typography {
-                        cursor: pointer;
-                        font-family: var(--font-family);
-                        font-weight: 400;
-                        font-size: 14px;
-                        line-height: 130%;
-                        color: var(--primary-light-6);
-                    }
-                }
-            }
-
-            .ant-card-body {
-                height: 0px;
-                padding: 0px;
-                margin: 0px;
-            }
-
-            .ant-card-actions > li {
-                margin: 22.5px 0;
-
-                button {
-                    width: 130px;
-                }
-            }
-
-            .ant-space {
-                width: 89px;
-                height: 40px;
-                font-family: var(--font-family);
-                font-weight: 500;
-                font-size: 16px;
-                line-height: 130%;
-                color: var(--primary-light-10);
-
-                svg {
-                    path {
-                        fill: rgba(0, 0, 0, 0.85);
-                    }
-                }
-            }
-        }
-
-        .anticon {
-            svg {
-                path {
-                    fill: var(--character-light-secondary-45);
-                }
-            }
-        }
-    }
-
-    .settings-wrap {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
+  :global {
+    .ant-drawer {
+      .ant-drawer-content-wrapper {
+        box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.05), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+        0 6px 16px 0 rgba(0, 0, 0, 0.08);
         background: var(--character-light-primary-inverse);
-        padding: 24px;
-        border-radius: 8px;
-    }
 
-    .settings-drawer {
-        width: 100%;
-
-        :global {
-            .ant-drawer-content-wrapper {
-                box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.05), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
-                0 6px 16px 0 rgba(0, 0, 0, 0.08);
-                background: var(--character-light-primary-inverse);
-            }
+        .ant-drawer-body {
         }
+      }
     }
 
-    .cards-container {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        align-content: flex-start;
-        gap: 25px;
-        margin-top: 16px;
-    }
+    .ant-card {
+      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+      background: var(--character-light-primary-inverse);
+      border-radius: 2px;
 
-    .tools-container {
-        margin-top: 16px;
-        margin-bottom: 16px;
-        max-width: 505px;
-
-        :global {
-            .ant-typography {
-                font-family: var(--font-family);
-                font-weight: 700;
-                font-size: 14px;
-                line-height: 130%;
-                color: var(--character-light-title-85);
-            }
-        }
-    }
-
-    .buttons-container {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 0px;
-        justify-content: flex-start;
-    }
-}
-
-.settings-drawer {
-    .tag-free {
+      .ant-card-head {
+        padding: 3px 24px;
+        height: 53px;
         display: flex;
         align-items: center;
-        justify-content: center;
-        width: 56px;
-        height: 24px;
-        font-family: var(--font-family);
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 130%;
-        text-align: center;
-        color: var(--character-light-title-85);
-        background: var(--character-light-dividers);
-    }
 
-    .tag-pro {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        width: 56px;
-        height: 24px;
-        font-family: var(--font-family);
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 130%;
-        text-align: center;
-        color: var(--primary-light-7);
-        background: var(--primary-light-1);
-
-        svg {
-            path {
-                fill: #52c41a;
-            }
+        .ant-card-head-wrapper {
+          width: 100%;
         }
-    }
 
-    .tariffs-params-list {
-        margin-bottom: 50px;
+        .ant-card-head-title {
+          font-family: var(--font-family);
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 130%;
+          color: var(--character-light-title-85);
+        }
 
-        .param-name {
+        .ant-card-extra {
+          .ant-typography {
+            cursor: pointer;
             font-family: var(--font-family);
             font-weight: 400;
             font-size: 14px;
             line-height: 130%;
-            color: var(--character-light-title-85);
+            color: var(--primary-light-6);
+          }
         }
+      }
 
-        .param-disabled {
-            :global {
-                path {
-                    fill: #bfbfbf;
-                }
-            }
+      .ant-card-body {
+        height: 0px;
+        padding: 0px;
+        margin: 0px;
+      }
+
+      .ant-card-actions > li {
+        margin: 25px 0;
+
+        button {
+          width: 130px;
         }
+      }
+
+      .ant-space {
+        width: 89px;
+        height: 40px;
+        font-family: var(--font-family);
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 130%;
+        color: var(--primary-light-10);
+
+        svg {
+          path {
+            fill: rgba(0, 0, 0, 0.85);
+          }
+        }
+      }
     }
+
+    .anticon {
+      svg {
+        path {
+          fill: var(--character-light-secondary-45);
+        }
+      }
+    }
+  }
+
+  .settings-wrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: var(--character-light-primary-inverse);
+    padding: 24px;
+    border-radius: 8px;
+  }
+
+  .settings-drawer {
+    width: 100%;
 
     :global {
-        .ant-alert {
-            border: 0px;
-            background: var(--primary-light-1);
-            padding: 14px 0px;
-            height: 49px;
-            width: 100%;
-            font-family: var(--font-family);
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 130%;
-            text-align: center;
-
-            .ant-alert-message {
-                color: var(--primary-light-10);
-            }
-        }
+      .ant-drawer-content-wrapper {
+        box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.05), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+        0 6px 16px 0 rgba(0, 0, 0, 0.08);
+        background: var(--character-light-primary-inverse);
+      }
     }
+  }
+
+  .cards-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 25px;
+    margin-top: 16px;
+  }
+
+  .tools-container {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    max-width: 505px;
+
+    :global {
+      .ant-typography {
+        width: auto;
+        font-family: var(--font-family);
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 130%;
+        color: var(--character-light-title-85);
+      }
+
+      .ant-typography-disabled {
+        font-family: var(--font-family);
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 130%;
+        color: var(--character-light-disable-25);
+      }
+    }
+  }
+
+  .buttons-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 7px;
+    justify-content: flex-start;
+
+    :global {
+      .ant-btn-primary {
+        border: 1px solid var(--primary-light-6);
+        border-radius: 2px;
+        padding: 4px 15px;
+        width: 142px;
+        height: 40px;
+      }
+
+      .ant-btn-link {
+        font-family: var(--font-family);
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 130%;
+        text-align: center;
+        color: var(--primary-light-6);
+        padding: 4px 15px;
+        width: 181px;
+        height: 40px;
+      }
+    }
+  }
+}
+
+.settings-drawer {
+  .tag-free {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 24px;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 130%;
+    text-align: center;
+    color: var(--character-light-title-85);
+    background: var(--character-light-dividers);
+  }
+
+  .tag-pro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 24px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 130%;
+    text-align: center;
+    color: var(--primary-light-7);
+    background: var(--primary-light-1);
+
+    svg {
+      path {
+        fill: #52c41a;
+      }
+    }
+  }
+
+  .tag-pro.active {
+    justify-content: end;
+  }
+
+  .tariffs-params-list {
+    margin-bottom: 50px;
+
+    .param-name {
+      font-family: var(--font-family);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 130%;
+      color: var(--character-light-title-85);
+    }
+
+    .param-disabled {
+      :global {
+        path {
+          fill: #bfbfbf;
+        }
+      }
+    }
+  }
+
+  .period-cost {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 130%;
+    color: var(--character-light-title-85);
+    text-align: center;
+  }
+
+  :global {
+    .ant-alert {
+      border: 0px;
+      background: var(--primary-light-1);
+      padding: 14px 0px;
+      height: 49px;
+      width: 100%;
+      font-family: var(--font-family);
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 130%;
+      text-align: center;
+
+      .ant-alert-message {
+        color: var(--primary-light-10);
+      }
+    }
+
+    .ant-radio-group {
+      font-size: unset;
+    }
+  }
 }
 
 .modal-success {
-    :global {
-        .ant-modal-content {
-            border-radius: 2px;
-            padding: 64px 32px 56px 32px;
-            width: 539px;
-            height: 351px;
-            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
-            background: var(--character-light-primary-inverse);
-            transition: width 0.3s;
-        }
+  :global {
+    .ant-modal-content {
+      border-radius: 2px;
+      padding: 64px 32px 56px 32px;
+      width: 539px;
+      height: 351px;
+      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+      background: var(--character-light-primary-inverse);
+      transition: width 0.3s;
     }
+  }
 }
 
 :global {
-    .ant-drawer {
-        .ant-drawer-title {
-            font-family: var(--font-family);
-            font-weight: 500;
-            font-size: 20px;
-            line-height: 130%;
-            color: var(--character-light-title-85);
-        }
-
-        .ant-drawer-footer {
-            padding: 12px 32px;
-            height: 64px;
-
-            button {
-                border-radius: 2px;
-                padding: 4px 15px;
-                width: 100%;
-                height: 40px;
-                box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
-            }
-        }
+  .ant-drawer {
+    .ant-drawer-title {
+      font-family: var(--font-family);
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 130%;
+      color: var(--character-light-title-85);
     }
+
+    .ant-drawer-footer {
+      padding: 12px 32px;
+      height: 64px;
+
+      button {
+        border-radius: 2px;
+        padding: 4px 15px;
+        width: 100%;
+        height: 40px;
+        box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 650px) {
-    .modal-success {
-        :global {
-            .ant-modal-content {
-                padding: 32px;
-                width: 328px;
-                height: 362px;
-            }
-        }
+  .modal-success {
+    :global {
+      .ant-modal-content {
+        padding: 32px;
+        width: 328px;
+        height: 362px;
+      }
     }
+  }
 }
 
 @media screen and (max-width: 450px) {
-    .settings-container {
-        padding: 24px 0px 42px;
+  .settings-container {
+    padding: 24px 0px 42px;
 
-        .buttons-container {
-            flex-direction: column;
-            align-items: unset;
-        }
-
-        :global {
-            .ant-card {
-                width: 100%;
-            }
-        }
-
-        .cards-container {
-            gap: 12px;
-        }
-
-        .buttons-container {
-            gap: 16px;
-        }
+    .cards-container {
+      gap: 12px;
     }
 
-    .settings-drawer {
-        .tariffs-params-list {
-            margin-bottom: 9px;
+    .tools-container {
+      :global {
+        .ant-typography {
+          max-width: 176px;
         }
+      }
+    }
+
+    .buttons-container {
+      flex-direction: column;
+      align-items: unset;
+      gap: 16px;
+
+      :global {
+        .ant-btn-primary,
+        .ant-btn-link {
+          width: 100%;
+        }
+      }
     }
 
     :global {
-        .ant-drawer {
-            .ant-drawer-content-wrapper {
-                width: 360px;
-            }
-
-            .ant-drawer-footer {
-                padding: 12px 16px;
-                height: 64px;
-            }
-        }
+      .ant-card {
+        width: 100%;
+      }
     }
-}
+  }
 
+  .settings-drawer {
+    .tariffs-params-list {
+      margin-bottom: 9px;
+    }
+  }
+
+  :global {
+    .ant-drawer {
+      .ant-drawer-content-wrapper {
+        width: 360px;
+      }
+
+      .ant-drawer-footer {
+        padding: 12px 16px;
+        height: 64px;
+      }
+    }
+  }
+}

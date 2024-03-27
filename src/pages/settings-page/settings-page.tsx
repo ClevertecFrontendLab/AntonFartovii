@@ -15,9 +15,9 @@ import {
     Typography,
 } from 'antd';
 import { CheckOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
-import imageTariffFree from '../../assets/images/tariff_free.png';
-import imageTariffPro from '../../assets/images/tariff_pro.png';
-import imageTariffProActive from '../../assets/images/tariff_pro_active.png';
+import imageTariffFree from '@assets/images/tariff_free.png';
+import imageTariffPro from '@assets/images/tariff_pro.png';
+import imageTariffProActive from '@assets/images/tariff_pro_active.png';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks.ts';
 import { push } from 'redux-first-history';
@@ -100,7 +100,7 @@ export const SettingsPage = () => {
                     <Row className={classes['cards-container']}>
                         <Card
                             size={'small'}
-                            title='FREE Tarif'
+                            title='FREE tarif'
                             extra={
                                 <Typography.Text onClick={openTariffSider}>
                                     Подробнее
@@ -117,7 +117,7 @@ export const SettingsPage = () => {
                         <Card
                             size={'small'}
                             data-test-id='pro-tariff-card'
-                            title='PRO Tarif'
+                            title='PRO tarif'
                             extra={
                                 <Typography.Text onClick={openTariffSider}>
                                     Подробнее
@@ -149,20 +149,15 @@ export const SettingsPage = () => {
                     </Row>
                     <Row className={classes['tools-container']} gutter={[0, 16]}>
                         <Row wrap={false} style={{ width: '100%' }} justify={'space-between'}>
-                            <Row wrap={false} align={'top'}>
-                                <Col>
-                                    <Typography.Text>
-                                        Открыт для совместных тренировок
-                                    </Typography.Text>
-                                </Col>
-                                <Col flex={1}>
-                                    <Tooltip
-                                        placement='bottomLeft'
-                                        title='включеная функция позволит участвовать в совместных тренировках'
-                                    >
-                                        <ExclamationCircleOutlined data-test-id='tariff-trainings-icon' />
-                                    </Tooltip>
-                                </Col>
+                            <Row wrap={false} style={{ lineHeight: '15px' }}>
+                                <Typography.Text>Открыт для совместных тренировок</Typography.Text>
+                                <Tooltip
+                                    placement='bottomLeft'
+                                    title='включеная функция позволит участвовать в совместных тренировках'
+                                >
+                                    &nbsp;
+                                    <ExclamationCircleOutlined data-test-id='tariff-trainings-icon' />
+                                </Tooltip>
                             </Row>
                             <Switch
                                 size={defaultScreen}
@@ -173,7 +168,7 @@ export const SettingsPage = () => {
                             />
                         </Row>
                         <Row wrap={false} style={{ width: '100%' }} justify={'space-between'}>
-                            <Row>
+                            <Row wrap={false} style={{ lineHeight: '15px' }}>
                                 <Typography.Text>Увеломления</Typography.Text>
                                 <Tooltip
                                     placement='bottomLeft'
@@ -192,7 +187,7 @@ export const SettingsPage = () => {
                             />
                         </Row>
                         <Row wrap={false} style={{ width: '100%' }} justify={'space-between'}>
-                            <Row>
+                            <Row wrap={false} style={{ lineHeight: '15px' }}>
                                 <Typography.Text disabled={!activePro}>Тёмная тема</Typography.Text>
                                 <Tooltip
                                     placement='bottomLeft'
@@ -273,12 +268,13 @@ export const SettingsPage = () => {
                                                     <Col flex='177px'>{period.text}</Col>
                                                     <Col
                                                         flex='39px'
-                                                        style={{ textAlign: 'center' }}
+                                                        className={classes['period-cost']}
                                                     >
                                                         {period.cost
                                                             .toString()
                                                             .split('.')
                                                             .join(',')}
+                                                        &nbsp;$
                                                     </Col>
                                                     <Col flex='16px'>
                                                         <Radio

@@ -1,15 +1,17 @@
-import { Typography } from 'antd/';
-import classes from './layout.module.less';
 import { ArrowLeftOutlined, SettingOutlined } from '@ant-design/icons';
-import { Breadcrumb, Button, Col, Row, Space } from 'antd';
+import { Breadcrumb, Col, Row, Space } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { PathNames, Paths } from '../../routes/Paths.ts';
 import { push } from 'redux-first-history';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
+import { TitleMainPage } from './HeaderComponents/TitleMainPage.tsx';
+import classes from './layout.module.less';
+import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 
 export const Header = () => {
     const { pathname, state } = useLocation();
     const dispatch = useAppDispatch();
+    const { md } = useBreakpoint();
 
     const paths = pathname.split('/').slice(1);
     const templateLink = (path: string) => (
@@ -25,59 +27,70 @@ export const Header = () => {
             }),
         );
     const settingBackHandler = () => dispatch(push(state.from || `/${Paths.MAIN_PAGE}`));
-    const printHeader = () => {
-        if (pathname === `/${Paths.PROFILE_PAGE}`) {
-            return <Typography.Title level={5}>Профиль</Typography.Title>;
-        }
+
+    const printMiddlePart = () => {
         if (pathname === `/${Paths.SETTINGS_PAGE}`) {
             return (
-                <Space onClick={settingBackHandler} style={{ cursor: 'pointer' }}>
+                <Space
+                    onClick={settingBackHandler}
+                    className={classes['header-profile-breadcrumb']}
+                    data-test-id='settings-back'
+                >
                     <ArrowLeftOutlined />
-                    <Typography.Title level={4} data-test-id='settings-back'>
-                        Настройки
-                    </Typography.Title>
+                    <span>&nbsp;&nbsp;Настройки</span>
                 </Space>
             );
-        } else {
+        } else if (pathname === `/${Paths.PROFILE_PAGE}`) {
             return (
-                <Breadcrumb>
-                    {templateLink(Paths.MAIN_PAGE)}
-                    {paths.map(printPath)}
-                </Breadcrumb>
+                <Space
+                    className={classes['header-profile-breadcrumb']}
+                    style={{ margin: '1px 0px' }}
+                >
+                    Профиль
+                </Space>
             );
+        } else if (pathname === `/${Paths.MAIN_PAGE}`) {
+            return <TitleMainPage />;
         }
     };
+
     return (
         <header>
-            <div className={classes['inner-wrapper']}>
-                <Row justify={'space-between'} wrap={false}>
-                    <Col flex={'auto'}>
-                        <Row>{printHeader()}</Row>
-                        {pathname === `/${Paths.MAIN_PAGE}` && (
-                            <Row style={{ marginTop: '13px' }}>
-                                <div className={classes['header-title']}>
-                                    <Typography.Title level={1}>
-                                        Приветствуем тебя в&nbsp;CleverFit — приложении,
-                                        <br /> которое поможет тебе добиться своей мечты!
-                                    </Typography.Title>
-                                </div>
-                            </Row>
-                        )}
-                    </Col>
-                    {pathname !== `/${Paths.SETTINGS_PAGE}` && (
-                        <Col className='setting-container'>
-                            <Button
-                                type='text'
-                                icon={<SettingOutlined />}
-                                onClick={openSettingPage}
-                                data-test-id='header-settings'
-                            >
-                                Настройки
-                            </Button>
-                        </Col>
+            <Row>
+                {[
+                    `/${Paths.MAIN_PAGE}`,
+                    `/${Paths.CALENDAR_PAGE}`,
+                    `/${Paths.FEEDBACKS_PAGE}`,
+                ].includes(pathname) && (
+                    <Breadcrumb>
+                        {templateLink(Paths.MAIN_PAGE)}
+                        {paths.map(printPath)}
+                    </Breadcrumb>
+                )}
+            </Row>
+            <Row wrap={false}>
+                <Col flex={'auto'}>{printMiddlePart()}</Col>
+                <Col>
+                    {[
+                        `/${Paths.MAIN_PAGE}`,
+                        `/${Paths.CALENDAR_PAGE}`,
+                        `/${Paths.PROFILE_PAGE}`,
+                    ].includes(pathname) && (
+                        <Space
+                            align={'center'}
+                            className={classes['header-setting']}
+                            wrap={false}
+                            onClick={openSettingPage}
+                            data-test-id='header-settings'
+                        >
+                            <div className={classes['setting-icon']}>
+                                <SettingOutlined />
+                            </div>
+                            {md && 'Настройки'}
+                        </Space>
                     )}
-                </Row>
-            </div>
+                </Col>
+            </Row>
         </header>
     );
 };
