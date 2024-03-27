@@ -1,12 +1,11 @@
 import { Typography } from 'antd/';
 import classes from './layout.module.less';
 import { ArrowLeftOutlined, SettingOutlined } from '@ant-design/icons';
-import { Breadcrumb, Button, Col, Row } from 'antd';
+import { Breadcrumb, Button, Col, Row, Space } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { PathNames, Paths } from '../../routes/Paths.ts';
 import { push } from 'redux-first-history';
 import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
-import React from 'react';
 
 export const Header = () => {
     const { pathname, state } = useLocation();
@@ -32,14 +31,12 @@ export const Header = () => {
         }
         if (pathname === `/${Paths.SETTINGS_PAGE}`) {
             return (
-                <Button
-                    type='text'
-                    icon={<ArrowLeftOutlined />}
-                    onClick={settingBackHandler}
-                    data-test-id='settings-back'
-                >
-                    Настройки
-                </Button>
+                <Space onClick={settingBackHandler} style={{ cursor: 'pointer' }}>
+                    <ArrowLeftOutlined />
+                    <Typography.Title level={4} data-test-id='settings-back'>
+                        Настройки
+                    </Typography.Title>
+                </Space>
             );
         } else {
             return (

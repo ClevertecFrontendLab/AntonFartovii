@@ -10,7 +10,7 @@ export type ModalFeedbackAdd = {
 
 export const ModalFeedbackAdd = ({ open, close }: ModalFeedbackAdd) => {
     const size = useWindowSize();
-    const [createFeedback, createFeedbackEvents] = useCreateFeedbackMutation();
+    const [createFeedback] = useCreateFeedbackMutation();
     const [form] = Form.useForm();
 
     const writeFeedbackHandler = async () => {
@@ -21,8 +21,8 @@ export const ModalFeedbackAdd = ({ open, close }: ModalFeedbackAdd) => {
     return (
         <Modal
             width={size.width && size.width > 800 ? 539 : 328}
-            wrapClassName='add-feedback-blur'
             maskStyle={{ background: 'unset' }}
+            wrapClassName='settings-wrapper-blur'
             title='Выш отзыв'
             centered={true}
             open={open}

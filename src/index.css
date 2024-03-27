@@ -142,6 +142,12 @@ body {
     background: rgba(121, 156, 212, 0.1);
 }
 
+.settings-wrapper-blur {
+    backdrop-filter: blur(4px);
+    background: transparent;
+}
+
+
 .auth-wrapper-blur.active {
     z-index: 15;
 }
@@ -209,7 +215,7 @@ body {
 
     .ant-col,
     .ant-row {
-        padding: 0px;
-        margin: 0px;
+        padding: 0;
+        margin: 0;
     }
 }

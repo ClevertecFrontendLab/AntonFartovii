@@ -16,7 +16,6 @@ import {
 import { CloseCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks.ts';
-import { useUploadFileMutation } from '@redux/api/uploadApi.ts';
 import axios from 'axios';
 import { useUpdateUserMutation } from '@redux/api/userApi.ts';
 
@@ -41,7 +40,6 @@ export const ProfilePage = () => {
     const [successAlert, setSuccessAlert] = useState<boolean>(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
-    const [query, state] = useUploadFileMutation();
     const { user } = useAppSelector((state) => state.userReducer);
     const [updateUser, updateState] = useUpdateUserMutation();
 
@@ -79,7 +77,7 @@ export const ProfilePage = () => {
                 mask: false,
                 wrapClassName: 'calendar-wrapper-blur',
             });
-    }, [modalErrorUpload, error]);
+    }, [modalErrorUpload]);
 
     const onChange = () => {
         form.validateFields([
@@ -137,7 +135,7 @@ export const ProfilePage = () => {
     };
 
     const handleRequest = async (options) => {
-        const { onSuccess, onError, file, onProgress } = options;
+        const { onSuccess, onError, file } = options;
 
         const fmData = new FormData();
         const config = {

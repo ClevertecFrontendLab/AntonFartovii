@@ -3,8 +3,6 @@ import path from 'path';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
-const mode = process.env.NODE_ENV;
-
 export default defineConfig({
     base: '/',
     plugins: [react()],
