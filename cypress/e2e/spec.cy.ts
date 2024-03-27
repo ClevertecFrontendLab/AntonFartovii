@@ -32,13 +32,13 @@ const DATA_TEST_ID = {
 
 describe('Sprint 5', () => {
     const resolutionFull = [
-        {width: 360, height: 740},
-        {width: 833, height: 900},
-        {width: 1440, height: 900},
+        { width: 360, height: 740 },
+        { width: 833, height: 900 },
+        { width: 1440, height: 900 },
     ];
-    const resolutionMobile = [{width: 360, height: 740}];
-    const resolutionTablet = [{width: 833, height: 900}];
-    const resolutionLaptop = [{width: 1440, height: 900}];
+    const resolutionMobile = [{ width: 360, height: 740 }];
+    const resolutionTablet = [{ width: 833, height: 900 }];
+    const resolutionLaptop = [{ width: 1440, height: 900 }];
 
     function takeScreenshots(screenshotName, resolution = resolutionFull) {
         cy.wait(1000);
@@ -52,7 +52,7 @@ describe('Sprint 5', () => {
 
     function beforeEach(testName: string) {
         cy.visit('/');
-        cy.intercept('POST', 'auth/login', {accessToken: 'SUPERUSER'}).as('login');
+        cy.intercept('POST', 'auth/login', { accessToken: 'SUPERUSER' }).as('login');
         cy.visit('/auth');
         cy.get('[data-test-id=login-email]').type('valadzkoaliaksei@tut.by');
         cy.get('[data-test-id=login-password]').type('1234qqQQ');
