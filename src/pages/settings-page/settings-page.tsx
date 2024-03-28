@@ -25,11 +25,11 @@ import { Paths } from '../../routes/Paths.ts';
 import { useUpdateUserMutation } from '@redux/api/userApi.ts';
 import { ModalFeedbackAdd } from '@components/Settings/ModalFeedbackAdd.tsx';
 import { useBayTariffMutation } from '@redux/api/tariffApi.ts';
-import ModalSuccessTariff from '@components/Settings/ModalSuccessTariff.tsx';
+import { ModalSuccessTariff } from '@components/Settings/ModalSuccessTariff.tsx';
 import { formatDateDDMM } from '../../utils.ts';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { SwitchSize } from 'antd/es/switch';
-import TariffsParamsList from '@components/Settings/TariffsParamsList.tsx';
+import { TariffsParamsList } from '@components/Settings/TariffsParamsList.tsx';
 
 export const SettingsPage = () => {
     const [tariffSider, setTariffSider] = useState<boolean>(false);

@@ -51,6 +51,7 @@ export const Router = () => (
                 <Route path={Paths.FEEDBACKS_PAGE} element={<FeedbacksPage />} />
                 <Route path={Paths.PROFILE_PAGE} element={<ProfilePage />} />
                 <Route path={Paths.SETTINGS_PAGE} element={<SettingsPage />} />
+                <Route path={Paths.PAGE_404} element={<Page404 />} />
             </Route>
             <Route
                 element={
@@ -112,7 +113,6 @@ export const Router = () => (
                     />
                 </Route>
             </Route>
-            <Route path={Paths.PAGE_404} element={<Page404 />} />
             <Route path='*' element={<Navigate to={`/${Paths.PAGE_404}`} />} />
         </Routes>
     </HistoryRouter>

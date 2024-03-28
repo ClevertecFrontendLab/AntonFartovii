@@ -5,7 +5,7 @@ import classes from '@pages/settings-page/settings.module.less';
 import { CheckCircleFilled } from '@ant-design/icons';
 import { useWindowSize } from '@uidotdev/usehooks';
 
-const ModalSuccessTariff = ({ open }: { open: boolean }) => {
+export const ModalSuccessTariff = ({ open }: { open: boolean }) => {
     const { user } = useAppSelector((state) => state.userReducer);
     const dispatch = useAppDispatch();
     const size = useWindowSize();
@@ -41,5 +41,3 @@ const ModalSuccessTariff = ({ open }: { open: boolean }) => {
         </Modal>
     );
 };
-
-export default ModalSuccessTariff;

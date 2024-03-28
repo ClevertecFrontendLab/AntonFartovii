@@ -2,7 +2,7 @@ import { createContext, RefObject, useEffect, useLayoutEffect, useState } from '
 import { Sider } from './Sider.tsx';
 import { Header } from './Header.tsx';
 import classes from './layout.module.less';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Loader } from '@components/Loader/Loader.tsx';
 import { useLoader } from '@hooks/useLoader.ts';
 import { ILoader } from '../../hoc/LoaderProvider.tsx';
@@ -66,7 +66,7 @@ export const MainLayout = () => {
         refetchOnReconnect: true,
     });
     const dispatch = useAppDispatch();
-
+    const { pathname } = useLocation();
     useEffect(() => {
         queryUser.data && dispatch(setUser(queryUser.data));
     }, [queryUser.data, dispatch]);
@@ -134,7 +134,7 @@ export const MainLayout = () => {
             <div className={classes['app-wrapper']}>
                 <Sider />
                 <div className={classes['wrapper']}>
-                    <Header />
+                    {pathname !== `/${Paths.PAGE_404}` && <Header />}
                     <main className={classes.main}>
                         <Outlet />
                     </main>
