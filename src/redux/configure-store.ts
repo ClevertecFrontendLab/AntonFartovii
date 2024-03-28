@@ -3,10 +3,15 @@ import { authApi } from '@redux/api/authApi.ts';
 import { feedbackApi } from '@redux/api/feedbacksApi.ts';
 import { catalogsApi } from '@redux/api/catalogsApi.ts';
 import { trainingApi } from '@redux/api/trainingApi.ts';
+import { userApi } from '@redux/api/userApi.ts';
+import { uploadApi } from '@redux/api/uploadApi.ts';
+import { tariffApi } from '@redux/api/tariffApi.ts';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import authReducer from './authSlice.ts';
 import formReducer from './formSlice.ts';
 import calendarReducer from './calendarSlice.ts';
+import userReducer from './userSlice.ts';
+import catalogReducer from './catalogsSlice.ts';
 import { createReduxHistoryContext } from 'redux-first-history';
 import { createBrowserHistory } from 'history';
 
@@ -20,9 +25,14 @@ const rootReducer = combineReducers({
     [feedbackApi.reducerPath]: feedbackApi.reducer,
     [catalogsApi.reducerPath]: catalogsApi.reducer,
     [trainingApi.reducerPath]: trainingApi.reducer,
+    [uploadApi.reducerPath]: uploadApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
+    [tariffApi.reducerPath]: tariffApi.reducer,
     authReducer,
     formReducer,
     calendarReducer,
+    catalogReducer,
+    userReducer,
     router: routerReducer,
 });
 
@@ -53,6 +63,9 @@ export const store = configureStore({
             feedbackApi.middleware,
             catalogsApi.middleware,
             trainingApi.middleware,
+            userApi.middleware,
+            uploadApi.middleware,
+            tariffApi.middleware,
             localStorageMiddleware,
             routerMiddleware,
         ]),

@@ -27,6 +27,13 @@ export const getModalCoords = (cellRef: RefObject<HTMLDivElement>, size: Size) =
     }
     return undefined;
 };
+export const formatDateDDMM = (value: string | Date) => {
+    const date = new Date(value);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    return `${day}.${month}`;
+};
+
 export const formatDate = (value: string | Date) => {
     const date = new Date(value);
     const day = date.getUTCDate();

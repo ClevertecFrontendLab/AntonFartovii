@@ -39,7 +39,7 @@ export const FeedbacksPage = () => {
     return (
         <>
             {data && data.length > 0 ? (
-                <>
+                <div className={classes['feedback-container']}>
                     <div className={classes['feedbacks-wrap']}>
                         {(shortData ? data.slice(0, 4) : data).map((feedback: Feedback) => (
                             <FeedbackCard key={feedback.id} {...feedback} />
@@ -63,7 +63,7 @@ export const FeedbacksPage = () => {
                             {shortData ? 'Развернуть' : 'Свернуть'} все отзывы
                         </Button>
                     </div>
-                </>
+                </div>
             ) : (
                 <FeedbackWelcome />
             )}

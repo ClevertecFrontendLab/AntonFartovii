@@ -123,7 +123,7 @@ export const CalendarPage = () => {
     };
 
     return (
-        <>
+        <section className={classes['calendar-container']}>
             <Calendar
                 locale={calendarLocale}
                 fullscreen={fullScreen}
@@ -169,6 +169,6 @@ export const CalendarPage = () => {
                     <ExerciseList />
                 </div>
             </Drawer>
-        </>
+        </section>
     );
 };

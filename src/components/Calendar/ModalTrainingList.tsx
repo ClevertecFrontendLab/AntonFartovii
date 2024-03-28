@@ -13,7 +13,8 @@ import { getModalCoords } from '../../utils.ts';
 export const ModalTrainingList = () => {
     const [okDisabled, setOkDisabled] = useState<boolean>(false);
     const [modalCoords, setModalCoords] = useState({});
-    const { currentDate, trainingList } = useAppSelector((state) => state.calendarReducer);
+    const { currentDate } = useAppSelector((state) => state.calendarReducer);
+    const { trainingList } = useAppSelector((state) => state.catalogReducer);
     const size = useWindowSize();
     const dispatch = useAppDispatch();
 
