@@ -163,7 +163,7 @@ export const SettingsPage = () => {
                                 size={defaultScreen}
                                 data-id='readyForJointTraining'
                                 data-test-id='tariff-trainings'
-                                defaultChecked={user && user.readyForJointTraining}
+                                defaultChecked={user?.readyForJointTraining}
                                 onChange={onChangeSwitchReadyForJointTraining}
                             />
                         </Row>
@@ -182,7 +182,7 @@ export const SettingsPage = () => {
                                 size={defaultScreen}
                                 data-id='sendNotification'
                                 data-test-id='tariff-notifications'
-                                defaultChecked={user && user.sendNotification}
+                                defaultChecked={user?.sendNotification}
                                 onChange={onChangeSwitchNotification}
                             />
                         </Row>
