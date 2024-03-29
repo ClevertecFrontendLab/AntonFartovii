@@ -93,6 +93,16 @@
     --font6: 'Menlo', sans-serif;
 }
 
+:root {
+    --font-weight-400: '400';
+    --font-weight-500: '500';
+    --font-size-14: '14px';
+    --modat-width-264: '264px';
+    --modat-width-328: '328px';
+    --box-shadow-1: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    --box-shadow-2: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+}
+
 body {
     margin: 0;
     height: 100%;
@@ -166,8 +176,8 @@ body {
     height: 40px;
     background: var(--character-light-primary-inverse);
     font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
+    font-weight: var(--font-weight-400);
+    font-size: var(--font-size-14);
     line-height: 130%;
     text-align: center;
     color: var(--character-light-title-85);
@@ -178,8 +188,8 @@ body {
     align-items: center;
     justify-content: center;
     font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
+    font-weight: var(--font-weight-400);
+    font-size: var(--font-size-14);
     line-height: 130%;
     text-align: center;
     color: var(--character-light-title-85);
@@ -202,6 +212,12 @@ body {
 }
 
 :global {
+    .ant-btn {
+        border-radius: 2px;
+        padding: 4px 15px;
+        height: 40px;
+    }
+
     .ant-result-icon {
         margin-bottom: 28px;
         padding-top: 5px;

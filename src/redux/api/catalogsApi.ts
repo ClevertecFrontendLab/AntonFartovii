@@ -39,11 +39,17 @@ export type UserJointTrainingListItem = {
     inviteId: null;
 };
 
+const baseUrl = 'https://marathon-api.clevertec.ru/catalogs';
+const urlTrainingList = 'training-list';
+const urlUserList = 'user-list';
+const urlTariffList = 'tariff-list';
+const urlUserJointTrainingList = 'user-joint-training-list';
+
 export const catalogsApi = createApi({
     reducerPath: 'catalogsApi',
     refetchOnFocus: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://marathon-api.clevertec.ru/catalogs/',
+        baseUrl: baseUrl,
         credentials: 'include',
         prepareHeaders: (headers, { getState }) => {
             const { accessToken } = (getState() as RootState).authReducer;
@@ -56,7 +62,7 @@ export const catalogsApi = createApi({
         getTrainingList: builder.query<TrainingListItem[], void>({
             query: () => {
                 return {
-                    url: 'training-list',
+                    url: urlTrainingList,
                     method: 'GET',
                 };
             },
@@ -73,7 +79,7 @@ export const catalogsApi = createApi({
         getUserList: builder.query<UserListItem[], void>({
             query: () => {
                 return {
-                    url: 'user-list',
+                    url: urlUserList,
                     method: 'GET',
                 };
             },
@@ -90,7 +96,7 @@ export const catalogsApi = createApi({
         getTariffList: builder.query<TariffListItem[], void>({
             query: () => {
                 return {
-                    url: 'tariff-list',
+                    url: urlTariffList,
                     method: 'GET',
                 };
             },
@@ -107,7 +113,7 @@ export const catalogsApi = createApi({
         getUserJointTrainingList: builder.query<UserJointTrainingListItem[], void>({
             query: () => {
                 return {
-                    url: 'user-joint-training-list',
+                    url: urlUserJointTrainingList,
                     method: 'GET',
                 };
             },

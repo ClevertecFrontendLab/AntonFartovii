@@ -1,6 +1,6 @@
-import exit_icon from '../../assets/svg/exit_icon.svg';
-import switcher from '../../assets/svg/switcher.svg';
-import switcher_mobile from '../../assets/svg/switcher_mobile.svg';
+import exit_icon from '@assets/svg/exit_icon.svg';
+import switcher from '@assets/svg/switcher.svg';
+import switcher_mobile from '@assets/svg/switcher_mobile.svg';
 import classes from './layout.module.less';
 import {
     CalendarTwoTone,

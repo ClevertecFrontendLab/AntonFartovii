@@ -9,14 +9,11 @@
                 box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.05), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
                     0 6px 16px 0 rgba(0, 0, 0, 0.08);
                 background: var(--character-light-primary-inverse);
-
-                .ant-drawer-body {
-                }
             }
         }
 
         .ant-card {
-            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: var(--box-shadow-1);
             background: var(--character-light-primary-inverse);
             border-radius: 2px;
 
@@ -32,7 +29,7 @@
 
                 .ant-card-head-title {
                     font-family: var(--font-family);
-                    font-weight: 500;
+                    font-weight: var(--font-weight-500);
                     font-size: 16px;
                     line-height: 130%;
                     color: var(--character-light-title-85);
@@ -42,8 +39,8 @@
                     .ant-typography {
                         cursor: pointer;
                         font-family: var(--font-family);
-                        font-weight: 400;
-                        font-size: 14px;
+                        font-weight: var(--font-weight-400);
+                        font-size: var(--font-size-14);
                         line-height: 130%;
                         color: var(--primary-light-6);
                     }
@@ -115,7 +112,7 @@
     .cards-container {
         display: flex;
         justify-content: center;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         align-content: flex-start;
         gap: 25px;
         margin-top: 16px;
@@ -131,7 +128,7 @@
                 width: auto;
                 font-family: var(--font-family);
                 font-weight: 700;
-                font-size: 14px;
+                font-size: var(--font-size-14);
                 line-height: 130%;
                 color: var(--character-light-title-85);
             }
@@ -139,7 +136,7 @@
             .ant-typography-disabled {
                 font-family: var(--font-family);
                 font-weight: 700;
-                font-size: 14px;
+                font-size: var(--font-size-14);
                 line-height: 130%;
                 color: var(--character-light-disable-25);
             }
@@ -156,44 +153,24 @@
 
         :global {
             .ant-btn-primary {
-                border: 1px solid var(--primary-light-6);
-                border-radius: 2px;
-                padding: 4px 15px;
                 width: 142px;
-                height: 40px;
             }
 
             .ant-btn-link {
                 font-family: var(--font-family);
-                font-weight: 400;
-                font-size: 14px;
+                font-weight: var(--font-weight-400);
+                font-size: var(--font-size-14);
                 line-height: 130%;
                 text-align: center;
                 color: var(--primary-light-6);
-                padding: 4px 15px;
                 width: 181px;
-                height: 40px;
             }
         }
     }
 }
 
 .settings-drawer {
-    .tag-free {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 56px;
-        height: 24px;
-        font-family: var(--font-family);
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 130%;
-        text-align: center;
-        color: var(--character-light-title-85);
-        background: var(--character-light-dividers);
-    }
-
+    .tag-free,
     .tag-pro {
         display: flex;
         align-items: center;
@@ -201,10 +178,19 @@
         width: 56px;
         height: 24px;
         font-family: var(--font-family);
-        font-weight: 500;
-        font-size: 14px;
         line-height: 130%;
-        text-align: center;
+    }
+
+    .tag-free {
+        font-weight: var(--font-weight-400);
+        font-size: 12px;
+        color: var(--character-light-title-85);
+        background: var(--character-light-dividers);
+    }
+
+    .tag-pro {
+        font-weight: var(--font-weight-500);
+        font-size: var(--font-size-14);
         color: var(--primary-light-7);
         background: var(--primary-light-1);
 
@@ -224,8 +210,7 @@
 
         .param-name {
             font-family: var(--font-family);
-            font-weight: 400;
-            font-size: 14px;
+            font-weight: var(--font-weight-400var(--font-size-14));
             line-height: 130%;
             color: var(--character-light-title-85);
         }
@@ -241,7 +226,7 @@
 
     .period-cost {
         font-family: var(--font-family);
-        font-weight: 500;
+        font-weight: var(--font-weight-500);
         font-size: 16px;
         line-height: 130%;
         color: var(--character-light-title-85);
@@ -256,7 +241,7 @@
             height: 49px;
             width: 100%;
             font-family: var(--font-family);
-            font-weight: 500;
+            font-weight: var(--font-weight-500);
             font-size: 16px;
             line-height: 130%;
             text-align: center;
@@ -279,7 +264,7 @@
             padding: 64px 32px 56px 32px;
             width: 539px;
             height: 351px;
-            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: var(--box-shadow-1);
             background: var(--character-light-primary-inverse);
             transition: width 0.3s;
         }
@@ -290,7 +275,7 @@
     .ant-drawer {
         .ant-drawer-title {
             font-family: var(--font-family);
-            font-weight: 500;
+            font-weight: var(--font-weight-500);
             font-size: 20px;
             line-height: 130%;
             color: var(--character-light-title-85);
@@ -301,22 +286,25 @@
             height: 64px;
 
             button {
-                border-radius: 2px;
-                padding: 4px 15px;
                 width: 100%;
-                height: 40px;
-                box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+                box-shadow: var(--box-shadow-2);
             }
         }
     }
 }
 
 @media screen and (max-width: 650px) {
+    .settings-container {
+        .cards-container {
+            flex-wrap: wrap;
+        }
+    }
+
     .modal-success {
         :global {
             .ant-modal-content {
                 padding: 32px;
-                width: 328px;
+                width: var(--modat-width-328);
                 height: 362px;
             }
         }

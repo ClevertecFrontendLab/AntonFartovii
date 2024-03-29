@@ -4,7 +4,6 @@ import { feedbackApi } from '@redux/api/feedbacksApi.ts';
 import { catalogsApi } from '@redux/api/catalogsApi.ts';
 import { trainingApi } from '@redux/api/trainingApi.ts';
 import { userApi } from '@redux/api/userApi.ts';
-import { uploadApi } from '@redux/api/uploadApi.ts';
 import { tariffApi } from '@redux/api/tariffApi.ts';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import authReducer from './authSlice.ts';
@@ -25,7 +24,6 @@ const rootReducer = combineReducers({
     [feedbackApi.reducerPath]: feedbackApi.reducer,
     [catalogsApi.reducerPath]: catalogsApi.reducer,
     [trainingApi.reducerPath]: trainingApi.reducer,
-    [uploadApi.reducerPath]: uploadApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [tariffApi.reducerPath]: tariffApi.reducer,
     authReducer,
@@ -64,7 +62,6 @@ export const store = configureStore({
             catalogsApi.middleware,
             trainingApi.middleware,
             userApi.middleware,
-            uploadApi.middleware,
             tariffApi.middleware,
             localStorageMiddleware,
             routerMiddleware,

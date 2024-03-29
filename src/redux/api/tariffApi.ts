@@ -1,23 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '@redux/configure-store.ts';
 
-export type TariffCheckout = {
-    userId: string;
-    tariffId: string;
-    days: number;
-    key: string;
-};
-
 export type BayTariff = {
     tariffId: string;
     days: number;
 };
 
+const baseUrl = 'https://marathon-api.clevertec.ru/tariff';
+
 export const tariffApi = createApi({
     reducerPath: 'tariffApi',
     refetchOnFocus: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://marathon-api.clevertec.ru/tariff',
+        baseUrl,
         credentials: 'include',
         prepareHeaders: (headers, { getState }) => {
             const { accessToken } = (getState() as RootState).authReducer;
@@ -27,15 +22,6 @@ export const tariffApi = createApi({
     }),
     tagTypes: ['Tariff'],
     endpoints: (builder) => ({
-        getTariffCheckout: builder.query<{ message: string }, void>({
-            query: () => {
-                return {
-                    url: '/checkout',
-                    method: 'GET',
-                };
-            },
-            providesTags: ['Tariff'],
-        }),
         bayTariff: builder.mutation<void, BayTariff>({
             query: (body) => ({
                 url: '',
@@ -47,4 +33,4 @@ export const tariffApi = createApi({
     }),
 });
 
-export const { useLazyGetTariffCheckoutQuery, useBayTariffMutation } = tariffApi;
+export const { useBayTariffMutation } = tariffApi;

@@ -26,12 +26,13 @@ export type Training = {
     parameters?: Parameter;
     exercises: Exercise[];
 };
+const baseUrl = 'https://marathon-api.clevertec.ru/training';
 
 export const trainingApi = createApi({
     reducerPath: 'trainingApi',
     refetchOnFocus: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://marathon-api.clevertec.ru/training',
+        baseUrl,
         credentials: 'include',
         prepareHeaders: (headers, { getState }) => {
             const { accessToken } = (getState() as RootState).authReducer;

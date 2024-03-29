@@ -17,7 +17,7 @@ import {
 import { CloseCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '@hooks/typed-react-redux-hooks.ts';
-import axios from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 import { useUpdateUserMutation } from '@redux/api/userApi.ts';
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 
@@ -98,6 +98,7 @@ export const ProfilePage = () => {
     };
 
     const handleChange: UploadProps['onChange'] = ({ fileList }) => {
+        console.log(fileList);
         setFileList(fileList);
     };
 
@@ -118,7 +119,8 @@ export const ProfilePage = () => {
 
     const handleRequest = async (options) => {
         const { onSuccess, onError, file } = options;
-
+        const uploadUrl = 'https://marathon-api.clevertec.ru/upload-image';
+        const downloadUrl = 'https://training-api.clevertec.ru';
         const fmData = new FormData();
         const config = {
             headers: {
@@ -128,15 +130,25 @@ export const ProfilePage = () => {
         };
         fmData.append('file', file);
         try {
-            await axios.post('https://marathon-api.clevertec.ru/upload-image', fmData, config);
-            onSuccess();
+            const { data } = await axios.post(uploadUrl, fmData, config);
+            onSuccess(file);
+            setFileList([
+                {
+                    uid: '-1',
+                    name: data.name,
+                    status: 'done',
+                    url: downloadUrl + data.url,
+                },
+            ]);
         } catch (err) {
-            if (err.response.status === 409) {
+            if (err.response.status === HttpStatusCode.Conflict) {
+                const KILOBYTE = 1024;
                 error({
                     title: 'Файл слишком большой',
                     content: (
                         <span data-test-id='modal-error-user-training-subtitle'>
-                            Выберите файл размером {(file.size / 1024 / 1014).toFixed(2)} МБ.
+                            Выберите файл размером [{(file.size / KILOBYTE / KILOBYTE).toFixed(2)}
+                            ]&nbsp; МБ.
                         </span>
                     ),
                     icon: <CloseCircleOutlined />,

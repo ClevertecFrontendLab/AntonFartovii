@@ -17,11 +17,14 @@ export type UserEntity = {
     tariff: UserTariff;
 };
 
+const baseUrl = 'https://marathon-api.clevertec.ru/user';
+const urlUser = '/me';
+
 export const userApi = createApi({
     reducerPath: 'userApi',
     refetchOnFocus: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://marathon-api.clevertec.ru/user',
+        baseUrl,
         credentials: 'include',
         prepareHeaders: (headers, { getState }) => {
             const { accessToken } = (getState() as RootState).authReducer;
@@ -34,7 +37,7 @@ export const userApi = createApi({
         getUser: builder.query<UserEntity, void>({
             query: () => {
                 return {
-                    url: '/me',
+                    url: urlUser,
                     method: 'GET',
                 };
             },

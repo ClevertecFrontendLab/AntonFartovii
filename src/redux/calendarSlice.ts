@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Exercise, Training } from '@redux/api/trainingApi.ts';
+import { RootState } from '@redux/configure-store.ts';
 
 export type TrainingList = { [key: string]: string };
 
@@ -80,5 +81,5 @@ export const {
     setCurrentDate,
     setCurrentTraining,
 } = calendarSlice.actions;
-
+export const selectCalendar = (state: RootState) => state.calendarReducer;
 export default calendarSlice.reducer;

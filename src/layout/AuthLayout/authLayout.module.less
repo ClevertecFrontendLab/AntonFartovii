@@ -21,7 +21,7 @@
     align-items: center;
     justify-content: flex-start;
     border-radius: 2px;
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: var(--box-shadow-1);
     background: var(--character-light-primary-inverse);
     z-index: 10;
 }
@@ -52,8 +52,8 @@
 
         .ant-result-subtitle {
             font-family: var(--font-family);
-            font-weight: 400;
-            font-size: 14px;
+            font-weight: var(--font-weight-400);
+            font-size: var(--font-size-14);
             line-height: 130%;
             text-align: center;
             color: var(--character-light-secondary-45);
@@ -103,18 +103,14 @@
     }
 
     .ant-btn-primary {
-        border: 1px solid var(--primary-light-6);
-        border-radius: 2px;
-        padding: 4px 15px;
-        height: 40px;
-        box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+        box-shadow: var(--box-shadow-2);
         background: var(--primary-light-6);
     }
 
     .ant-typography-secondary {
         font-family: var(--font-family);
-        font-weight: 400;
-        font-size: 14px;
+        font-weight: var(--font-weight-400);
+        font-size: var(--font-size-14);
         line-height: 130%;
         text-align: center;
         color: var(--character-light-secondary-45);
@@ -122,7 +118,7 @@
 
     .ant-form-item-explain {
         font-family: var(--font-family);
-        font-weight: 400;
+        font-weight: var(--font-weight-400);
         font-size: 12px;
         line-height: 130%;
         color: var(--character-light-secondary-45);
@@ -132,7 +128,7 @@
 @media screen and (max-width: 800px) {
     :global {
         .ant-result-500 {
-            max-width: 264px;
+            max-width: var(--modat-width-264);
             width: auto;
             height: 448px;
             margin: 32px 16px 24px;
@@ -165,7 +161,7 @@
         }
 
         .ant-result-500 {
-            max-width: 264px;
+            max-width: var(--modat-width-264);
             width: auto;
             height: 448px;
             margin: 32px 16px 24px;

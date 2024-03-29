@@ -1,32 +1,44 @@
 import { ButtonProps, Form, Input, Modal, Rate } from 'antd';
 import { StarFilled, StarOutlined } from '@ant-design/icons';
-import { useWindowSize } from '@uidotdev/usehooks';
 import { useCreateFeedbackMutation } from '@redux/api/feedbacksApi.ts';
+import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
+import { push } from 'redux-first-history';
+import { Paths } from '../../routes/Paths.ts';
 
-export type ModalFeedbackAdd = {
+type ModalFeedbackAddType = {
     open: boolean;
     close: (bool: boolean) => void;
 };
 
-export const ModalFeedbackAdd = ({ open, close }: ModalFeedbackAdd) => {
-    const size = useWindowSize();
+export const ModalFeedbackAdd = ({ open, close }: ModalFeedbackAddType) => {
     const [createFeedback] = useCreateFeedbackMutation();
     const [form] = Form.useForm();
+    const { xs } = useBreakpoint();
+    const dispatch = useAppDispatch();
 
     const writeFeedbackHandler = async () => {
         await createFeedback(form.getFieldsValue(['rating', 'message']));
         form.resetFields();
+        close(false);
+        dispatch(push(`/${Paths.FEEDBACKS_PAGE}`));
+    };
+
+    const rateCharacter = ({ value, index }: { value?: number; index?: number }) => {
+        if (typeof value === 'number' && typeof index === 'number') {
+            return index < value ? <StarFilled /> : <StarOutlined />;
+        }
     };
 
     return (
         <Modal
-            width={size.width && size.width > 800 ? 539 : 328}
+            width={xs ? 328 : 539}
             maskStyle={{ background: 'unset' }}
             wrapClassName='settings-wrapper-blur'
             title='Выш отзыв'
             centered={true}
             open={open}
-            onOk={() => writeFeedbackHandler()}
+            onOk={writeFeedbackHandler}
             onCancel={() => close(false)}
             cancelButtonProps={{ hidden: true }}
             okText='Опубликовать'
@@ -35,24 +47,11 @@ export const ModalFeedbackAdd = ({ open, close }: ModalFeedbackAdd) => {
                     'data-test-id': 'new-review-submit-button',
                 } as ButtonProps
             }
-            bodyStyle={
-                size.width && size.width > 800
-                    ? {
-                          display: 'block',
-                          padding: '24px',
-                      }
-                    : { display: 'block', padding: '16px' }
-            }
+            bodyStyle={xs ? { padding: '16px' } : { padding: '24px' }}
         >
             <Form form={form}>
                 <Form.Item noStyle name='rating'>
-                    <Rate
-                        character={({ value, index }) => {
-                            if (typeof value === 'number' && typeof index === 'number') {
-                                return index < value ? <StarFilled /> : <StarOutlined />;
-                            }
-                        }}
-                    />
+                    <Rate character={rateCharacter} />
                 </Form.Item>
                 <Form.Item name='message'>
                     <Input.TextArea

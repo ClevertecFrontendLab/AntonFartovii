@@ -1,7 +1,7 @@
 import classes from './auth.module.less';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import logo from '../../assets/svg/logo.svg';
+import logo from '@assets/svg/logo.svg';
 import { createContext, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Paths } from '../../routes/Paths.ts';

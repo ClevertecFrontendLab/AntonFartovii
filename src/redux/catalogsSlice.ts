@@ -5,6 +5,7 @@ import {
     UserJointTrainingListItem,
     UserListItem,
 } from '@redux/api/catalogsApi.ts';
+import { RootState } from '@redux/configure-store.ts';
 
 export type catalogsState = {
     tariffList: TrainingListItem[];
@@ -41,5 +42,7 @@ export const catalogsSlice = createSlice({
 
 export const { setUserJointTrainingList, setTariffList, setTrainingList, setUserList } =
     catalogsSlice.actions;
+
+export const selectCatalog = (state: RootState) => state.catalogReducer;
 
 export default catalogsSlice.reducer;

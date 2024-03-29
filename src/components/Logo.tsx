@@ -1,6 +1,6 @@
 import classes from '../layout/MainLayout/layout.module.less';
-import logo from '../assets/svg/logo.svg';
-import logo_mobile from '../assets/svg/logo_mobile.svg';
+import logo from '@assets/svg/logo.svg';
+import logo_mobile from '@assets/svg/logo_mobile.svg';
 import { Link } from 'react-router-dom';
 
 export const Logo = ({ collapsed }: { collapsed: boolean }) => (
