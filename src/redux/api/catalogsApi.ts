@@ -1,13 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '@redux/configure-store.ts';
-import { setTrainingList } from '@redux/calendarSlice.ts';
+import {
+    setTariffList,
+    setTrainingList,
+    setUserJointTrainingList,
+    setUserList,
+} from '@redux/catalogsSlice.ts';
 
 export type TrainingListItem = {
     name: string;
     key: string;
 };
 
-export type User = {
+export type UserListItem = {
     id: string;
     name: string;
 };
@@ -18,17 +23,33 @@ export type Period = {
     days: number;
 };
 
-export type Tariff = {
+export type TariffListItem = {
     _id: string;
     name: string;
     periods: Period[];
 };
 
+export type UserJointTrainingListItem = {
+    id: string;
+    name: string;
+    trainingType: string;
+    imageSrc: null;
+    avgWeightInWeek: number;
+    status: null;
+    inviteId: null;
+};
+
+const baseUrl = 'https://marathon-api.clevertec.ru/catalogs';
+const urlTrainingList = 'training-list';
+const urlUserList = 'user-list';
+const urlTariffList = 'tariff-list';
+const urlUserJointTrainingList = 'user-joint-training-list';
+
 export const catalogsApi = createApi({
     reducerPath: 'catalogsApi',
     refetchOnFocus: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://marathon-api.clevertec.ru/catalogs/',
+        baseUrl: baseUrl,
         credentials: 'include',
         prepareHeaders: (headers, { getState }) => {
             const { accessToken } = (getState() as RootState).authReducer;
@@ -41,7 +62,7 @@ export const catalogsApi = createApi({
         getTrainingList: builder.query<TrainingListItem[], void>({
             query: () => {
                 return {
-                    url: 'training-list',
+                    url: urlTrainingList,
                     method: 'GET',
                 };
             },
@@ -55,32 +76,56 @@ export const catalogsApi = createApi({
                 }
             },
         }),
-        getUserList: builder.query<User[], void>({
+        getUserList: builder.query<UserListItem[], void>({
             query: () => {
                 return {
-                    url: 'user-list',
+                    url: urlUserList,
                     method: 'GET',
                 };
             },
             providesTags: ['UserList'],
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(setUserList(data));
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         }),
-        getTariffList: builder.query<Tariff[], void>({
+        getTariffList: builder.query<TariffListItem[], void>({
             query: () => {
                 return {
-                    url: 'tariff-list',
+                    url: urlTariffList,
                     method: 'GET',
                 };
             },
             providesTags: ['TariffList'],
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(setTariffList(data));
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         }),
-        getUserJointTrainingList: builder.query<Tariff[], void>({
+        getUserJointTrainingList: builder.query<UserJointTrainingListItem[], void>({
             query: () => {
                 return {
-                    url: 'user-joint-training-list',
+                    url: urlUserJointTrainingList,
                     method: 'GET',
                 };
             },
             providesTags: ['UserJointTrainingList'],
+            async onQueryStarted(_, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(setUserJointTrainingList(data));
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         }),
     }),
 });

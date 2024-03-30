@@ -2,8 +2,11 @@ export enum Paths {
     MAIN = '/',
     MAIN_PAGE = 'main',
     CALENDAR_PAGE = 'calendar',
+    PROFILE_PAGE = 'profile',
+    SETTINGS_PAGE = 'settings',
     AUTH = 'auth',
-    FEEDBACKS = 'feedbacks',
+    PAGE_404 = '404',
+    FEEDBACKS_PAGE = 'feedbacks',
     REGISTRATION = 'registration',
     CHANGE_PASSWORD = 'change-password',
     FORGOT_PASSWORD = 'forgot-password',
@@ -43,6 +46,8 @@ export enum PathsFull {
 
 export const PathNames: { [key: string]: string } = {
     [Paths.MAIN_PAGE]: 'Главная',
-    [Paths.FEEDBACKS]: 'Отзывы пользователей',
+    [Paths.FEEDBACKS_PAGE]: 'Отзывы пользователей',
     [Paths.CALENDAR_PAGE]: 'Календарь',
+    [Paths.PROFILE_PAGE]: 'Профиль',
+    [Paths.SETTINGS_PAGE]: 'Настройки',
 };

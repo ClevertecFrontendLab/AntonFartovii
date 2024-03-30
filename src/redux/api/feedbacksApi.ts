@@ -10,11 +10,13 @@ export type Feedback = {
     createdAt: string;
 };
 
+const baseUrl = 'https://marathon-api.clevertec.ru/feedback';
+
 export const feedbackApi = createApi({
     reducerPath: 'feedbackApi',
     refetchOnFocus: true,
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://marathon-api.clevertec.ru/',
+        baseUrl,
         credentials: 'include',
         prepareHeaders: (headers, { getState }) => {
             const { accessToken } = (getState() as RootState).authReducer;
@@ -27,7 +29,7 @@ export const feedbackApi = createApi({
         getFeedbacks: builder.query({
             query: () => {
                 return {
-                    url: 'feedback',
+                    url: '',
                     method: 'GET',
                 };
             },
@@ -40,7 +42,7 @@ export const feedbackApi = createApi({
         createFeedback: builder.mutation({
             query: (body) => {
                 return {
-                    url: 'feedback',
+                    url: '',
                     method: 'POST',
                     body,
                 };

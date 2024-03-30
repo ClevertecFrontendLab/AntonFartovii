@@ -1,0 +1,108 @@
+.profile-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--character-light-primary-inverse);
+    border-radius: 8px;
+    margin: 24px;
+    padding: 24px 24px 42px;
+    min-height: 886px;
+
+    .profile-top {
+        margin-bottom: 11px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        gap: 24px;
+
+        .profile-avatar {
+            width: 104px;
+        }
+
+        .button-lg {
+            margin-top: 8px;
+            font-family: var(--font-family);
+            font-weight: var(--font-weight-400);
+            font-size: var(--font-size-14);
+            line-height: 130%;
+            text-align: center;
+            color: var(--character-light-secondary-45);
+        }
+
+        .button-xs {
+            font-family: var(--font-family);
+            font-weight: var(--font-weight-400);
+            font-size: var(--font-size-14);
+            line-height: 130%;
+            text-align: center;
+            color: var(--character-light-title-85);
+
+            svg {
+                path {
+                    fill: rgba(0, 0, 0, 0.25);
+                }
+            }
+        }
+    }
+
+    :global {
+        .ant-btn-primary {
+            width: 206px;
+        }
+
+        .ant-alert {
+            position: fixed;
+            left: calc(50% - 197px);
+            bottom: 10%;
+            margin: 0 auto;
+            border: 1px solid #b7eb8f;
+            border-radius: 2px;
+            padding: 9px 16px;
+            max-width: 395px;
+            width: 100%;
+            height: 36px;
+            background: #f6ffed;
+            font-family: var(--font-family);
+            font-weight: var(--font-weight-400);
+            font-size: var(--font-size-14);
+            line-height: 130%;
+            color: var(--character-light-title-85);
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .profile-container {
+        margin: 24px 0px 42px;
+        padding: 16px 24px;
+        min-height: 693px;
+
+        .profile-top {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 16px;
+
+            .profile-avatar {
+                width: 100%;
+            }
+        }
+
+        :global {
+            .ant-btn-primary {
+                width: 100%;
+            }
+
+            .ant-alert {
+                left: calc(50% - 156px);
+                border: 1px solid #b7eb8f;
+                border-radius: 2px;
+                padding: 9px 16px;
+                width: 312px;
+                height: 54px;
+            }
+        }
+    }
+}

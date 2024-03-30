@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Exercise, Training } from '@redux/api/trainingApi.ts';
-import { TrainingListItem } from '@redux/api/catalogsApi.ts';
+import { RootState } from '@redux/configure-store.ts';
 
 export type TrainingList = { [key: string]: string };
 
@@ -14,7 +14,6 @@ export type CalendarState = {
     currentTraining: string;
     currentIndex: number;
     currentEditTraining: Training | undefined;
-    trainingList: TrainingListItem[];
 };
 
 const initialState: CalendarState = {
@@ -23,7 +22,6 @@ const initialState: CalendarState = {
     currentDate: '',
     currentTraining: '',
     currentIndex: 0,
-    trainingList: [],
 };
 
 export const calendarSlice = createSlice({
@@ -71,9 +69,6 @@ export const calendarSlice = createSlice({
         setCurrentTraining: (state, action: PayloadAction<string>) => {
             state.currentTraining = action.payload;
         },
-        setTrainingList: (state, action: PayloadAction<TrainingListItem[]>) => {
-            state.trainingList = action.payload;
-        },
     },
 });
 
@@ -84,8 +79,7 @@ export const {
     addTemporaryDay,
     deleteTemporaryDay,
     setCurrentDate,
-    setTrainingList,
     setCurrentTraining,
 } = calendarSlice.actions;
-
+export const selectCalendar = (state: RootState) => state.calendarReducer;
 export default calendarSlice.reducer;

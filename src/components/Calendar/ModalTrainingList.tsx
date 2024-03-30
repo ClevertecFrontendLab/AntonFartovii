@@ -3,17 +3,20 @@ import { ButtonProps, Modal } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import { useMainContext } from '@hooks/useMainContext.ts';
 import { MainContextType } from '../../layout/MainLayout/MainLayout.tsx';
-import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks.ts';
-import { deleteTemporaryDay, setCurrentDate } from '@redux/calendarSlice.ts';
+import { useAppDispatch } from '@hooks/typed-react-redux-hooks.ts';
+import { deleteTemporaryDay, selectCalendar, setCurrentDate } from '@redux/calendarSlice.ts';
 import { useEffect, useState } from 'react';
 import { useWindowSize } from '@uidotdev/usehooks';
 import { ModalContentTraining } from '@components/Calendar/ModalContentTraining.tsx';
 import { getModalCoords } from '../../utils.ts';
+import { selectCatalog } from '@redux/catalogsSlice.ts';
+import { useSelector } from 'react-redux';
 
 export const ModalTrainingList = () => {
     const [okDisabled, setOkDisabled] = useState<boolean>(false);
     const [modalCoords, setModalCoords] = useState({});
-    const { currentDate, trainingList } = useAppSelector((state) => state.calendarReducer);
+    const { currentDate } = useSelector(selectCalendar);
+    const { trainingList } = useSelector(selectCatalog);
     const size = useWindowSize();
     const dispatch = useAppDispatch();
 
@@ -47,6 +50,11 @@ export const ModalTrainingList = () => {
         setModalTraining(false);
     };
 
+    const okButtonHandler = () => {
+        setModalTraining(false);
+        setModalExercise(true);
+    };
+
     const title = (
         <>
             <span className={classes['title-training']}>Тренировки на {currentDate}</span>
@@ -76,10 +84,7 @@ export const ModalTrainingList = () => {
             okText={'Создать тренировку'}
             okButtonProps={{ style: { width: '100%' }, disabled: okDisabled }}
             focusTriggerAfterClose={false}
-            onOk={() => {
-                setModalTraining(false);
-                setModalExercise(true);
-            }}
+            onOk={okButtonHandler}
             children={<ModalContentTraining />}
         ></Modal>
     );

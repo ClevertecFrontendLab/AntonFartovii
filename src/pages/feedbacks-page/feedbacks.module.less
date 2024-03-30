@@ -15,23 +15,16 @@
         }
 
         .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger) {
-            box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+            box-shadow: var(--box-shadow-2);
             background: var(--primary-light-6);
-            border: 1px solid var(--primary-light-6);
-            border-radius: 2px;
-            padding: 4px 15px;
             width: 130px;
-            height: 40px;
             margin: 10px 24px 10px;
         }
 
         .ant-modal-footer .ant-btn + .ant-btn:not(.ant-dropdown-trigger)[disabled] {
             background: var(--character-light-background);
             border: 0;
-            border-radius: 2px;
-            padding: 4px 15px;
             width: 128px;
-            height: 40px;
         }
 
         .ant-result-warning,
@@ -120,7 +113,7 @@
     }
 
     .ant-card {
-        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+        box-shadow: var(--box-shadow-1);
         background: var(--character-light-primary-inverse);
         border-radius: 2px;
 
@@ -139,7 +132,7 @@
         padding: 0px;
         margin-right: 10px;
         font-family: var(--font-family);
-        font-weight: 400;
+        font-weight: var(--font-weight-400);
         font-size: 16px;
         line-height: 130%;
         color: var(--character-light-title-85);
@@ -153,8 +146,8 @@
     .ant-card-meta-description {
         word-break: break-all;
         font-family: var(--font-family);
-        font-weight: 400;
-        font-size: 14px;
+        font-weight: var(--font-weight-400);
+        font-size: var(--font-size-14);
         line-height: 130%;
         color: var(--character-light-secondary-45);
     }
@@ -167,6 +160,10 @@
         min-height: 46px;
         resize: both !important;
     }
+}
+
+.feedback-container {
+    margin: 24px;
 }
 
 .feedbacks-wrap {
@@ -187,16 +184,12 @@
     gap: 7px;
 
     .btn-add-feedback {
-        box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+        box-shadow: var(--box-shadow-2);
         background: var(--primary-light-6);
-        border: 1px solid var(--primary-light-6);
-        border-radius: 2px;
-        padding: 4px 15px;
         width: 142px;
-        height: 40px;
         font-family: var(--font-family);
-        font-weight: 400;
-        font-size: 14px;
+        font-weight: var(--font-weight-400);
+        font-size: var(--font-size-14);
         line-height: 130%;
         text-align: center;
         color: var(--character-light-primary-inverse);
@@ -204,12 +197,9 @@
     }
 
     .btn-expand-feedbacks {
-        border-radius: 2px;
-        padding: 4px 15px;
         width: 216px;
-        height: 40px;
         font-family: var(--font-family);
-        font-weight: 400;
+        font-weight: var(--font-weight-400);
         font-size: 16px;
         line-height: 130%;
         text-align: center;
@@ -219,7 +209,7 @@
 
 .feedback-date {
     font-family: var(--font-family);
-    font-weight: 400;
+    font-weight: var(--font-weight-400);
     font-size: 12px;
     line-height: 130%;
     text-align: right;
@@ -264,8 +254,8 @@
     .welcome-text {
         width: 520px;
         font-family: var(--font-family);
-        font-weight: 400;
-        font-size: 14px;
+        font-weight: var(--font-weight-400);
+        font-size: var(--font-size-14);
         line-height: 130%;
         text-align: center;
         color: var(--character-light-secondary-45);
@@ -273,8 +263,8 @@
 
     .btn-add-feedback {
         font-family: var(--font-family);
-        font-weight: 400;
-        font-size: 14px;
+        font-weight: var(--font-weight-400);
+        font-size: var(--font-size-14);
         line-height: 130%;
         text-align: center;
         color: var(--character-light-primary-inverse);
@@ -282,13 +272,10 @@
 }
 
 .btn-close-error {
-    border-radius: 2px;
-    padding: 4px 15px;
     width: 180px;
-    height: 40px;
     font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
+    font-weight: var(--font-weight-400);
+    font-size: var(--font-size-14);
     line-height: 130%;
     text-align: center;
     color: var(--character-light-title-85);
@@ -362,25 +349,25 @@
 
         .welcome-card {
             padding: 48px 32px;
-            width: 328px;
+            width: var(--modat-width-328);
             height: auto;
             gap: 48px;
         }
 
         .welcome-title {
-            width: 264px;
+            width: var(--modat-width-264);
         }
 
         .welcome-text {
-            width: 264px;
+            width: var(--modat-width-264);
         }
 
         .btn-add-feedback {
-            width: 328px;
+            width: var(--modat-width-328);
         }
     }
 
     .tools-wrap .btn-add-feedback {
-        width: 328px;
+        width: var(--modat-width-328);
     }
 }

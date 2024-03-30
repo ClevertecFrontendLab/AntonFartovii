@@ -5,10 +5,17 @@ import { setFormChangePassword, setFormLogin, setFormRegister } from '@redux/for
 import { push } from 'redux-first-history';
 import { Paths, PathsFull } from '../../routes/Paths.ts';
 
+const baseUrl = 'https://marathon-api.clevertec.ru/auth';
+const urlRegistration = '/registration';
+const urlLogin = '/login';
+const urlCheckEmail = '/check-email';
+const urlConfirmEmail = '/confirm-email';
+const urlChangePassword = '/change-password';
+
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://marathon-api.clevertec.ru/',
+        baseUrl,
         credentials: 'include',
     }),
     tagTypes: ['Auth'],
@@ -16,7 +23,7 @@ export const authApi = createApi({
         register: builder.mutation<void, Credentials>({
             query: (body) => {
                 return {
-                    url: 'auth/registration',
+                    url: urlRegistration,
                     method: 'POST',
                     body,
                 };
@@ -32,7 +39,7 @@ export const authApi = createApi({
         login: builder.mutation<{ accessToken: string }, Credentials & { remember: boolean }>({
             query: ({ email, password }) => {
                 return {
-                    url: 'auth/login',
+                    url: urlLogin,
                     method: 'POST',
                     body: { email, password },
                 };
@@ -49,7 +56,7 @@ export const authApi = createApi({
                     dispatch(
                         push(PathsFull.RESULT_ERROR_LOGIN, {
                             key: 'result_redirect',
-                            from: '/auth',
+                            from: `/${Paths.AUTH}`,
                         }),
                     );
                 }
@@ -58,7 +65,7 @@ export const authApi = createApi({
         checkEmail: builder.mutation({
             query: (body: { email: string }) => {
                 return {
-                    url: 'auth/check-email',
+                    url: urlCheckEmail,
                     method: 'POST',
                     body,
                 };
@@ -74,7 +81,7 @@ export const authApi = createApi({
         confirmEmail: builder.mutation<void, ConfirmEmail>({
             query: (body) => {
                 return {
-                    url: 'auth/confirm-email',
+                    url: urlConfirmEmail,
                     method: 'POST',
                     body,
                 };
@@ -83,7 +90,7 @@ export const authApi = createApi({
         changePassword: builder.mutation<void, ChangePassword>({
             query: (body) => {
                 return {
-                    url: 'auth/change-password',
+                    url: urlChangePassword,
                     method: 'POST',
                     body,
                 };
